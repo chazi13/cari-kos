@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator, createAppContainer, HeaderStyleInterpolator, createStackNavigator } from "react-navigation";
+
 import Explore from './src/screens/Explore';
 import Wishlist from './src/screens/Wishlist';
 import Chat from './src/screens/Chat';
@@ -67,7 +68,7 @@ const RootRoute = createStackNavigator(
     },
     LoginModal: {
       screen: Login
-    }
+    },
   },
   {
     mode: 'modal',
