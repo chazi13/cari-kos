@@ -10,10 +10,7 @@ class Wishlist extends React.Component {
   render() {
     return(
       <Container>
-        <View style={{backgroundColor: '#03A9F4'}}>
-            <Text>Halo</Text>
-        </View>
-        <Tabs style={{backgroundColor: '#03A9F4',borderWidth:0,}}>
+        <Tabs style={{backgroundColor: '#03A9F4',borderWidth:0, shadowColor: 'transparent'}}>
           <Tab heading={ <TabHeading style={{backgroundColor: '#03A9F4'}}><Text>Favorit</Text></TabHeading>}>
             <Tab1 />
           </Tab>
