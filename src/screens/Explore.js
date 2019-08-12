@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, Button } from "react-native";
-import { createBottomTabNavigator, FlatList } from "react-navigation";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, Button, FlatList } from "react-native";
 import { Searchbar } from 'react-native-paper';
+import listItem from './ListItem';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import { createBottomTabNavigator, createAppContainer, HeaderStyleInterpolator, createStackNavigator } from "react-navigation";
 
 
 
@@ -9,8 +11,8 @@ import { Searchbar } from 'react-native-paper';
 
 class Explore extends React.Component {
   render() {
+    const { navigate } = this.props.navigation;
     return(
-        
       <View style={styles.containerHome}>
           <View style={styles.HeaderExplore}>
                <View style={styles.HeaderExplore}>
@@ -20,26 +22,22 @@ class Explore extends React.Component {
                 />
               <Text style={styles.textLogo}>Carikos</Text>
                </View>
-              <View style={styles.rowLayout}>
+              <View style={[styles.rowLayout, {paddingLeft: 40, paddingRight:40, paddingBottom:5, paddingTop: 10}]}>
                     <TouchableOpacity style={styles.touchable}>
-                        <Image
-                        source={require('../../assets/mortgage.png')}
-                        style={styles.imageIcon} />
+                       <Icon name="bed" size={20} color={'#fff'}></Icon>
+                       <Text style={{color: '#fff', fontSize: 10}}>Kos</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchable}>
-                        <Image
-                        source={require('../../assets/buildings.png')}
-                        style={styles.imageIcon} />
+                        <Icon name="hotel" size={20} color={'#fff'}></Icon>
+                       <Text style={{color: '#fff', fontSize: 10}}>Hotel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchable}>
-                        <Image
-                        source={require('../../assets/city-hall.png')}
-                        style={styles.imageIcon} />
+                        <Icon name="store" size={20} color={'#fff'}></Icon>
+                       <Text style={{color: '#fff', fontSize: 10}}>Toko</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchable}>
-                        <Image
-                        source={require('../../assets/swing.png')}
-                        style={styles.imageIcon} />
+                        <Icon name="wallet" size={20} color={'#fff'}></Icon>
+                       <Text style={{color: '#fff', fontSize: 10}}>Dompet</Text>
                     </TouchableOpacity>
               </View>
           </View>
@@ -61,43 +59,49 @@ class Explore extends React.Component {
                 
                 <View>
                     <View style={{height:200, backgroundColor: '#FFF', padding: 10}}>
-                        <Text style={{marginBottom: 10}}>Promo</Text>
+                        <Text style={{marginBottom: 10, fontWeight: 'bold'}}>Promo</Text>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{padding:10}}>
-                                <View style={{height:120, width:300, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                              <TouchableOpacity >
+                              <View style={{height:120, width:300, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
                                         elevation: 1,}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/re1.png')}
+                                        source={require('../../assets/traver1.jpg')}
                                         style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
                                     </View>
                                 </View>
+                              </TouchableOpacity>
 
-                                <View style={{height:120, width:300, marginLeft:10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                               <TouchableOpacity>
+                               <View style={{height:120, width:300, marginLeft:10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
                                         elevation: 1,}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/re2.png')}
+                                        source={require('../../assets/traver2.jpg')}
                                         style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
                                     </View>
                                 </View>
+                               </TouchableOpacity>
 
-                                <View style={{height:120, width:300, marginLeft:10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                               <TouchableOpacity>
+                               <View style={{height:120, width:300, marginLeft:10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
                                         elevation: 1,}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/re3.png')}
+                                        source={require('../../assets/traver3.jpg')}
                                         style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
                                     </View>
                                 </View>
+                               </TouchableOpacity>
                                 
                             
                             </ScrollView>
@@ -105,94 +109,105 @@ class Explore extends React.Component {
 
                     <View style={{flex:1, }}>
                         <View style={{flex:1, borderWidth: 1, borderColor: '#03A9F4', margin:10, padding:10, borderRadius:5, flexDirection: 'row'}} >
-                            <View style={{flex:2}}>
+                            <View style={{flex:4}}>
                                 <Text style={{color: '#03A9F4', fontSize: 10, fontWeight: 'bold'}}>Anda Pemilik Kost?</Text>
                                 <Text style={{color: '#03A9F4', fontSize: 10}}>Masuk atau daftar Disini</Text>
                             </View>
                             <View style={{flex:1}}>
-                                <Button
-                                title="Login"
-                                color="#03A9F4"
-                                />
+                              <TouchableOpacity>
+                                    <View style={{padding: 4, borderColor: '#03A9F4', borderRadius: 5, borderWidth: 1, justifyContent: 'center', alignContent: 'center'}}>
+                                        <Text style={{textAlign: 'center',color: '#03A9F4', fontSize: 10 }}>Login</Text>
+                                    </View>   
+                              </TouchableOpacity>
                             </View>
                         </View>
                     </View>
 
                     <View style={{height:200, backgroundColor: '#FFF', padding: 10}}>
-                        <Text style={{marginBottom: 10}}>Kota Populer</Text>
+                        <Text style={{marginBottom: 10, fontWeight: 'bold'}}>Kota Populer</Text>
                             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{padding:10}}>
-                                <View style={{height:120, width:80, marginLeft: 5, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                                
+                               <TouchableOpacity  onPress={() => navigate('listItem')}>
+                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
-                                        elevation: 1,}}>
+                                        elevation: 1, position: 'relative'}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/jakarta.png')}
-                                        style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
+                                        source={require('../../assets/monas.jpg')}
+                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                       
                                     </View>
+                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Jakarta</Text>
                                 </View>
+                               </TouchableOpacity>
 
-                                <View style={{height:120, width:80, marginLeft: 5, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                               <TouchableOpacity>
+                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
-                                        elevation: 1,}}>
+                                        elevation: 1, position: 'relative'}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/bandung.png')}
-                                        style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
+                                        source={require('../../assets/surabaya.jpg')}
+                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                       
                                     </View>
+                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Surabaya</Text>
                                 </View>
+                               </TouchableOpacity>
 
-                                <View style={{height:120, width:80, marginLeft: 5, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                               <TouchableOpacity>
+                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
-                                        elevation: 1,}}>
+                                        elevation: 1, position: 'relative'}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/jogja.png')}
-                                        style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
+                                        source={require('../../assets/bandung.jpg')}
+                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                       
                                     </View>
+                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Bandung</Text>
                                 </View>
+                               </TouchableOpacity>
 
-                                <View style={{height:120, width:80, marginLeft: 5, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                               <TouchableOpacity>
+                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
-                                        elevation: 1,}}>
+                                        elevation: 1, position: 'relative'}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/bandung.png')}
-                                        style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
+                                        source={require('../../assets/padang.jpg')}
+                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                       
                                     </View>
+                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Padang</Text>
                                 </View>
+                               </TouchableOpacity>
 
-                                <View style={{height:120, width:80, marginLeft: 5, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
+                               <TouchableOpacity>
+                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
                                         borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
                                         shadowOpacity: 0.8,
                                         shadowRadius: 2,
-                                        elevation: 1,}}>
+                                        elevation: 1, position: 'relative'}}>
                                     <View style={{flex:2}}>
                                     <Image
-                                        source={require('../../assets/jogja.png')}
-                                        style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
+                                        source={require('../../assets/semarang.jpg')}
+                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                       
                                     </View>
+                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Semarang</Text>
                                 </View>
+                               </TouchableOpacity>
 
-                                <View style={{height:120, width:80, marginLeft: 5, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1,}}>
-                                    <View style={{flex:2}}>
-                                    <Image
-                                        source={require('../../assets/jakarta.png')}
-                                        style={{flex:1, height:null, width:null, resizeMode:'cover', borderRadius:5}}/>
-                                    </View>
-                                </View>
-                            
+                                
                             </ScrollView>
                     </View>
                 </View>
@@ -206,7 +221,23 @@ class Explore extends React.Component {
   }
 }
 
-export default Explore;
+
+const ExploreRoute = createStackNavigator(
+    {
+      Main: {
+        screen: Explore,
+      },
+      listItem: {
+        screen: listItem,
+      },
+    },
+    {
+      mode: 'modal',
+      headerMode: 'none',
+    }
+  );
+
+export default ExploreRoute;
 
 const styles = StyleSheet.create({
     textTitleSearch:{
@@ -224,7 +255,7 @@ const styles = StyleSheet.create({
     },
     ContentParent: {
         flex:1,
-        marginTop:80,
+        marginTop:90,
         backgroundColor: '#fff'
        
     },
@@ -238,7 +269,7 @@ const styles = StyleSheet.create({
           padding: 5,
           flexDirection: 'row',
           flex: 1,
-          height: 80,
+          height: 90,
           backgroundColor: '#03A9F4',
           position: 'absolute',
           top:0,
@@ -254,13 +285,13 @@ const styles = StyleSheet.create({
         paddingTop:7,
         color: '#fff',
         fontWeight: 'bold',
-        fontSize:15,
+        fontSize:18,
         letterSpacing: 1,
-        paddingLeft: 0,
+        paddingLeft: 3,
       },
       imageLogo: {
-        width: 20, 
-        height: 20  ,
+        width: 25, 
+        height: 25,
         margin: 3,
       },
       imageIcon: {
