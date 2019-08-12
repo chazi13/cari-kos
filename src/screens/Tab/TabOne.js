@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "react-navigation";
 class TabOne extends React.Component {
   render() {
     return(
-      <Vi ew style={styles.containerHome}>
+      <View style={styles.containerHome}>
        <View style={{alignItems: 'center'}}>
         <Image
                 style={{height:50, width:50}}
@@ -15,7 +15,7 @@ class TabOne extends React.Component {
 
         <Text style={{fontSize:10, textAlign: 'center', fontWeight: '500', marginTop : 10}}>Belum Ada properti favorit</Text>
         <Text style={{fontSize:10, textAlign: 'center', color: '#9E9E9E', marginTop : 10, marginBottom:10}}>properti yang anda sukai akan ada di halaman ini</Text>
-          <View style={{paddingLeft:75, paddingRight:75,}}>
+          <View style={{paddingLeft:75, paddingRight:75}}>
           <Button
              title="Cari"
              color="#03A9F4"
