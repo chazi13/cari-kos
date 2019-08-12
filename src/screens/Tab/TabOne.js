@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from "react-navigation";
 class TabOne extends React.Component {
   render() {
     return(
-      <View style={styles.containerHome}>
-        <View style={{alignItems: 'center'}}>
+      <Vi ew style={styles.containerHome}>
+       <View style={{alignItems: 'center'}}>
         <Image
                 style={{height:50, width:50}}
                 source={require('../../../assets/houses.png')}
