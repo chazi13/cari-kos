@@ -1,26 +1,67 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { createBottomTabNavigator } from "react-navigation";
+import React, { Component } from "react";
+import { ScrollView, View, Text, StyleSheet, Image } from "react-native";
+import { TextInput, Title, Button } from "react-native-paper";
 
-
-
-class Login extends React.Component {
+class Login extends Component {
   render() {
     return(
-      <View style={styles.containerHome}>
-        <Text>Login</Text>
-      </View>
+      <ScrollView style={styles.mainContainer}>
+        <View style={styles.headerContainer}>
+          <Image source={require('../../assets/houses.png')} style={styles.logoIcon} />
+          <Title style={styles.headerTitle}>Daftar Akun</Title>
+        </View>
+        <View>
+          <TextInput mode="outlined" label="Email atau Telp" style={styles.inputDefault} placeholder="Masukan email atau telp" />
+          <TextInput mode="outlined" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" />
+        </View>
+        <View style={{marginBottom: 20}}>
+            <Button mode="contained" style={styles.buttonSubmit} onPress={() => {console.log('button pressed')}}>
+              Simpan
+            </Button>
+        </View>
+      </ScrollView>
     )
   }
 }
 
-export default Login;
-
 const styles = StyleSheet.create({
-    containerHome: {
-          flex: 1,
-          backgroundColor:'#fff',
-          alignItems: 'center',
-          justifyContent: 'center',
-      },
-  })
+  mainContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
+  headerContainer: {
+    paddingTop: 30,
+    flexDirection: "column",
+    justifyContent: "space-around"
+  },
+  logoIcon: {
+    width: 50,
+    height: 50,
+    marginBottom: 20
+  },
+  headerTitle: {
+    fontSize: 30
+  },
+  inputDefault: {
+    marginVertical: 15,
+    paddingVertical: 0
+  },
+  floatLeft: {
+    flex: 1,
+    alignItems: "stretch",
+    flexDirection: "row",
+    alignItems: "flex-start"
+  },
+  buttonSubmit: {
+    backgroundColor: '#1E88E5',
+    fontWeight: "bold",
+    shadowColor: "#0D47A1",
+    shadowOpacity: 0.2,
+    shadowOffset: {
+      bottom: 2
+    }
+  },
+});
+
+
+export default Login;
