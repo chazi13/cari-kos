@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, ScrollView, StyleSheet, Image, Text } from "react-native";
 import { Button, Title, Paragraph, TouchableRipple } from "react-native-paper";
-// import { createAppContainer, creat } from "react-navigation";
+import { withNavigation } from "react-navigation";
 
 class LoginContainer extends Component {
     constructor() {
@@ -10,26 +10,14 @@ class LoginContainer extends Component {
             
         }
     }
-
-    _renderLoginIcon = ({size, color}) => {
-        return (
-            <Image 
-                source={require('./assets/images/login-icon.png')}
-                style={{
-                    width: size,
-                    height: size,
-                    tintColor: color
-                }}
-            />
-        )
-    }
-
+    
     render() {
+        const { navigate } = this.props.navigation;
         return (
             <ScrollView style={styles.mainContainer}>
                 <View style={styles.iconContainer}>
                     <Image 
-                        source={require('./assets/images/login-icon.png')}
+                        source={require('../../assets/images/login-icon.png')}
                         style={styles.iconLogin}
                     />
                     
@@ -38,11 +26,11 @@ class LoginContainer extends Component {
                     <Paragraph style={styles.textCenter}>Yuk masuk, dan rasakan lebih banyak fitur-fitur kami!</Paragraph>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button mode="contained" style={styles.loginButton} onPress={() => {console.log('button pressed')}}>
+                    <Button mode="contained" style={styles.loginButton} onPress={() => navigate('LoginModal')}>
                         Login
                     </Button>
                     <Text style={[styles.textCenter, {paddingVertical: 20, color: "grey", fontStyle: "italic"}]}>Atau belum punya akun?</Text>
-                    <Button mode="contained" style={styles.signUpButton} onPress={() => {console.log('button pressed')}}>
+                    <Button mode="contained" style={styles.signUpButton} onPress={() => navigate('SignUpModal') }>
                         Daftar
                     </Button>
                 </View>
@@ -106,4 +94,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LoginContainer;
+export default withNavigation(LoginContainer);
