@@ -8,21 +8,18 @@ class Chat extends React.Component {
   render() {
     return(
       <View style={styles.containerHome}>
+         <View style={styles.HeaderExplore}>
+              <Text style={styles.textLogo}>Chat</Text>
+               </View>
         <View style={{alignItems: 'center'}}>
         <Image
                 style={{height:50, width:50}}
-                source={require('../../assets/houses.png')}
+                source={require('../../assets/chat.png')}
                 />
         </View>
 
-        <Text style={{fontSize:10, textAlign: 'center', fontWeight: '500', marginTop : 10}}>Belum Ada properti favorit</Text>
-        <Text style={{fontSize:10, textAlign: 'center', color: '#9E9E9E', marginTop : 10, marginBottom:10}}>properti yang anda sukai akan ada di halaman ini</Text>
-          <View style={{paddingLeft:75, paddingRight:75,}}>
-          <Button
-             title="Cari"
-             color="#03A9F4"
-             style={{flex:1, marginLeft:10, marginRight:10, fontSize: 10}}/>  
-          </View>                 
+        <Text style={{fontSize:10, textAlign: 'center', fontWeight: '500', marginTop : 10}}>Belum Ada percapakan</Text>
+      
       </View>
     )
   }
@@ -37,4 +34,32 @@ const styles = StyleSheet.create({
           alignItems: 'center',
           justifyContent: 'center',
       },
+      HeaderExplore: {
+        padding: 5,
+        flexDirection: 'row',
+        flex: 1,
+        height: 50,
+        backgroundColor: '#03A9F4',
+        position: 'absolute',
+        top:0,
+        left:0,
+        right:0,
+    },
+  ContentExplore: {
+  
+  
+  },
+  textLogo:{
+      padding: 10,
+      paddingTop:7,
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize:18,
+      paddingLeft: 0,
+    },
+    imageLogo: {
+      width: 20, 
+      height: 20  ,
+      margin: 3,
+    },
   })
