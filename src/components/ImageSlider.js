@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image, ScrollView, Dimensions, Animated, StyleSheet } from "react-native";
+import { View, Image, ScrollView, Dimensions, Animated, StyleSheet } from "react-native";
 
 
 class ImageSlider extends Component {

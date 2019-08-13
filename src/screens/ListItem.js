@@ -10,7 +10,7 @@ class ListItem extends React.Component {
   renderItem = ({ item, index }) => {
     const { navigate } = this.props.navigation;
     return (
-      <View key={index} style={styles.cardContainer}>
+      <View keys={index.toString()} style={styles.cardContainer}>
         <TouchableOpacity style={{ position: 'relative' }} onPress={() => navigate('Detail')}>
           <Image
             source={require('../../assets/kamarkos.jpg')}
@@ -84,7 +84,7 @@ class ListItem extends React.Component {
   }
 }
 
-export default ListItem;
+export default withNavigation(ListItem);
 
 const styles = StyleSheet.create({
   containerHome: {

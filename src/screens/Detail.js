@@ -1,22 +1,47 @@
 import React, { Component } from "react";
-import { Text, ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, ScrollView, View, StyleSheet, TouchableOpacity, Dimensions, Share, Image } from "react-native";
 
 import Icon from "react-native-vector-icons";
 import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { withNavigation } from "react-navigation";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
 import ImageSlider from "../components/ImageSlider";
 
 class Detail extends Component {
   constructor() {
     super();
+    const width = Dimensions.get('window');
     this.state = {
       isShowImage: true,
       isShowMaps: false,
       showImageColor: "#03A9F4",
-      showMapsColor: "white"
+      showMapsColor: "white",
+      width: width.width
     }
   }
+
+  onShare = async () => {
+    try {
+      const result = await Share.share({
+        message:
+          'Sebarkan kamar kost',
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          alert('Kamar kost disebarkan')
+        }
+      } else if (result.action === Share.dismissedAction) {
+        alert('Batal berbagi');
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   _showImage = () => {
     this.setState({
@@ -49,22 +74,37 @@ class Detail extends Component {
 
   _renderShowMpas = () => {
     return (
-      <Text>Here the maps</Text>
+      <View style={[styles.container, { display: this.props.display }]}>
+        <MapView
+          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+          style={styles.mapsContainer}
+          region={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121
+          }}
+        />
+      </View>
     )
+  }
+
+  _goBack = () => {
+    alert('go back')
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
+        <Appbar.Header style={{backgroundColor: "#03a9f4"}}>
+          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} color="#dfdfdf" />
+          <Appbar.Content title="Detail Kost" />
+          <Appbar.Action icon="favorite-border" color="#dfdfdf" />
+          <Appbar.Action icon="share" color="#dfdfdf" onPress={this.onShare} />
+        </Appbar.Header>
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.bannerSection}>
-            <Appbar.Header style={{backgroundColor: "transparent"}}>
-              <Appbar.BackAction onPress={this._goBack} />
-              <Appbar.Content/>
-              <Appbar.Action icon="search" />
-              <Appbar.Action icon="more-vert" />
-            </Appbar.Header>
-            <View style={{ flex: 4, alignItems: "center", justifyContent: "center"}}>
+            <View style={{ flex: 4, width: this.state.width }}>
               {this.state.isShowImage == true ? this._renderShowImage() : this._renderShowMpas()}
             </View>
             <View style={[styles.bannerControlContainer]}>
@@ -132,22 +172,40 @@ class Detail extends Component {
             <Subheading style={styles.titleNormalize}>Deskripsi Kost</Subheading>
             <Paragraph>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed corporis voluptatibus quasi blanditiis suscipit hic pariatur natus asperiores ullam ducimus, nam consequuntur deleniti dolorum dolores fugiat aliquam harum corrupti dolorem?</Paragraph>
           </View>
-          <View style={[styles.contentSection, {height: 150, backgroundColor: Colors.lighter}]}>
-            {/* <Title style={styles.titleNormalize}>Hubungi Pemilik</Title> */}
-            <Paragraph style={{marginTop: 20}}>Data bisa berubah sewaktu-waktu, tanyakan data saat ini</Paragraph>
-            <View style={styles.floatLeft}>
-              <IconButton icon="contact-phone" color="#03a9f4" size={100} style={{width: 100, height: 100, paddingTop: 60, marginLeft: 0}} />
-              <View style={{paddingTop: 40}}>
-                <Subheading>Pemilik Kost</Subheading>
-                <Subheading>Endah Fauzi</Subheading>
-                <View style={styles.floatLeft}>
-                  <Paragraph>0812142xxxxx</Paragraph>
-                  <TouchableOpacity style={[styles.textStandart, {marginLeft: 30}]}>
-                    <Text style={{color: '#03a9f4'}}>Minta Nomor</Text>
-                  </TouchableOpacity>
+          <View style={styles.contentSection}>
+            <Subheading style={styles.titleNormalize}>Kost Menarik Lainnya</Subheading>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer]}>
+              <TouchableOpacity  onPress={() => navigate('ListItem')}>
+                <View style={styles.anotherKostContainer}>
+                    <View style={{flex:2}}>
+                    <Image
+                        source={require('../../assets/kamarkos.jpg')}
+                        style={styles.kostImage}/>
+                    </View>
+                    <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
-              </View>
-            </View>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={() => navigate('ListItem')}>
+                <View style={styles.anotherKostContainer}>
+                    <View style={{flex:2}}>
+                    <Image
+                        source={require('../../assets/kamarkos.jpg')}
+                        style={styles.kostImage}/>
+                    </View>
+                    <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity  onPress={() => navigate('ListItem')}>
+                <View style={styles.anotherKostContainer}>
+                    <View style={{flex:2}}>
+                    <Image
+                        source={require('../../assets/kamarkos.jpg')}
+                        style={styles.kostImage}/>
+                    </View>
+                    <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
+                </View>
+              </TouchableOpacity>
+            </ScrollView>
           </View>
         </ScrollView>
         <View style={styles.footerContainer}>
@@ -176,7 +234,17 @@ const styles = StyleSheet.create({
   bannerSection: {
     height: 250,
     flexDirection: "column",
-    backgroundColor: Colors.light
+    backgroundColor: Colors.light,
+    position: "relative"
+  },
+  header: {
+    backgroundColor: "transparent", 
+    // position: "absolute", 
+    // zIndex: 99,
+    // left: 0, 
+    // right: 0, 
+    // top: 0,
+    flex: 1,
   },
   bannerControlContainer: {
     flexDirection: "row", 
@@ -293,7 +361,44 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     justifyContent: "center",
     alignItems: "center"
+  },
+  container: {
+    height: 230,
+  },
+  mapsContainer: {
+    height: 230,
+    flex: 1
+  },
+  anotherKostContainer: {
+    height:120, 
+    width:200, 
+    marginRight: 10, 
+    borderWidth:0.5, 
+    borderColor:"#dddddd", 
+    borderColor:10,
+    borderRadius:5, 
+    shadowColor: '#000', 
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1, 
+    position: 'relative'
+  },
+  kostImage: {
+    flex:1, 
+    height:null, 
+    width:null, 
+    borderRadius:5
+  },
+  anotherKostName: {
+    color: '#fff',
+    position: 'absolute',
+    bottom: 3,
+    fontSize: 16, 
+    fontWeight: "600",
+    left:5,
+    backgroundColor: Colors.dark
   }
 });
 
-export default Detail;
+export default withNavigation(Detail);
