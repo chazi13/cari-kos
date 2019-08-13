@@ -98,7 +98,7 @@ class Explore extends React.Component {
                                 <Text style={styles.textInfo }>Tertarik untuk memasang iklan?</Text>
                             </View>
                             <View style={{flex:1}}>
-                              <TouchableOpacity>
+                              <TouchableOpacity onPress={() => navigate('iklanPage')}>
                                     <View style={styles.buttonInfoOutline}>
                                         <Text style={[styles.textInfo, {textAlign: 'center',}]}>Pasang Iklan</Text>
                                     </View>   

@@ -8,6 +8,7 @@ import Wishlist from './src/screens/Wishlist';
 import Chat from './src/screens/Chat';
 import Login from './src/screens/Login';
 import ListItem from "./src/screens/ListItem";
+import IklanPage from "./src/screens/IklanPage";
 import SignupScreen from "./src/screens/SignupScreen";
 import Detail from "./src/screens/Detail";
 
@@ -76,6 +77,9 @@ const RootRoute = createStackNavigator(
     },
     Detail: {
       screen: Detail
+    },
+    iklanPage:{
+      screen: IklanPage
     }
   },
   {
