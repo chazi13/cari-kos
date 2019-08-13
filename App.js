@@ -7,7 +7,9 @@ import Explore from './src/screens/Explore';
 import Wishlist from './src/screens/Wishlist';
 import Chat from './src/screens/Chat';
 import Login from './src/screens/Login';
+import ListItem from "./src/screens/ListItem";
 import SignupScreen from "./src/screens/SignupScreen";
+import Detail from "./src/screens/Detail";
 
 class App extends React.Component {
   render() {
@@ -69,6 +71,12 @@ const RootRoute = createStackNavigator(
     LoginModal: {
       screen: Login
     },
+    ListItem: {
+      screen: ListItem,
+    },
+    Detail: {
+      screen: Detail
+    }
   },
   {
     mode: 'modal',

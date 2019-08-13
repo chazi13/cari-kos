@@ -46,7 +46,8 @@ class LoginContainer extends Component {
 
 const styles = StyleSheet.create({
     mainContainer: {
-        paddingVertical: 10,
+        marginTop: -20,
+        paddingBottom: 60,
         paddingHorizontal: 50
     },
     iconContainer: {
@@ -59,8 +60,8 @@ const styles = StyleSheet.create({
         paddingBottom: 30,
     },
     iconLogin: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         tintColor: "#03a9f4",
         paddingBottom: 30,
     },

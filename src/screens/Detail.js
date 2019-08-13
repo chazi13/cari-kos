@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Text, ScrollView, View, StyleSheet, TouchableOpacity } from "react-native";
 
 import Icon from "react-native-vector-icons";
-import { IconButton, Title, Subheading, Paragraph } from "react-native-paper";
+import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
 import ImageSlider from "../components/ImageSlider";
@@ -40,8 +40,8 @@ class Detail extends Component {
     return (
       <ImageSlider
         photos={[
-          {src: require("./assets/images/kost1/beranda.jpg")},
-          {src: require("./assets/images/kost1/kamar.jpg")},
+          {src: require("../../assets/images/kost1/beranda.jpg")},
+          {src: require("../../assets/images/kost1/kamar.jpg")},
         ]}
       />
     )
@@ -58,6 +58,12 @@ class Detail extends Component {
       <View style={{flex: 1}}>
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.bannerSection}>
+            <Appbar.Header style={{backgroundColor: "transparent"}}>
+              <Appbar.BackAction onPress={this._goBack} />
+              <Appbar.Content/>
+              <Appbar.Action icon="search" />
+              <Appbar.Action icon="more-vert" />
+            </Appbar.Header>
             <View style={{ flex: 4, alignItems: "center", justifyContent: "center"}}>
               {this.state.isShowImage == true ? this._renderShowImage() : this._renderShowMpas()}
             </View>
@@ -144,6 +150,19 @@ class Detail extends Component {
             </View>
           </View>
         </ScrollView>
+        <View style={styles.footerContainer}>
+          <View style={{flex: 1, justifyContent: "center"}}>
+            <Text style={styles.price}>Rp 1.750.000 / bulan</Text>
+          </View>
+          <View style={[styles.bookContainer, {flex: 1}]}>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]}>
+              <Text style={{textAlign: "center", color: "#03a9f4"}}>Hubungi Kost</Text>
+            </TouchableOpacity>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]}>
+              <Text style={{textAlign: "center", color: "#fff"}}>Booking</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     )
   }
@@ -151,7 +170,7 @@ class Detail extends Component {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    backgroundColor: Colors.white,
+    backgroundColor: "#fafafa",
     zIndex: 1
   },
   bannerSection: {
@@ -161,8 +180,7 @@ const styles = StyleSheet.create({
   },
   bannerControlContainer: {
     flexDirection: "row", 
-    paddingLeft: 20, 
-    paddingRight: 20, 
+    paddingHorizontal: 15,
     flex: 1, 
     backgroundColor: Colors.dark
   },
@@ -179,13 +197,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   contentSection: {
-    padding: 20,
+    padding: 15,
     alignItems: "flex-start",
     justifyContent: "space-around",
   }, 
   primaryInfo: {
     flex: 4,
-    padding: 20,
+    padding: 15,
     alignItems: "flex-start",
     justifyContent: "space-between",
   },
@@ -244,6 +262,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between"
   },
+  footerContainer: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    justifyContent: "center",
+    borderColor: "#ddd",
+    borderRadius: 10,
+    borderWidth: 1,
+    margin: 5
+  },
+  price: {
+    fontWeight: "bold"
+  },
+  bookContainer: {
+    flexDirection: "row"
+  },
+  buttonOUtline: {
+    alignItems: "center",
+    borderColor: "#03a9f4",
+    borderRadius: 10,
+    borderWidth: 2,
+    marginRight: 5,
+    paddingVertical: 5,
+    justifyContent: "center"
+  },
+  buttonContained: {
+    backgroundColor: "#03a9f4",
+    borderRadius: 10,
+    marginLeft: 5,
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
 
 export default Detail;

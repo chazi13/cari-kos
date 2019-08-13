@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         fontSize: 30
     },
     inputDefault: {
-        marginVertical: 15,
+        marginVertical: 7.5,
         paddingVertical: 0
     },
     floatLeft: {

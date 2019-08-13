@@ -1,13 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, Button, FlatList } from "react-native";
 import { Searchbar } from 'react-native-paper';
-import listItem from './ListItem';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { createBottomTabNavigator, createAppContainer, HeaderStyleInterpolator, createStackNavigator } from "react-navigation";
-
-
-
-
+import { withNavigation } from "react-navigation";
 
 class Explore extends React.Component {
   render() {
@@ -22,22 +17,22 @@ class Explore extends React.Component {
                 />
               <Text style={styles.textLogo}>Carikos</Text>
                </View>
-              <View style={[styles.rowLayout, {paddingLeft: 40, paddingRight:40, paddingBottom:5, paddingTop: 10}]}>
+              <View style={styles.rowLayout}>
                     <TouchableOpacity style={styles.touchable}>
                        <Icon name="bed" size={20} color={'#fff'}></Icon>
-                       <Text style={{color: '#fff', fontSize: 10}}>Kos</Text>
+                       <Text style={styles.textWhite}>Kos</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchable}>
                         <Icon name="hotel" size={20} color={'#fff'}></Icon>
-                       <Text style={{color: '#fff', fontSize: 10}}>Hotel</Text>
+                       <Text style={styles.textWhite}>Hotel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchable}>
                         <Icon name="store" size={20} color={'#fff'}></Icon>
-                       <Text style={{color: '#fff', fontSize: 10}}>Toko</Text>
+                       <Text style={styles.textWhite}>Toko</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.touchable}>
                         <Icon name="wallet" size={20} color={'#fff'}></Icon>
-                       <Text style={{color: '#fff', fontSize: 10}}>Dompet</Text>
+                       <Text style={styles.textWhite}>Dompet</Text>
                     </TouchableOpacity>
               </View>
           </View>
@@ -50,7 +45,8 @@ class Explore extends React.Component {
                     <Searchbar
                         placeholder="Masukkan Alamat Atau Nama Tempat"
                         placeholderTextColor="#BDBDBD" 
-                        style={{height:40, marginTop:5}}
+                        inputStyle={{fontSize:12}}
+                        style={{height:40}}
                     />
                 </View>
                 <View style={{height:15, backgroundColor: '#eeeeee'}}>
@@ -58,15 +54,11 @@ class Explore extends React.Component {
                 </View>
                 
                 <View>
-                    <View style={{height:200, backgroundColor: '#FFF', padding: 10}}>
-                        <Text style={{marginBottom: 10, fontWeight: 'bold'}}>Promo</Text>
-                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{padding:10}}>
-                              <TouchableOpacity >
-                              <View style={{height:120, width:300, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1,}}>
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.subHeading}>Promo</Text>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollHorizon}>
+                              <TouchableOpacity>
+                              <View style={styles.promoContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/traver1.jpg')}
@@ -76,11 +68,7 @@ class Explore extends React.Component {
                               </TouchableOpacity>
 
                                <TouchableOpacity>
-                               <View style={{height:120, width:300, marginLeft:10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1,}}>
+                               <View style={styles.promoContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/traver2.jpg')}
@@ -90,11 +78,7 @@ class Explore extends React.Component {
                                </TouchableOpacity>
 
                                <TouchableOpacity>
-                               <View style={{height:120, width:300, marginLeft:10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1,}}>
+                               <View style={styles.promoContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/traver3.jpg')}
@@ -110,100 +94,79 @@ class Explore extends React.Component {
                     <View style={{flex:1, }}>
                         <View style={{flex:1, borderWidth: 1, borderColor: '#03A9F4', margin:10, padding:10, borderRadius:5, flexDirection: 'row'}} >
                             <View style={{flex:4}}>
-                                <Text style={{color: '#03A9F4', fontSize: 10, fontWeight: 'bold'}}>Anda Pemilik Kost?</Text>
-                                <Text style={{color: '#03A9F4', fontSize: 10}}>Masuk atau daftar Disini</Text>
+                                <Text style={[styles.textInfo, { fontWeight: 'bold'}]}>Anda Pemilik Kost?</Text>
+                                <Text style={styles.textInfo }>Tertarik untuk memasang iklan?</Text>
                             </View>
                             <View style={{flex:1}}>
                               <TouchableOpacity>
-                                    <View style={{padding: 4, borderColor: '#03A9F4', borderRadius: 5, borderWidth: 1, justifyContent: 'center', alignContent: 'center'}}>
-                                        <Text style={{textAlign: 'center',color: '#03A9F4', fontSize: 10 }}>Login</Text>
+                                    <View style={styles.buttonInfoOutline}>
+                                        <Text style={[styles.textInfo, {textAlign: 'center',}]}>Pasang Iklan</Text>
                                     </View>   
                               </TouchableOpacity>
                             </View>
                         </View>
                     </View>
 
-                    <View style={{height:200, backgroundColor: '#FFF', padding: 10}}>
-                        <Text style={{marginBottom: 10, fontWeight: 'bold'}}>Kota Populer</Text>
-                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{padding:10}}>
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.subHeading}>Kota Populer</Text>
+                            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.scrollHorizon}>
                                 
-                               <TouchableOpacity  onPress={() => navigate('listItem')}>
-                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1, position: 'relative'}}>
+                               <TouchableOpacity  onPress={() => navigate('ListItem')}>
+                               <View style={styles.popularCityContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/monas.jpg')}
-                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                        style={styles.cityImage}/>
                                        
                                     </View>
-                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Jakarta</Text>
+                                    <Text style={styles.cityName}>Jakarta</Text>
                                 </View>
                                </TouchableOpacity>
 
                                <TouchableOpacity>
-                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1, position: 'relative'}}>
+                               <View style={styles.popularCityContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/surabaya.jpg')}
-                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                        style={styles.cityImage}/>
                                        
                                     </View>
-                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Surabaya</Text>
+                                    <Text style={styles.cityName}>Surabaya</Text>
                                 </View>
                                </TouchableOpacity>
 
                                <TouchableOpacity>
-                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1, position: 'relative'}}>
+                               <View style={styles.popularCityContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/bandung.jpg')}
-                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                        style={styles.cityImage}/>
                                        
                                     </View>
-                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Bandung</Text>
+                                    <Text style={styles.cityName}>Bandung</Text>
                                 </View>
                                </TouchableOpacity>
 
                                <TouchableOpacity>
-                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1, position: 'relative'}}>
+                               <View style={styles.popularCityContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/padang.jpg')}
-                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
+                                        style={styles.cityImage}/>
                                        
                                     </View>
-                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Padang</Text>
+                                    <Text style={styles.cityName}>Padang</Text>
                                 </View>
                                </TouchableOpacity>
 
                                <TouchableOpacity>
-                               <View style={{height:120, width:80, marginLeft: 10, borderWidth:0.5, borderColor:"#dddddd", borderColor:10,
-                                        borderRadius:5, shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-                                        shadowOpacity: 0.8,
-                                        shadowRadius: 2,
-                                        elevation: 1, position: 'relative'}}>
+                               <View style={styles.popularCityContainer}>
                                     <View style={{flex:2}}>
                                     <Image
                                         source={require('../../assets/semarang.jpg')}
-                                        style={{flex:1,  height:null, width:null, borderRadius:5}}/>
-                                       
+                                        style={styles.cityImage}/>
                                     </View>
-                                    <Text style={{color: '#fff',position: 'absolute', bottom: 3, fontSize: 10, left:5, }}>Semarang</Text>
+                                    <Text style={styles.cityName}>Semarang</Text>
                                 </View>
                                </TouchableOpacity>
 
@@ -221,23 +184,7 @@ class Explore extends React.Component {
   }
 }
 
-
-const ExploreRoute = createStackNavigator(
-    {
-      Main: {
-        screen: Explore,
-      },
-      listItem: {
-        screen: listItem,
-      },
-    },
-    {
-      mode: 'modal',
-      headerMode: 'none',
-    }
-  );
-
-export default ExploreRoute;
+export default withNavigation(Explore);
 
 const styles = StyleSheet.create({
     textTitleSearch:{
@@ -245,8 +192,9 @@ const styles = StyleSheet.create({
     },
     textTitleSearch2:{
         color: '#fff',
-        fontSize: 20,
+        fontSize: 16,
         fontWeight: 'bold',
+        marginBottom: 5
     },
     cardSearch: {
         backgroundColor: '#03A9F4',
@@ -256,29 +204,51 @@ const styles = StyleSheet.create({
     ContentParent: {
         flex:1,
         marginTop:90,
-        backgroundColor: '#fff'
-       
+        backgroundColor: '#fff' 
+    },
+    contentContainer: {
+        height:200, 
+        backgroundColor: '#FFF', 
+        padding: 10
+    },
+    subHeading: {
+        marginBottom: 16, 
+        fontWeight: 'bold'
+    },
+    scrollHorizon: {
+        marginBottom:10,
+        paddingHorizontal: 0
     },
     containerHome: {
-          flex: 1,
-          flexDirection: 'row',
-          backgroundColor:'#fff',
-          justifyContent: 'center',
-      },
-      HeaderExplore: {
-          padding: 5,
-          flexDirection: 'row',
-          flex: 1,
-          height: 90,
-          backgroundColor: '#03A9F4',
-          position: 'absolute',
-          top:0,
-          left:0,
-          right:0,
-      },
-    ContentExplore: {
-    
-    
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor:'#fff',
+        justifyContent: 'center',
+    },
+    promoContainer: {
+        height:120, 
+        width:300, 
+        marginRight: 10, 
+        borderWidth:0.5, 
+        borderColor:"#dddddd", 
+        borderColor:10,
+        borderRadius:5, 
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1
+    },
+    HeaderExplore: {
+        padding: 5,
+        flexDirection: 'row',
+        flex: 1,
+        height: 90,
+        backgroundColor: '#03A9F4',
+        position: 'absolute',
+        top:0,
+        left:0,
+        right:0,
     },
     textLogo:{
         padding: 10,
@@ -304,6 +274,25 @@ const styles = StyleSheet.create({
         marginTop:40,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        paddingHorizontal: 40, 
+        paddingBottom:5, 
+        paddingTop: 10
+      },
+      textWhite: {
+        color: '#fff', 
+        fontSize: 12
+      },
+      textInfo: {
+        color: '#03A9F4', 
+        fontSize: 14
+      },
+      buttonInfoOutline: {
+        padding: 4, 
+        borderColor: '#03A9F4', 
+        borderRadius: 5, 
+        borderWidth: 1, 
+        justifyContent: 'center', 
+        alignContent: 'center'
       },
       columnItem:{
           flexDirection: 'row',
@@ -313,4 +302,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
       },
+      popularCityContainer: {
+        height:120, 
+        width:80, 
+        marginRight: 10, 
+        borderWidth:0.5, 
+        borderColor:"#dddddd", 
+        borderColor:10,
+        borderRadius:5, 
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 1, 
+        position: 'relative'
+    },
+    cityImage: {
+        flex:1, 
+        height:null, 
+        width:null, 
+        borderRadius:5
+    },
+    cityName: {
+        color: '#fff',
+        position: 'absolute',
+        bottom: 3,
+        fontSize: 12, left:5 
+    }
   })

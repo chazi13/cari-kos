@@ -11,8 +11,8 @@ class Login extends Component {
           <Title style={styles.headerTitle}>Daftar Akun</Title>
         </View>
         <View>
-          <TextInput mode="outlined" label="Email atau Telp" style={styles.inputDefault} placeholder="Masukan email atau telp" />
-          <TextInput mode="outlined" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" />
+          <TextInput mode="outlined" selectionColor="#03a9f4" autoFocus label="Email atau Telp" style={styles.inputDefault} placeholder="Masukan email atau telp" />
+          <TextInput mode="outlined" selectionColor="#03a9f4" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" />
         </View>
         <View style={{marginBottom: 20}}>
             <Button mode="contained" style={styles.buttonSubmit} onPress={() => {console.log('button pressed')}}>
@@ -43,8 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 30
   },
   inputDefault: {
-    marginVertical: 15,
-    paddingVertical: 0
+    marginVertical: 7.5,
   },
   floatLeft: {
     flex: 1,
