@@ -11,6 +11,10 @@ import ListItem from "./src/screens/ListItem";
 import IklanPage from "./src/screens/IklanPage";
 import SignupScreen from "./src/screens/SignupScreen";
 import Detail from "./src/screens/Detail";
+import Profil from "./src/screens/Profile";
+import ListBook from "./src/screens/listBook";
+import ListIklan from "./src/screens/listIklan";
+import KontrakSaya from "./src/screens/kontrakSaya"
 
 class App extends React.Component {
   render() {
@@ -51,7 +55,7 @@ const MainNavBottom = createBottomTabNavigator({
     }
   },
   Login: {
-    screen: Login,
+    screen: Profil,
     navigationOptions:{
       tabBarLabel:'Login',
       tabBarIcon: ( {tintColor}) =>(
@@ -80,6 +84,15 @@ const RootRoute = createStackNavigator(
     },
     iklanPage:{
       screen: IklanPage
+    },
+    ListIklanPage:{
+      screen: ListIklan
+    },
+    ListBookPage:{
+      screen: ListBook
+    },
+    kontrakSaya:{
+      screen: KontrakSaya
     }
   },
   {
