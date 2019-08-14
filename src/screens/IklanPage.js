@@ -1,12 +1,9 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, TextInput } from "react-native";
-import { createBottomTabNavigator } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
-
-
-
+import Maps from "../components/Maps";
 
 class IklanPage extends React.Component {
 
@@ -24,17 +21,11 @@ class IklanPage extends React.Component {
         <View style={styles.formIklan}>
           <ScrollView>
             <Text style={styles.textLabel}>Nama Kost</Text>
-            <TextInput
-              onFocus={this.onFocusChange}
-              style={styles.inputStyle} placeholder='Masukkan Nama Kost Disini'
-              underlineColor="#03A9F4" selectionColor="#03A9F4"
-            />
+            <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='Masukkan Nama Kost Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+            
             <Text style={styles.textLabel}>Alamat Kost</Text>
-            <TextInput
-              onFocus={this.onFocusChange}
-              style={styles.inputStyle} placeholder='masukkan nama jalan, kecamatan, kelurahan, dll' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
-
-            />
+            <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='masukkan nama jalan, kecamatan, kelurahan, dll' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3" />
+            
             <Text style={styles.textLabel}>Search Alamat/area kost anda di Peta, kemudian pindahkan pin peta ke lokasi tepat kost anda</Text>
             <View style={{ position: 'relative', marginTop: 5 }}>
               <TextInput
@@ -44,8 +35,17 @@ class IklanPage extends React.Component {
             </View>
 
 
-            <View style={{ height: 100, backgroundColor: '#03A9F4', marginTop: 10 }}>
-              <Text>Lontong</Text>
+            <View style={{ height: 250, backgroundColor: '#03A9F4', marginTop: 10 }}>
+              <Maps 
+                region={{
+                  latitude: -6.301686,
+                  longitude: 106.734972,
+                  latitudeDelta: 0.01,
+                  longitudeDelta: 0.01
+                }}
+                height={250}
+                title="Cek tempat"
+              />
             </View>
 
 
@@ -54,7 +54,6 @@ class IklanPage extends React.Component {
                 <Text style={styles.textLabel}>Masukkan Latitude</Text>
                 <TextInput
                   style={styles.inputStyle} placeholder='Latitude' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
-
                 />
               </View>
 

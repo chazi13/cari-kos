@@ -5,9 +5,9 @@ import Icon from "react-native-vector-icons";
 import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { withNavigation } from "react-navigation";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 
 import ImageSlider from "../components/ImageSlider";
+import Maps from "../components/Maps";
 
 class Detail extends Component {
   constructor() {
@@ -18,7 +18,14 @@ class Detail extends Component {
       isShowMaps: false,
       showImageColor: "#03A9F4",
       showMapsColor: "white",
-      width: width.width
+      width: width.width,
+      isMapReady: false,
+      region: {
+        latitude: -6.301686,
+        longitude: 106.734972,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01
+      }
     }
   }
 
@@ -74,18 +81,16 @@ class Detail extends Component {
 
   _renderShowMpas = () => {
     return (
-      <View style={[styles.container, { display: this.props.display }]}>
-        <MapView
-          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-          style={styles.mapsContainer}
-          region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121
-          }}
-        />
-      </View>
+      <Maps 
+        region={{
+          latitude: -6.301686,
+          longitude: 106.734972,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
+        }}
+        height={200}
+        title="The kost"
+      />
     )
   }
 
@@ -94,10 +99,11 @@ class Detail extends Component {
   }
 
   render() {
+    let {navigate, goBack} = this.props.navigation
     return (
       <View style={{flex: 1}}>
         <Appbar.Header style={{backgroundColor: "#03a9f4"}}>
-          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} color="#dfdfdf" />
+          <Appbar.BackAction onPress={() => goBack()} color="#dfdfdf" />
           <Appbar.Content title="Detail Kost" />
           <Appbar.Action icon="favorite-border" color="#dfdfdf" />
           <Appbar.Action icon="share" color="#dfdfdf" onPress={this.onShare} />
@@ -216,7 +222,7 @@ class Detail extends Component {
             <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]}>
               <Text style={{textAlign: "center", color: "#03a9f4"}}>Hubungi Kost</Text>
             </TouchableOpacity>
-            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]}>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]} onPress={() => navigate('Booking')}>
               <Text style={{textAlign: "center", color: "#fff"}}>Booking</Text>
             </TouchableOpacity>
           </View>
@@ -361,13 +367,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     justifyContent: "center",
     alignItems: "center"
-  },
-  container: {
-    height: 230,
-  },
-  mapsContainer: {
-    height: 230,
-    flex: 1
   },
   anotherKostContainer: {
     height:120, 
