@@ -1,16 +1,23 @@
 import React from "react";
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight } from "react-native";
-import { Paragraph } from "react-native-paper";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Paragraph, Button } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
 
 class ListItem extends React.Component {
+  constructor(props) {
+    super(props);
+    const city = this.props.navigation.getParam('city', '');
+    this.state = {
+      search: city
+    }
+  }
 
   renderItem = ({ item, index }) => {
     const { navigate } = this.props.navigation;
     return (
-      <View keys={index.toString()} style={styles.cardContainer}>
+      <View keys={index} style={styles.cardContainer}>
         <TouchableOpacity style={{ position: 'relative' }} onPress={() => navigate('Detail')}>
           <Image
             source={require('../../assets/kamarkos.jpg')}
@@ -42,6 +49,11 @@ class ListItem extends React.Component {
     )
   }
 
+  handleChangeText = (text) => {
+    this.setState({
+      search: text
+    });
+  }
 
   render() {
     const cars = [{
@@ -65,6 +77,8 @@ class ListItem extends React.Component {
           <View style={{ flex: 1, position: 'relative' }}>
             <TextInput
               style={styles.seactInput}
+              value={this.state.search}
+              onChangeText={this.handleChangeText}
               autoFocus={true}
             />
               <TouchableOpacity style={styles.touchable} onPress={() => navigate('Main')}>
@@ -77,7 +91,26 @@ class ListItem extends React.Component {
             data={cars}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
           />
+        </View>
+        <View style={styles.floatingContainer}>
+          <View style={styles.floatingSection}>
+            <View style={{borderRightColor: "#ddd", borderRightWidth: 1}}>
+              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon={({size, color}) => (
+                <Image
+                  source={require('../../assets/images/controls.png')}
+                  style={{width: size, height: size, tintColor: color}} />
+              )}>
+                <Text style={{fontSize: 10}}>Filter</Text>
+              </Button>
+            </View>
+            <View>
+              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon="sort">
+                <Text style={{fontSize: 10}}>Urutkan</Text>
+              </Button>
+            </View>
+          </View>
         </View>
       </View>
     )
@@ -107,7 +140,7 @@ const styles = StyleSheet.create({
     height: 40, 
     borderRadius: 5, 
     borderColor: '#03A9F4' , 
-    backgroundColor: '#CFD8DC', 
+    backgroundColor: '#fff', 
     borderWidth: 1 
   },
   imageIcon: {
@@ -153,5 +186,26 @@ const styles = StyleSheet.create({
     flex: 1, 
     marginLeft: 5, 
     paddingBottom: 5 
+  },
+  floatingContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "transparent",
+    backfaceVisibility: "hidden",
+    position: 'absolute',                                          
+    bottom: 30,
+    left: 50, 
+    right: 50
+  },
+  floatingSection: {
+    backgroundColor: "white",
+    flexDirection: "row",
+    paddingVertical: 3,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  buttonOptions: {
+    padding: 0,
   }
 })
