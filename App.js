@@ -14,7 +14,8 @@ import Detail from "./src/screens/Detail";
 import Profil from "./src/screens/Profile";
 import ListBook from "./src/screens/listBook";
 import ListIklan from "./src/screens/listIklan";
-import KontrakSaya from "./src/screens/kontrakSaya"
+import KontrakSaya from "./src/screens/kontrakSaya";
+import Booking from "./src/screens/Booking";
 
 class App extends React.Component {
   render() {
@@ -93,6 +94,9 @@ const RootRoute = createStackNavigator(
     },
     kontrakSaya:{
       screen: KontrakSaya
+    },
+    Booking: {
+      screen: Booking
     }
   },
   {
