@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { ScrollView, View, Image, StyleSheet, Text } from "react-native";
-import { TextInput, Title, Subheading, RadioButton, Button } from "react-native-paper";
+import { ScrollView, View, Image, StyleSheet, Text, TextInput } from "react-native";
+import { Title, Button } from "react-native-paper";
 
 class SignupScreen extends Component {
     constructor() {
@@ -24,24 +24,28 @@ class SignupScreen extends Component {
                     <Title style={styles.headerTitle}>Daftar Akun</Title>
                 </View>
                 <View>
-                    <TextInput mode="outlined" label="Nama Lengkap" style={styles.inputDefault} placeholder="Masukan nama lengkap" />
+                    <View style={styles.formGroup}>
+                        <Text style={styles.textLabel}>Nama Lengkap</Text>
+                        <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='Masukkan Nama Lengkap Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <Text style={styles.textLabel}>Email</Text>
+                        <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='Masukkan Alamat Email Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <Text style={styles.textLabel}>No. Telp</Text>
+                        <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} keyboardType={'numeric'} placeholder='Masukkan No. Telp Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+                    </View>
+                    <View style={styles.formGroup}>
+                        <Text style={styles.textLabel}>Password</Text>
+                        <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} secureTextEntry={true} placeholder='*************' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+                    </View>
+                    {/* <TextInput mode="outlined" label="Nama Lengkap" style={styles.inputDefault} placeholder="Masukan nama lengkap" />
                     <TextInput mode="outlined" label="Email" style={styles.inputDefault} placeholder="Masukan alamat email" />
                     <TextInput mode="outlined" label="No. Telp" keyboardType={'numeric'} style={styles.inputDefault} placeholder="Masukan no. Telp kamu" />
-                    <TextInput mode="outlined" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" />
-                    
-                    <RadioButton.Group style={[styles.floatLeft, {alignItems: "stretch"}]} onValueChange={this._handlerChangeValue}>
-                        <Subheading>Daftar sebagai :</Subheading>
-                        <View style={[styles.floatLeft]}>
-                            <RadioButton value="pengiklan" status={this.state.checked == 'pengiklan' ? 'checked' : 'unchecked'} color="#03a9f4" />
-                            <Text style={{flex: 1}}>Pengiklan</Text>
-                        </View>
-                        <View style={[styles.floatLeft]}>
-                            <RadioButton value="pengguna" status={this.state.checked == 'pengguna' ? 'checked' : 'unchecked'} color="#03a9f4" />
-                            <Text style={{flex: 1}}>Pengguna</Text>
-                        </View>
-                    </RadioButton.Group>
+                    <TextInput mode="outlined" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" /> */}
                 </View>
-                <View style={{marginBottom: 20}}>
+                <View style={{marginVertical: 20}}>
                     <Button mode="contained" style={styles.buttonSubmit} onPress={() => {console.log('button pressed')}}>
                         Simpan
                     </Button>
@@ -69,9 +73,19 @@ const styles = StyleSheet.create({
     headerTitle: {
         fontSize: 30
     },
-    inputDefault: {
-        marginVertical: 7.5,
-        paddingVertical: 0
+    formGroup: {
+        paddingVertical: 5
+    },
+    textLabel: {
+        fontSize: 12,
+        fontWeight: '500',
+        marginTop: 10
+    },
+    inputStyle: {
+        height: 50,
+        borderWidth: 0,
+        backgroundColor: '#fff',
+        borderBottomColor: '#03A9F4',
     },
     floatLeft: {
         flex: 1,

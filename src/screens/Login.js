@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { ScrollView, View, Text, StyleSheet, Image } from "react-native";
-import { TextInput, Title, Button } from "react-native-paper";
+import { ScrollView, View, Text, StyleSheet, Image, TextInput } from "react-native";
+import { Title, Button } from "react-native-paper";
 
 class Login extends Component {
   render() {
@@ -11,8 +11,16 @@ class Login extends Component {
           <Title style={styles.headerTitle}>Daftar Akun</Title>
         </View>
         <View>
-          <TextInput mode="outlined" selectionColor="#03a9f4" autoFocus label="Email atau Telp" style={styles.inputDefault} placeholder="Masukan email atau telp" />
-          <TextInput mode="outlined" selectionColor="#03a9f4" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" />
+          <View style={styles.formGroup}>
+              <Text style={styles.textLabel}>Email / No. Telp</Text>
+              <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='Masukkan Email / No. Telp Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+          </View>
+          <View style={styles.formGroup}>
+              <Text style={styles.textLabel}>Password</Text>
+              <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} secureTextEntry={true} placeholder='*************' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+          </View>
+          {/* <TextInput mode="outlined" selectionColor="#03a9f4" autoFocus label="Email atau Telp" style={styles.inputDefault} placeholder="Masukan email atau telp" />
+          <TextInput mode="outlined" selectionColor="#03a9f4" label="Password" secureTextEntry={true} style={styles.inputDefault} placeholder="*******" /> */}
         </View>
         <View style={{marginBottom: 20}}>
             <Button mode="contained" style={styles.buttonSubmit} onPress={() => {console.log('button pressed')}}>
@@ -42,8 +50,19 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 30
   },
-  inputDefault: {
-    marginVertical: 7.5,
+  formGroup: {
+    paddingVertical: 5
+  },
+  textLabel: {
+      fontSize: 12,
+      fontWeight: '500',
+      marginTop: 10
+  },
+  inputStyle: {
+      height: 50,
+      borderWidth: 0,
+      backgroundColor: '#fff',
+      borderBottomColor: '#03A9F4',
   },
   floatLeft: {
     flex: 1,
