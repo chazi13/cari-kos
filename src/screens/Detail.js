@@ -103,10 +103,10 @@ class Detail extends Component {
     return (
       <View style={{flex: 1}}>
         <Appbar.Header style={{backgroundColor: "#03a9f4"}}>
-          <Appbar.BackAction onPress={() => goBack()} color="#dfdfdf" />
+          <Appbar.BackAction onPress={() => goBack()} />
           <Appbar.Content title="Detail Kost" />
-          <Appbar.Action icon="favorite-border" color="#dfdfdf" />
-          <Appbar.Action icon="share" color="#dfdfdf" onPress={this.onShare} />
+          <Appbar.Action icon="favorite-border" />
+          <Appbar.Action icon="share" onPress={this.onShare} />
         </Appbar.Header>
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.bannerSection}>
@@ -170,7 +170,7 @@ class Detail extends Component {
               </View>
               <View style={styles.fiturKostContainer}>
                 <IconButton icon="hot-tub" color="#03a9f4" />
-                <Text>Kamar Mandi</Text>
+                <Text>Kamar Mandi Dalam</Text>
               </View>
             </ScrollView>
           </View>
@@ -245,11 +245,6 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: "transparent", 
-    // position: "absolute", 
-    // zIndex: 99,
-    // left: 0, 
-    // right: 0, 
-    // top: 0,
     flex: 1,
   },
   bannerControlContainer: {
@@ -396,7 +391,6 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     fontWeight: "600",
     left:5,
-    backgroundColor: Colors.dark
   }
 });
 
