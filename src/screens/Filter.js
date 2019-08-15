@@ -1,14 +1,35 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from "react-native";
-import { Appbar, Button, Checkbox } from "react-native-paper";
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { Appbar, Button, Checkbox, RadioButton } from "react-native-paper";
 import Modal from "react-native-modal";
+
+const { width } = Dimensions.get('window');
+const features = require('../../data/fitur.json');
+let minBillings = ["Opsional"];
+for (let i = 2; i < 13; i++) {
+  minBillings.push(i.toString());
+}
 
 class Filter extends Component {
   constructor() {
     super();
+    featuresWithStatus = [];
+    features.map((fitur, index) => {
+      featuresWithStatus.push({...fitur, status: false});
+    })
     this.state = {
-      gender: "Campur",
-      genderMixChecked: true
+      modalVisible: "",
+      types: "Campur",
+      gender: [
+        { type: "Campur", status: true },
+        { type: "Putra", status: false },
+        { type: "Putri", status: false }
+      ],
+      bilingType: "Bulanan",
+      minPrice: 1000000,
+      maxPrice: 20000000,
+      features: featuresWithStatus,
+      minBilling: "Opsional"
     }
   }
 
@@ -18,9 +39,40 @@ class Filter extends Component {
     });
   }
 
-  render() {
-    const features = require('../../data/fitur.json');
+  closeModal = () => {
+    this.setState({ modalVisible: "" })
+  }
 
+  handleGenderChange = type => {
+    const index = this.state.gender.findIndex(gender => gender.type === type);
+    const { gender } = this.state;
+    gender[index].status = !gender[index].status;
+    this.setState({
+      gender
+    });
+    this.fetchingGender();
+  }
+
+  handleFeaturesChange = fiturName => {
+    const index = this.state.features.findIndex(fitur => fitur.name === fiturName );
+    const { features } = this.state;
+    features[index].status = !features[index].status;
+    this.setState({
+      features
+    });
+  }
+
+  fetchingGender = () => {
+    let types = "";
+    this.state.gender.map((item) => {
+      if (item.status) {
+        types += `${item.type}, `
+      }
+    });
+    this.setState({ types })
+  }
+
+  render() {
     return (
       <View style={{ flex: 1 }}>
         <Appbar.Header style={styles.headerStyle}>
@@ -31,67 +83,159 @@ class Filter extends Component {
           <View>
             <Text style={styles.textLabel}>Tipe Kost (Gender)</Text>
             <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("gender")}>
-              <Text style={{ color: "#03a9f4" }}>{this.state.gender}</Text>
+              <Text style={{ color: "#03a9f4" }}>{this.state.types}</Text>
             </Button>
-            <Modal isVisible={this.state.visibleModal === "gender"}>
-              <View style={[styles.floatLeft, {alignItems: "space-between"}]}>
-                <Text style={{ paddingTop: 2 }}>Campur</Text>
-                <Checkbox
-                  status="unchecked"
-                  onPress={() => { this.setState({ checked: !checked }); }}
-                />
-              </View>
-              <View style={[styles.floatLeft, {alignItems: "space-between"}]}>
-                <Text style={{ paddingTop: 2 }}>Putra</Text>
-                <Checkbox
-                  status="unchecked"
-                  onPress={() => { this.setState({ checked: !checked }); }}
-                />
-              </View>
-              <View style={[styles.floatLeft, {alignItems: "space-between"}]}>
-                <Text style={{ paddingTop: 2 }}>Putri</Text>
-                <Checkbox
-                  status="unchecked"
-                  onPress={() => { this.setState({ checked: !checked }); }}
-                />
+            <Modal isVisible={this.state.modalVisible === "gender"} style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Appbar.Header style={styles.modalHeader}>
+                  <Appbar.Content title="Pilih tipe kost" />
+                  <Appbar.Action icon="close" onPress={() => this.setState({ modalVisible: "" })} />
+                </Appbar.Header>
+                <View style={[styles.floatLeft, { alignItems: "space-between" }]}>
+                  <View style={{ flex: 1 }}>
+                    <Text>Campur</Text>
+                  </View>
+                  <View style={{ flex: 1, alignItems: "flex-end"}}>
+                    <Checkbox
+                      color="#03a9f4"
+                      status={this.state.gender[0].status ? 'checked' : 'uncheck'}
+                      onPress={() => this.handleGenderChange("Campur")}
+                    />
+                  </View>
+                </View>
+                <View style={[styles.floatLeft, { alignItems: "space-between" }]}>
+                  <View style={{ flex: 1 }}>
+                    <Text>Putra</Text>
+                  </View>
+                  <View style={{ flex: 1, alignItems: "flex-end"}}>
+                    <Checkbox
+                      color="#03a9f4"
+                      status={this.state.gender[1].status ? 'checked' : 'uncheck'}
+                      onPress={() => this.handleGenderChange("Putra")}
+                    />
+                  </View>
+                </View>
+                <View style={[styles.floatLeft, { alignItems: "space-between" }]}>
+                  <View style={{ flex: 1 }}>
+                    <Text>Putri</Text>
+                  </View>
+                  <View style={{ flex: 1, alignItems: "flex-end"}}>
+                    <Checkbox
+                      color="#03a9f4"
+                      status={this.state.gender[2].status ? 'checked' : 'uncheck'}
+                      onPress={() => this.handleGenderChange("Putri")}
+                    />
+                  </View>
+                </View>
               </View>
             </Modal>
           </View>
           <View>
             <Text style={styles.textLabel}>Jangka Waktu</Text>
             <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("range")}>
-              <Text style={{ color: "#03a9f4" }}>Check</Text>
+              <Text style={{ color: "#03a9f4" }}>{this.state.bilingType}</Text>
             </Button>
+            <Modal isVisible={this.state.modalVisible === "range"} style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Appbar.Header style={styles.modalHeader}>
+                  <Appbar.Content title="Pilih Jangka Waktu" />
+                  <Appbar.Action icon="close" onPress={() => this.setState({ modalVisible: "" })} />
+                </Appbar.Header>
+                <RadioButton.Group
+                  onValueChange={bilingType => this.setState({ bilingType })}
+                  value={this.state.bilingType}
+                >
+                  <View style={styles.floatLeft}>
+                    <View style={{flex: 1}}>
+                      <Text>Harian</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: "flex-end"}}>
+                      <RadioButton value="Harian" color="#03a9f4" />
+                    </View>
+                  </View>
+                  <View style={styles.floatLeft}>
+                    <View style={{flex: 1}}>
+                      <Text>Mingguan</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: "flex-end"}}>
+                      <RadioButton value="Mingguan" color="#03a9f4" />
+                    </View>
+                  </View>
+                  <View style={styles.floatLeft}>
+                    <View style={{flex: 1}}>
+                      <Text>Bulanan</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: "flex-end"}}>
+                      <RadioButton value="Bulanan" color="#03a9f4" />
+                    </View>
+                  </View>
+                  <View style={styles.floatLeft}>
+                    <View style={{flex: 1}}>
+                      <Text>Tahunan</Text>
+                    </View>
+                    <View style={{flex: 1, alignItems: "flex-end"}}>
+                      <RadioButton value="Tahunan" color="#03a9f4" />
+                    </View>
+                  </View>
+                </RadioButton.Group>
+              </View>
+            </Modal>
           </View>
           <View>
             <Text style={styles.textLabel}>Harga</Text>
             <View style={styles.floatLeft}>
               <View style={{ flex: 8 }}>
-                <TextInput onFocus={this.onFocusChange} keyboardType="numeric" style={styles.inputStyle} />
+                <TextInput onFocus={this.onFocusChange} keyboardType="numeric" style={styles.inputStyle} value={this.state.minPrice.toString()} />
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={{ fontSize: 20, textAlign: "center" }}>-</Text>
+                <Text style={{ fontSize: 30, textAlign: "center", marginTop: 5 }}>-</Text>
               </View>
               <View style={{ flex: 8 }}>
-                <TextInput onFocus={this.onFocusChange} keyboardType="numeric" style={styles.inputStyle} />
+                <TextInput onFocus={this.onFocusChange} keyboardType="numeric" style={styles.inputStyle} value={this.state.maxPrice.toString()} />
               </View>
             </View>
           </View>
           <View>
             <Text style={styles.textLabel}>Minimal Pembayaran</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("min")}>
-              <Text style={{ color: "#03a9f4" }}>Check</Text>
+            <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("minBilling")}>
+              <Text style={{ color: "#03a9f4" }}>{this.state.minBilling !== 'Opsional' ? `Min. ${this.state.minBilling} bulan` : this.state.minBilling}</Text>
             </Button>
+            <Modal isVisible={this.state.modalVisible === "minBilling"} style={styles.modalContainer} propagateSwipe={true}>
+              <View style={styles.modalContent}>
+                <Appbar.Header style={styles.modalHeader}>
+                  <Appbar.Content title="Pilih Minimal Pembayaran" />
+                  <Appbar.Action icon="close" onPress={() => this.setState({ modalVisible: "" })} />
+                </Appbar.Header>
+                <ScrollView>
+                  <RadioButton.Group
+                    onValueChange={minBilling => this.setState({ minBilling })}
+                    value={this.state.minBilling}
+                  >
+                    {minBillings.map((item, index) => (
+                      <View key={index} style={styles.floatLeft}>
+                        <View style={{flex: 1}}>
+                          <Text>{(item !== "Opsional") ? `Min. ${item} bulan` : item}</Text>
+                        </View>
+                        <View style={{flex: 1, alignItems: "flex-end"}}>
+                          <RadioButton value={item} color="#03a9f4" />
+                        </View>
+                      </View>
+                    ))}
+                  </RadioButton.Group>
+                </ScrollView>
+              </View>
+            </Modal>
           </View>
-          <View>
+          <View style={{paddingBottom: 20}}>
             <Text style={styles.textLabel}>Fasilitas</Text>
             {features.map((fitur, index) => (
               <View key={index} style={styles.floatLeft}>
                 <Checkbox
-                  status="unchecked"
-                  onPress={() => { this.setState({ checked: !checked }); }}
+                  status={this.state.features[index].status ? 'checked' : 'unchecked'}
+                  onPress={() => this.handleFeaturesChange(fitur.name)}
+                  color="#03a9f4"
                 />
-                <Text style={{ paddingTop: 2 }}>{fitur.name}</Text>
+                <Text style={{ paddingTop: 8, }}>{fitur.name}</Text>
               </View>
             ))}
           </View>
@@ -126,8 +270,26 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     paddingHorizontal: 10,
-    paddingVertical: 15,
-    marginBottom: 50
+    paddingTop: 5,
+    paddingBottom: 20
+    // paddingTop: 15
+    // marginBottom: 50
+  },
+  modalContainer: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    width: width / 1.5,
+    borderRadius: 10
+  },
+  modalHeader: {
+    backgroundColor: "#fff",
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1
   },
   floatLeft: {
     flexDirection: "row"
@@ -141,7 +303,8 @@ const styles = StyleSheet.create({
   buttonInput: {
     alignItems: "flex-start",
     paddingHorizontal: 0,
-    color: "#333"
+    color: "#333",
+    flex: 1
   },
   textLabel: {
     fontSize: 12,
@@ -150,11 +313,8 @@ const styles = StyleSheet.create({
   },
   footerContainer: {
     padding: 15,
-    shadowColor: "#333",
-    shadowOpacity: 1,
-    shadowOffset: {
-      top: 2
-    },
+    borderTopColor: "#ddd",
+    borderTopWidth: 1
   },
   textUppercase: {
     textTransform: "uppercase",
