@@ -2,10 +2,33 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import Imageslider from './../components/ImageSlider';
+import ImagePicker from 'react-native-image-crop-picker'
 
 import Maps from "../components/Maps";
 
 class IklanPage extends React.Component {
+
+  state = {
+    ImageArrayFinal: null
+  }
+
+
+  handlePicker = () => ImagePicker.openPicker({
+    multiple: true
+  }).then(images => {
+    console.log(images);
+    let imgpatharray = []
+    images.map((item, index) => {
+      imgpatharray.push({src: {uri: item.path} })
+
+      this.setState({
+        ImageArrayFinal: imgpatharray
+      }) 
+    })
+
+  });
+
 
   render() {
     const { navigate } = this.props.navigation;
@@ -22,10 +45,27 @@ class IklanPage extends React.Component {
           <ScrollView>
             <Text style={styles.textLabel}>Nama Kost</Text>
             <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='Masukkan Nama Kost Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
-            
+
             <Text style={styles.textLabel}>Alamat Kost</Text>
             <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='masukkan nama jalan, kecamatan, kelurahan, dll' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3" />
-            
+
+
+
+            {
+              this.state.ImageArrayFinal && (
+                <Imageslider photos={this.state.ImageArrayFinal}/>
+              )
+            }
+
+            <TouchableOpacity onPress={this.handlePicker}>
+              <View style={{backgroundColor: '#03A9F4', flex:1, marginTop: 5, padding: 5, borderRadius: 5}}>
+                 <Text style={{color: '#fff', textAlign: 'center'}}>
+                   Pilih Foto
+                 </Text>
+              </View>
+            </TouchableOpacity>
+
+
             <Text style={styles.textLabel}>Search Alamat/area kost anda di Peta, kemudian pindahkan pin peta ke lokasi tepat kost anda</Text>
             <View style={{ position: 'relative', marginTop: 5 }}>
               <TextInput
@@ -36,7 +76,7 @@ class IklanPage extends React.Component {
 
 
             <View style={{ height: 250, backgroundColor: '#03A9F4', marginTop: 10 }}>
-              <Maps 
+              <Maps
                 region={{
                   latitude: -6.301686,
                   longitude: 106.734972,
@@ -94,8 +134,8 @@ class IklanPage extends React.Component {
 
             />
             <TouchableOpacity>
-              <View style={{backgroundColor: '#03A9F4', padding:10, margin: 10, borderRadius: 5}}>
-                    <Text style={{textAlign: 'center', color: '#fff'}}>Submit</Text>
+              <View style={{ backgroundColor: '#03A9F4', padding: 10, margin: 10, borderRadius: 5 }}>
+                <Text style={{ textAlign: 'center', color: '#fff' }}>Submit</Text>
               </View>
             </TouchableOpacity>
           </ScrollView>
