@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Appbar } from "react-native-paper";
+import { Appbar, IconButton } from "react-native-paper";
 import { Picker, Button } from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -69,8 +69,8 @@ class Booking extends Component {
 
     return (
       <View style={{flex: 1}}>
-        <Appbar.Header style={{backgroundColor: "#03a9f4", marginHorizontal: -15}}>
-          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} color="#dfdfdf" />
+        <Appbar.Header style={{backgroundColor: "#03a9f4"}}>
+          <Appbar.BackAction onPress={() => this.props.navigation.goBack()} />
           <Appbar.Content title="Booking" />
         </Appbar.Header>
         <ScrollView style={styles.mainContainer}>
@@ -105,12 +105,65 @@ class Booking extends Component {
             <View style={{flex: 4, alignContent: "stretch"}}>
               <Image
                 source={require("../../assets/images/kost1/beranda.jpg")}
-                style={{height: 80, width: 100}}
+                style={{height: 100, width: 120}}
               />
             </View>
-            <View style={{flex: 8}}>
+            <View style={{flex: 6}}>
               <Text>Kost MamiRooms Jatinangor Priwanda Sumedang</Text>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.flexLeft, {height: 30}]}>
+                  <IconButton icon="hotel" color="#03a9f4" size={20} />
+                  <IconButton icon="wifi" color="#03a9f4" size={20} />
+                  <IconButton icon="vpn-key" color="#03a9f4" size={20} />
+                  <IconButton icon="hot-tub" color="#03a9f4" size={20} />
+                <View style={styles.fiturKostContainer}>
+                </View>
+                <View style={styles.fiturKostContainer}>
+                </View>
+                <View style={styles.fiturKostContainer}>
+                </View>
+                <View style={styles.fiturKostContainer}>
+                </View>
+              </ScrollView>
               <Text style={{fontWeight: "bold", marginTop: 20}}>Rp 1.750.000 / bulan</Text>
+            </View>
+          </View>
+          <View>
+            <View style={styles.flexLeft}>
+              <View>
+                <Text style={styles.textBold}>Data pemesan</Text>
+              </View>
+            </View>
+            <View style={[styles.flexLeft, {marginVertical: 5}]}>
+              <View style={{flex: 1}}>
+                <Text>Nama</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text style={[styles.textBold, styles.textRight]}>Fajar Muttaqin</Text>
+              </View>
+            </View>
+            <View style={[styles.flexLeft, {marginVertical: 5}]}>
+              <View style={{flex: 1}}>
+                <Text>Jenis Kelamin</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text style={[styles.textBold, styles.textRight]}>Laki-laki</Text>
+              </View>
+            </View>
+            <View style={[styles.flexLeft, {marginVertical: 5}]}>
+              <View style={{flex: 1}}>
+                <Text>No. Telp</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text style={[styles.textBold, styles.textRight]}>082130128030</Text>
+              </View>
+            </View>
+            <View style={[styles.flexLeft, {marginVertical: 5}]}>
+              <View style={{flex: 1}}>
+                <Text>Pekerjaan</Text>
+              </View>
+              <View style={{flex: 1}}>
+                <Text style={[styles.textBold, styles.textRight]}>Pelajar</Text>
+              </View>
             </View>
           </View>
           { show && (
@@ -154,6 +207,12 @@ const styles = StyleSheet.create({
     borderBottomColor: "#ddd",
     borderBottomWidth: 1,
     paddingBottom: 15
+  },
+  textBold: {
+    fontWeight: "700"
+  },
+  textRight: {
+    textAlign: "right"
   },
   footerContainer: {
     paddingVertical: 10,
