@@ -1,9 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight } from "react-native";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Paragraph, Button } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
+
+import IklanKost from "../components/IklanKost";
+
+const dimensions = Dimensions.get('window');
 
 class ListItem extends React.Component {
   constructor(props) {
@@ -14,40 +18,12 @@ class ListItem extends React.Component {
     }
   }
 
-  renderItem = ({ item, index }) => {
-    const { navigate } = this.props.navigation;
-    return (
-      <View keys={index} style={styles.cardContainer}>
-        <TouchableOpacity style={{ position: 'relative' }} onPress={() => navigate('Detail')}>
-          <Image
-            source={require('../../assets/kamarkos.jpg')}
-            style={styles.imageIcon} />
-          <TouchableHighlight style={styles.starIconContainer} >
-            <View>
-              <Icon name="ios-star-outline" style={{ color: '#fff' }} size={24} />
-            </View>
-          </TouchableHighlight>
-          <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 0 }}>
-            <Text style={[styles.textDefault, {color: '#673AB7'}]}>Campur</Text>
-            <Text style={[styles.textDefault, styles.textSeparator]}>-</Text>
-            <Text style={[styles.textDefault, {color: '#4CAF50'}]}>Ada 2 Kamar</Text>
-            <Text style={[styles.textDefault, styles.textSeparator]}>-</Text>
-            <Text style={[styles.textDefault]}>Pademangan</Text>
-          </View>
-          <Text style={styles.textPrice}>Rp. 500.000</Text>
-          <Paragraph style={styles.kostName}>
-            Kost Gaby Pademangan Jakarta Utara
-          </Paragraph>
-          <View style={{ flexDirection: 'row', }}>
-            <Icon name="ios-clock" style={{ color: '#FFC107' }} size={13} />
-            <Text style={styles.textUpdated}>
-              Update 3 hari lalu
-            </Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    )
-  }
+  renderItem = ({ item, index }) => (
+    <IklanKost
+      data={item}
+      index={index}
+    />
+  )
 
   handleChangeText = (text) => {
     this.setState({
@@ -56,19 +32,7 @@ class ListItem extends React.Component {
   }
 
   render() {
-    const cars = [{
-      name: 'BMW',
-      price: 3000,
-      id: 1,
-    }, {
-      name: 'Porsche',
-      price: 1500,
-      id: 2,
-    }, {
-      name: 'Jaguar',
-      price: 300,
-      id: 3,
-    }];
+    const kosts = require('../../data/kosts.json');
     const { navigate } = this.props.navigation;
 
     return (
@@ -88,7 +52,7 @@ class ListItem extends React.Component {
         </View>
         <View style={{ flex: 1, alignItems: 'center' }}>
           <FlatList
-            data={cars}
+            data={kosts}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
@@ -143,49 +107,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff', 
     borderWidth: 1 
   },
-  imageIcon: {
-    flex: 1,
-    height: 150,
-    borderRadius: 5,
-  },
   touchable: {
     position: 'absolute',
     top:3,
     left: 15,
-  },
-  cardContainer: {
-    marginBottom: 10, 
-    marginTop: 10 
-  },
-  starIconContainer: {
-    position: 'absolute', 
-    top: 5, 
-    right: 10, 
-  },
-  textDefault: {
-    fontSize: 10,
-    color: '#BDBDBD'
-  },
-  textSeparator: {
-    marginHorizontal: 5, 
-    marginBottom: 10 
-  },
-  kostName: {
-    color: '#757575', 
-    fontSize: 10, 
-    flex: 1 
-  },
-  textPrice: {
-    fontWeight: '600', 
-    marginTop: -5, 
-    fontSize: 12 
-  },
-  textUpdated: {
-    color: '#757575', 
-    fontSize: 10, 
-    flex: 1, 
-    marginLeft: 5, 
-    paddingBottom: 5 
   },
   floatingContainer: {
     justifyContent: "center",

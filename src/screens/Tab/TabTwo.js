@@ -1,70 +1,31 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, Image, TouchableHighlight} from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, TouchableHighlight } from "react-native";
 import { Paragraph } from "react-native-paper";
 import { createBottomTabNavigator } from "react-navigation";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-
+import IklanKost from "../../components/IklanKost";
 
 class TabTwo extends React.Component {
-  renderItem = ({item, index}) => {
-    return (
-        <View key={index} style={{marginBottom: 10, marginTop: 10}}>
-            <TouchableOpacity style={{position: 'relative'}}>
-            <Image
-                        source={require('../../../assets/kamarkos.jpg')}
-                        style={styles.imageIcon} /> 
-                        <TouchableHighlight style={{position: 'absolute', top:5, right: 10,color: '#fff'}} >
-                            <View>
-                              <Icon name="ios-star-outline" style={{color: '#fff'}} size={24}/>   
-                            </View>
-                        </TouchableHighlight>
-            <View style={{flexDirection: 'row', marginTop: 5, marginBottom: 0}}>
-                <Text style={{color: '#673AB7', fontSize: 10}}>Campur</Text>
-                <Text style={{color: '#BDBDBD', fontSize: 10, marginLeft: 5, marginRight: 5, marginBottom: 10}}>-</Text>
-                <Text style={{color: '#4CAF50', fontSize: 10}}>Ada 2 Kamar</Text>
-                <Text style={{color: '#BDBDBD', fontSize: 10, marginLeft: 5, marginRight: 5, marginBottom: 10}}>-</Text>
-                <Text style={{color: '#BDBDBD', fontSize: 10}}>Pademangan</Text>
-            </View>
-            <Text style={{fontWeight: '600', marginTop: -5, fontSize:12}}>Rp. 500.000</Text>  
-            <Paragraph style={{color: '#757575', fontSize: 10, flex:1}}>
-              Kost Gaby Pademangan Jakarta Utara
-            </Paragraph>
-            <View style={{flexDirection: 'row', }}>
-                <Icon name="ios-clock" style={{color: '#FFC107'}} size={13}/>  
-                <Text style={{color: '#757575', fontSize: 10, flex:1, marginLeft: 5, paddingBottom: 5}}>
-                  Update 3 hari lalu
-                </Text> 
-            </View>                
-            </TouchableOpacity>
-        </View>
-    )
-}
-  
+  renderItem = ({ item, index }) => (
+    <IklanKost
+      data={item}
+      index={index}
+    />
+  )
+
 
   render() {
-    const cars = [{
-      name: 'BMW',
-      price: 3000,
-      id: 1,
-  }, {
-      name: 'Porsche',
-      price: 1500,
-      id: 2,
-  },{
-      name: 'Jaguar',
-      price: 300,
-      id: 3,
-  }];
+    const kosts = require('../../../data/kosts.json');
 
- 
-    return(
+    return (
       <View style={styles.containerHome}>
         <FlatList
-          data={cars}
+          data={kosts}
           showsVerticalScrollIndicator={false}
           renderItem={this.renderItem}
+          keyExtractor={(item, index) => index.toString()}
         />
       </View>
     )
@@ -74,14 +35,14 @@ class TabTwo extends React.Component {
 export default TabTwo;
 
 const styles = StyleSheet.create({
-    containerHome: {
-          flex: 1,
-          backgroundColor:'#fff',
-          alignItems: 'center',
-      },
-      imageIcon: {
-        flex:1,
-        height: 150,
-        borderRadius: 5,
-      },
-  })
+  containerHome: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  imageIcon: {
+    flex: 1,
+    height: 150,
+    borderRadius: 5,
+  },
+})
