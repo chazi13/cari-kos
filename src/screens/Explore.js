@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, Button, FlatList } from "react-native";
-import { Searchbar } from 'react-native-paper';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from "react-native";
+import { Searchbar, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from "react-navigation";
 import Cities from '../../data/kota';
@@ -60,14 +60,27 @@ class Explore extends React.Component {
             <View style={styles.cardSearch}>
               <Text style={styles.textTitleSearch}>Hai</Text>
               <Text style={styles.textTitleSearch2}>Mau Cari Kost Dimana?</Text>
-              <Searchbar
+              <Button 
+                mode="contained" 
+                icon="search" 
+                color="#fff" 
+                contentStyle={{height: 40}} 
+                style={{alignItems: "flex-start", fontWeight: "100"}}
+                uppercase={false} 
+                onPress={() => this.props.navigation.navigate('ListItem')}
+              >
+                <Text style={{fontWeight: "100", margin: 0, textAlign: "left"}}>
+                  Masukan alamat atau nama tempat
+                </Text>
+              </Button>
+              {/* <Searchbar
                 placeholder="Masukkan Alamat Atau Nama Tempat"
                 placeholderTextColor="#BDBDBD"
                 inputStyle={{ fontSize: 12, color: "#03a9f4" }}
                 style={{ height: 40 }}
                 onFocus={() => this.props.navigation.navigate('ListItem')}
                 theme={{ colors: { font: "#03a9f4" } }}
-              />
+              /> */}
             </View>
             <View style={{ height: 15, backgroundColor: '#eeeeee' }}></View>
 
