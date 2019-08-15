@@ -16,16 +16,7 @@ import ListBook from "./src/screens/listBook";
 import ListIklan from "./src/screens/listIklan";
 import KontrakSaya from "./src/screens/kontrakSaya";
 import Booking from "./src/screens/Booking";
-
-class App extends React.Component {
-  render() {
-    return(
-      <View style={styles.containerHome}>
-          <Text>Explore</Text>
-      </View>
-    )
-  }
-}
+import Filter from "./src/screens/Filter";
 
 const MainNavBottom = createBottomTabNavigator({
   Explore: {
@@ -80,6 +71,9 @@ const RootRoute = createStackNavigator(
     ListItem: {
       screen: ListItem,
     },
+    Filter: {
+      screen: Filter
+    },
     Detail: {
       screen: Detail
     },
@@ -106,13 +100,3 @@ const RootRoute = createStackNavigator(
 );
 
 export default createAppContainer(RootRoute);
-
-const styles = StyleSheet.create({
-  containerHome: {
-        flex: 1,
-        backgroundColor:'#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-})
-
