@@ -5,6 +5,8 @@ import { Picker, Button } from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import KostFeatures from "../components/KostFeatures";
+
 class Booking extends Component {
   constructor() {
     super();
@@ -65,8 +67,16 @@ class Booking extends Component {
     return day + ' ' + monthName[month] + ' ' + years;
   }
 
+  toRupiah = (number) => {
+    let rupiah = '';		
+    let revNumber = number.toString().split('').reverse().join('');
+    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
+    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+  }
+
   render() {
     const { show, date, dateDuration } = this.state;
+    const kost = this.props.navigation.getParam('kost', 'Tidak ada data kost');
 
     return (
       <View style={{flex: 1}}>
@@ -105,19 +115,25 @@ class Booking extends Component {
           <View style={[styles.detailKostContainer, styles.flexLeft]}>
             <View style={{flex: 4, alignContent: "stretch"}}>
               <Image
-                source={require("../../assets/images/kost1/beranda.jpg")}
+                source={{uri: kost.images[0]}}
                 style={{height: 100, width: 120}}
               />
             </View>
             <View style={{flex: 6}}>
-              <Text>Kost MamiRooms Jatinangor Priwanda Sumedang</Text>
-              <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.flexLeft, {height: 30}]}>
+              <Text>{kost.name}</Text>
+              <KostFeatures 
+                items={kost.features}
+                size={20}
+                style={[styles.flexLeft, {height: 30}]}
+                text={false}
+              />
+              {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.flexLeft, {height: 30}]}>
                 <IconButton icon="hotel" color="#03a9f4" size={20} />
                 <IconButton icon="wifi" color="#03a9f4" size={20} />
                 <IconButton icon="vpn-key" color="#03a9f4" size={20} />
                 <IconButton icon="hot-tub" color="#03a9f4" size={20} />
-              </ScrollView>
-              <Text style={{fontWeight: "bold", marginTop: 20}}>Rp 1.750.000 / bulan</Text>
+              </ScrollView> */}
+              <Text style={{fontWeight: "bold", marginTop: 20}}>{this.toRupiah(kost.price)} / bulan</Text>
             </View>
           </View>
           <View>

@@ -9,6 +9,14 @@ class IklanKost extends Component {
     super(props);
   }
 
+  toRupiah = (number) => {
+    let rupiah = '';		
+    let revNumber = number.toString().split('').reverse().join('');
+    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
+    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+  }
+
+
   render() {
     const { navigate } = this.props.navigation;
     const dimensions = Dimensions.get('window');
@@ -34,7 +42,7 @@ class IklanKost extends Component {
               <Text style={[styles.textDefault, styles.textSeparator]}>-</Text>
               <Text style={[styles.textDefault]}>{item.address}</Text>
             </View>
-            <Text style={styles.textPrice}>Rp. {item.price}</Text>
+            <Text style={styles.textPrice}>{this.toRupiah(item.price)}</Text>
             <Paragraph style={styles.kostName}>{item.name}</Paragraph>
             <View style={{ flexDirection: 'row', }}>
               <Icon name="ios-clock" style={{ color: '#FFC107' }} size={13} />

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FlatList, View, Text } from "react-native";
 import { IconButton } from "react-native-paper";
 
-const AllFeatures = require('../../data/fitur.json');
+const allFeatures = require('../../data/fitur.json');
 
 export default class KostFeatures extends Component {
   constructor() {
@@ -10,31 +10,35 @@ export default class KostFeatures extends Component {
   }
 
   fetchKostFeatures = () => {
-    const { features } = this.props;
+    const items = this.props.items;
     let kostFeatures = [];
     for (const fitur of allFeatures) {
-      if (features.include(fitur.name)) {
-        kostFeatures.push(fitur);
-      }
+      items.map(fiturName => {
+        if (fitur.name == fiturName) {
+          kostFeatures.push(fitur)
+        }
+      });
     }
     return kostFeatures;
   }
 
   renderKostFitur = (item, index) => (
-    <View key={index} style={this.props.itemStyle}>
-      <IconButton icon={item.icon} color="#03a9f4" size={this.props.size} />
-      <Text>{this.props.text ? item.name : ''}</Text>
+    <View keys={index} style={this.props.itemStyle}>
+      <IconButton icon={item.item.icon} color="#03a9f4" size={this.props.size} />
+      <Text>{this.props.text ? item.item.name : ''}</Text>
     </View>
   )
-
+  
   render() {
+    const features = this.fetchKostFeatures();
     return (
       <FlatList
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        data={this.fetchKostFeatures()}
+        data={features}
         renderItem={this.renderKostFitur}
         style={this.props.style}
+        keyExtractor={item => item.name}
       />
     )
   }

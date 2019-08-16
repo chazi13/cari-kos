@@ -4,7 +4,7 @@ import { Text, ScrollView, View, StyleSheet, TouchableOpacity, Dimensions, Share
 import Icon from "react-native-vector-icons";
 import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { withNavigation } from "react-navigation";
+// import { withNavigation } from "react-navigation";
 import Modal from "react-native-modal";
 
 import ImageSlider from "../components/ImageSlider";
@@ -13,24 +13,14 @@ import KostFeatures from "../components/KostFeatures";
 const { width } = Dimensions.get('window');
 
 class Detail extends Component {
-  constructor() {
-    super();
-    this.props = {
-      kost: this.props.navigation.getParam('kost', 'Data kost tidak ditemukan')
-    };
+  constructor(props) {
+    super(props);
     this.state = {
       isShowImage: true,
       isShowMaps: false,
       showImageColor: "#03A9F4",
       showMapsColor: "white",
       width: width,
-      isMapReady: false,
-      region: {
-        latitude: -6.301686,
-        longitude: 106.734972,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01
-      },
       modalVisible: ""
     }
   }
@@ -74,9 +64,11 @@ class Detail extends Component {
     })
   }
 
-  _renderShowImage = () => {
+  _renderShowImage = (images) => {
+
+    // const images = this.props.kost.images;
     let imagesArray = [];
-    this.props.kost.images.map(imgUri => {
+    images.map(imgUri => {
       imagesArray.push({
         src: {uri: imgUri}
       });
@@ -88,41 +80,32 @@ class Detail extends Component {
     )
   }
 
-  _renderShowMpas = () => {
-    const { coordinate } = this.props.kost
+  _renderShowMpas = (coordinate, placeName) => {
+    const { latitude, longitude } = coordinate
     return (
       <Maps 
         region={{
-          latitude: coordinate.latitude,
-          longitude: coordinate.longitude,
+          latitude: latitude,
+          longitude: longitude,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01
         }}
         height={200}
-        title="The kost"
+        title={placeName}
       />
     )
   }
 
-  kostFeatures = () => {
-    const allFeatures = require('../../data/fitur.json');
-    const { features } = this.props.kost;
-    let kostFeatures = [];
-    for (const fitur of allFeatures) {
-      if (features.include(fitur.name)) {
-        kostFeatures.push(fitur);
-      }
-    }
-    return kostFeatures;
+  toRupiah = (number) => {
+    let rupiah = '';		
+    let revNumber = number.toString().split('').reverse().join('');
+    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
+    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
   }
 
-  _goBack = () => {
-    alert('go back')
-  }
 
   render() {
-    const { kost } = this.props;
-    let kostFeatures = kostFeatures();
+    const kost = this.props.navigation.getParam('kost', 'Data kost tidak ditemukan');
     let {navigate, goBack} = this.props.navigation;
 
     return (
@@ -136,7 +119,7 @@ class Detail extends Component {
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.bannerSection}>
             <View style={{ flex: 4, width: this.state.width }}>
-              {this.state.isShowImage == true ? this._renderShowImage() : this._renderShowMpas()}
+              {this.state.isShowImage ? this._renderShowImage(kost.images) : this._renderShowMpas(kost.coordinate, kost.name)}
             </View>
             <View style={[styles.bannerControlContainer]}>
               <TouchableOpacity style={[styles.buttonBannerController]} onPress={this._showImage}>
@@ -181,31 +164,12 @@ class Detail extends Component {
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Fasilitas Kamar</Subheading>
             <KostFeatures 
-              features={kost.features}
+              items={kost.features}
               size={24}
               style={[styles.InfoContainer, {height: 75, marginLeft: -15}]}
+              itemStyle={styles.fiturKostContainer}
               text={true}
             />
-            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, {height: 75, marginLeft: -15}]}>
-              {kostFeatures.map((fitur) => (
-                <View style={styles.fiturKostContainer}>
-                  <IconButton icon={fitur.icon} color="#03a9f4" />
-                  <Text>{fitur.name}</Text>
-                </View>
-              ))}
-              <View style={styles.fiturKostContainer}>
-                <IconButton icon="wifi" color="#03a9f4" />
-                <Text>Wifi</Text>
-              </View>
-              <View style={styles.fiturKostContainer}>
-                <IconButton icon="vpn-key" color="#03a9f4" />
-                <Text>Akses Kunci</Text>
-              </View>
-              <View style={styles.fiturKostContainer}>
-                <IconButton icon="hot-tub" color="#03a9f4" />
-                <Text>Kamar Mandi Dalam</Text>
-              </View>
-            </ScrollView> */}
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Deskripsi Kost</Subheading>
@@ -250,13 +214,13 @@ class Detail extends Component {
         </ScrollView>
         <View style={styles.footerContainer}>
           <View style={{flex: 1, justifyContent: "center"}}>
-            <Text style={styles.price}>Rp {kost.price} / bulan</Text>
+            <Text style={styles.price}>{this.toRupiah(kost.price)} / bulan</Text>
           </View>
           <View style={[styles.bookContainer, {flex: 1}]}>
             <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]} onPress={() => this.setState({ modalVisible: "kostContact" })}>
               <Text style={{textAlign: "center", color: "#03a9f4"}}>Hubungi Kost</Text>
             </TouchableOpacity>
-            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]} onPress={() => navigate('Booking')}>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]} onPress={() => navigate('Booking', {kost: kost})}>
               <Text style={{textAlign: "center", color: "#fff"}}>Booking</Text>
             </TouchableOpacity>
             <Modal isVisible={this.state.modalVisible === "kostContact"} style={styles.modalContainer} propagateSwipe={true}>
@@ -453,7 +417,7 @@ const styles = StyleSheet.create({
     bottom: 3,
     fontSize: 16, 
     fontWeight: "600",
-    left:5,
+    left: 15,
   },
   modalContainer: {
     justifyContent: "center",
@@ -474,4 +438,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withNavigation(Detail);
+export default Detail;
