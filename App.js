@@ -18,6 +18,7 @@ import KontrakSaya from "./src/screens/kontrakSaya";
 import Booking from "./src/screens/Booking";
 import Filter from "./src/screens/Filter";
 
+console.disableYellowBox = true;
 const MainNavBottom = createBottomTabNavigator({
   Explore: {
     screen: Explore,
