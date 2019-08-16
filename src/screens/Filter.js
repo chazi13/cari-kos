@@ -82,7 +82,7 @@ class Filter extends Component {
         <ScrollView style={[styles.mainContainer]}>
           <View>
             <Text style={styles.textLabel}>Tipe Kost (Gender)</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("gender")}>
+            <Button style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("gender")}>
               <Text style={{ color: "#03a9f4" }}>{this.state.types}</Text>
             </Button>
             <Modal isVisible={this.state.modalVisible === "gender"} style={styles.modalContainer}>
@@ -132,7 +132,7 @@ class Filter extends Component {
           </View>
           <View>
             <Text style={styles.textLabel}>Jangka Waktu</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("range")}>
+            <Button style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("range")}>
               <Text style={{ color: "#03a9f4" }}>{this.state.bilingType}</Text>
             </Button>
             <Modal isVisible={this.state.modalVisible === "range"} style={styles.modalContainer}>
@@ -197,7 +197,7 @@ class Filter extends Component {
           </View>
           <View>
             <Text style={styles.textLabel}>Minimal Pembayaran</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} uppercase={false} onPress={this.showModal("minBilling")}>
+            <Button style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("minBilling")}>
               <Text style={{ color: "#03a9f4" }}>{this.state.minBilling !== 'Opsional' ? `Min. ${this.state.minBilling} bulan` : this.state.minBilling}</Text>
             </Button>
             <Modal isVisible={this.state.modalVisible === "minBilling"} style={styles.modalContainer} propagateSwipe={true}>
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 20,
     paddingBottom: 20,
-    width: width / 1.5,
+    width: width / 1.3,
     borderRadius: 10
   },
   modalHeader: {
@@ -295,6 +295,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   inputStyle: {
+    flex: 1,
     height: 40,
     backgroundColor: '#fff',
     borderBottomWidth: 1,
