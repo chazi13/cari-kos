@@ -138,7 +138,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#03A9F4',
     height: 70,
     flex: 1,
-    padding: 10,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingLeft: 25,
+    paddingRight: 25,    
     flexDirection: 'row'
   },
   cardNav: {

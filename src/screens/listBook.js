@@ -95,7 +95,7 @@ class listBook extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flex: 1, padding: 5 }}>
+        <View style={{ flex: 1, paddingLeft: 5, paddingTop:0, paddingRight: 5 }}>
           <FlatList
             data={cars}
             showsVerticalScrollIndicator={false}
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#03A9F4',
     height: 60,
-    marginBottom: 20,
+    marginBottom: 0,
     flexDirection: 'row'
   },
   seactInput: {
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   },
   imageIcon: {
     width: 100,
-    height: 100,
+    height: '100%',
     borderRadius: 2,
   },
   touchable: {

@@ -41,8 +41,8 @@ class listIklan extends React.Component {
                 </View>
 
                 <View style={styles.cardStatus}>
-                    <Text style={{fontSize: 10, textAlign: 'center', color: '#03A9F4'}}>Tunggu Konfirmasi</Text>
-                </View>                
+                  <Text style={{ fontSize: 10, textAlign: 'center', color: '#03A9F4' }}>Tunggu Konfirmasi</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -57,7 +57,7 @@ class listIklan extends React.Component {
       name: 'BMW',
       price: 3000,
       id: 1,
-    },{
+    }, {
       name: 'BMW',
       price: 3000,
       id: 2,
@@ -79,7 +79,7 @@ class listIklan extends React.Component {
     {
       name: 'Jaguar',
       price: 300,
-      id: 5,
+      id: 6,
     }];
 
     const { navigate } = this.props.navigation;
@@ -87,15 +87,15 @@ class listIklan extends React.Component {
       <View style={styles.containerHome}>
         <View style={styles.searchBar}>
           <View style={{ flex: 1, position: 'relative' }}>
-            <Text style={{color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5}}>
-               Daftar Iklan
+            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
+              Daftar Iklan
             </Text>
             <TouchableOpacity style={styles.touchable} onPress={() => navigate('Login')}>
               <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#fff' size={30}></Icon>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flex: 1, padding: 5 }}>
+        <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 0, paddingTop: 0 }}>
           <FlatList
             data={cars}
             showsVerticalScrollIndicator={false}
@@ -103,11 +103,13 @@ class listIklan extends React.Component {
           />
         </View>
 
-        <TouchableOpacity onPress={() => navigate('iklanPage')}>
-              <View style={{backgroundColor: '#03A9F4', padding:10, margin: 10, borderRadius: 5}}>
-                    <Text style={{textAlign: 'center', color: '#fff'}}>Tambah Iklan</Text>
-              </View>
-            </TouchableOpacity>
+        <View style={{width: '100%', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#bdbdbd', height: 50, borderTopLeftRadius: 2, borderTopRightRadius: 2}}>
+          <TouchableOpacity onPress={() => navigate('iklanPage')}>
+            <View style={{ backgroundColor: '#03A9F4', padding: 10, marginTop: 5, marginRight: 10, marginLeft: 10, marginBottom: 5, borderRadius: 5 }}>
+              <Text style={{ textAlign: 'center', color: '#fff' }}>Tambah Iklan</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     backgroundColor: '#03A9F4',
     height: 60,
-    marginBottom: 20,
+    marginBottom: 0,
     flexDirection: 'row'
   },
   seactInput: {
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
   },
   imageIcon: {
     width: 100,
-    height: 100,
+    height: '100%',
     borderRadius: 2,
   },
   touchable: {

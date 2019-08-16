@@ -5,9 +5,9 @@ import {
   Modal, Animated, ScrollView,
 } from 'react-native'
 
-import Message from './Message'
-import Button from './Button'
-import CancelButton from './CancelButton'
+import Message from './../style/Message'
+import Button from './../style/Button'
+import CancelButton from './../style/CancelButton'
 
 import { baseStyles, androidStyles, hairlineWidth } from './styles'
 
