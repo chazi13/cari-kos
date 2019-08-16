@@ -60,10 +60,10 @@ const options = [
     textAlign: 'left'}}>update terbaru</Text>,
   },
 ]
+
 const title = <Text style={{padding: 5, color: '#03A9F4', fontSize: 14 }}>Urutkan Dari</Text>
+
 class ListItem extends React.Component {
-
-
   state = {
     selected: 1,
   }
@@ -96,9 +96,6 @@ class ListItem extends React.Component {
     });
   }
 
-
-
-
   render() {
     const kosts = require('../../data/kosts.json');
     const { navigate } = this.props.navigation;
@@ -130,7 +127,7 @@ class ListItem extends React.Component {
         <View style={styles.floatingContainer}>
           <View style={styles.floatingSection}>
             <View style={{ borderRightColor: "#ddd", borderRightWidth: 1 }}>
-              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon={({ size, color }) => (
+              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" onPress={() => navigate('Filter')} icon={({ size, color }) => (
                 <Image
                   source={require('../../assets/images/controls.png')}
                   style={{ width: size, height: size, tintColor: color }} />

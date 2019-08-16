@@ -9,11 +9,15 @@ import Modal from "react-native-modal";
 
 import ImageSlider from "../components/ImageSlider";
 import Maps from "../components/Maps";
+import KostFeatures from "../components/KostFeatures";
 const { width } = Dimensions.get('window');
 
 class Detail extends Component {
   constructor() {
     super();
+    this.props = {
+      kost: this.props.navigation.getParam('kost', 'Data kost tidak ditemukan')
+    };
     this.state = {
       isShowImage: true,
       isShowMaps: false,
@@ -71,22 +75,26 @@ class Detail extends Component {
   }
 
   _renderShowImage = () => {
+    let imagesArray = [];
+    this.props.kost.images.map(imgUri => {
+      imagesArray.push({
+        src: {uri: imgUri}
+      });
+    })
     return (
       <ImageSlider
-        photos={[
-          {src: require("../../assets/images/kost1/beranda.jpg")},
-          {src: require("../../assets/images/kost1/kamar.jpg")},
-        ]}
+        photos={imagesArray}
       />
     )
   }
 
   _renderShowMpas = () => {
+    const { coordinate } = this.props.kost
     return (
       <Maps 
         region={{
-          latitude: -6.301686,
-          longitude: 106.734972,
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01
         }}
@@ -96,12 +104,27 @@ class Detail extends Component {
     )
   }
 
+  kostFeatures = () => {
+    const allFeatures = require('../../data/fitur.json');
+    const { features } = this.props.kost;
+    let kostFeatures = [];
+    for (const fitur of allFeatures) {
+      if (features.include(fitur.name)) {
+        kostFeatures.push(fitur);
+      }
+    }
+    return kostFeatures;
+  }
+
   _goBack = () => {
     alert('go back')
   }
 
   render() {
-    let {navigate, goBack} = this.props.navigation
+    const { kost } = this.props;
+    let kostFeatures = kostFeatures();
+    let {navigate, goBack} = this.props.navigation;
+
     return (
       <View style={{flex: 1}}>
         <Appbar.Header style={{backgroundColor: "#03a9f4"}}>
@@ -133,10 +156,10 @@ class Detail extends Component {
           <View style={[styles.InfoContainer, {marginBottom: 10}]}>
             <View style={styles.primaryInfo}>
               <View style={styles.floatLeft}>
-                <Text style={styles.category}>Putri </Text><Text> - </Text><Text style={styles.roomAvaible}>Ada 3 Kamar</Text>
+                <Text style={styles.category}>{kost.type} </Text><Text> - </Text><Text style={styles.roomAvaible}>Ada {kost.roomsAvaible} Kamar</Text>
               </View>
-              <Title style={styles.titleNormalize}>Kost MamiRooms Jatinangor Priwanda Sumedang</Title>
-              <Text style={styles.updated}>Update 10 August 2019 @ 14:32</Text>
+              <Title style={styles.titleNormalize}>{kost.name}</Title>
+              <Text style={styles.updated}>Update {kost.updated}</Text>
             </View>
             <View style={styles.premium}>
               <IconButton icon="star-border" color="#03a9f4" size={30} />
@@ -151,17 +174,25 @@ class Detail extends Component {
             <View style={[styles.floatLeft, styles.justifyCenter, {height: 50}]}>
               <IconButton icon="zoom-out-map" color="#03a9f4" size={30} style={{marginLeft: -0}} />
               <Paragraph style={{marginLeft: 10, marginTop: 12}}>
-                3.5 x 4 m
+                {kost.dimension.width} x {kost.dimension.length} m
               </Paragraph>
             </View>
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Fasilitas Kamar</Subheading>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, {height: 75, marginLeft: -15}]}>
-              <View style={styles.fiturKostContainer}>
-                <IconButton icon="hotel" color="#03a9f4" />
-                <Text>Kasur</Text>
-              </View>
+            <KostFeatures 
+              features={kost.features}
+              size={24}
+              style={[styles.InfoContainer, {height: 75, marginLeft: -15}]}
+              text={true}
+            />
+            {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, {height: 75, marginLeft: -15}]}>
+              {kostFeatures.map((fitur) => (
+                <View style={styles.fiturKostContainer}>
+                  <IconButton icon={fitur.icon} color="#03a9f4" />
+                  <Text>{fitur.name}</Text>
+                </View>
+              ))}
               <View style={styles.fiturKostContainer}>
                 <IconButton icon="wifi" color="#03a9f4" />
                 <Text>Wifi</Text>
@@ -174,11 +205,11 @@ class Detail extends Component {
                 <IconButton icon="hot-tub" color="#03a9f4" />
                 <Text>Kamar Mandi Dalam</Text>
               </View>
-            </ScrollView>
+            </ScrollView> */}
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Deskripsi Kost</Subheading>
-            <Paragraph>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sed corporis voluptatibus quasi blanditiis suscipit hic pariatur natus asperiores ullam ducimus, nam consequuntur deleniti dolorum dolores fugiat aliquam harum corrupti dolorem?</Paragraph>
+            <Paragraph>{kost.desc}</Paragraph>
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Kost Menarik Lainnya</Subheading>
@@ -219,7 +250,7 @@ class Detail extends Component {
         </ScrollView>
         <View style={styles.footerContainer}>
           <View style={{flex: 1, justifyContent: "center"}}>
-            <Text style={styles.price}>Rp 1.750.000 / bulan</Text>
+            <Text style={styles.price}>Rp {kost.price} / bulan</Text>
           </View>
           <View style={[styles.bookContainer, {flex: 1}]}>
             <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]} onPress={() => this.setState({ modalVisible: "kostContact" })}>
@@ -240,7 +271,7 @@ class Detail extends Component {
                       <Text>Nama Pemilik: </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-start"}}>
-                      <Text style={{fontWeight: "700"}}>Jhon Doe</Text>
+                      <Text style={{fontWeight: "700"}}>{kost.owner.name}</Text>
                     </View>
                   </View>
                   <View style={[styles.floatLeft]}>
@@ -248,7 +279,7 @@ class Detail extends Component {
                       <Text>Telp Pemilik: </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-start"}}>
-                      <Text style={{fontWeight: "700"}}>081231209302</Text>
+                      <Text style={{fontWeight: "700"}}>{kost.owner.phone}</Text>
                     </View>
                   </View>
                 </View>

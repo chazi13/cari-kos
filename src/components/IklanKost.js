@@ -17,7 +17,7 @@ class IklanKost extends Component {
 
     return (
       <View keys={index} style={[styles.cardContainer, { width: dimensions.width }]}>
-        <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail')}>
+        <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kost: item})}>
           <Image
             source={{ uri: item.images[0] }}
             style={styles.imageCover} />

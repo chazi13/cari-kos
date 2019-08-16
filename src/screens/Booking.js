@@ -112,18 +112,10 @@ class Booking extends Component {
             <View style={{flex: 6}}>
               <Text>Kost MamiRooms Jatinangor Priwanda Sumedang</Text>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.flexLeft, {height: 30}]}>
-                  <IconButton icon="hotel" color="#03a9f4" size={20} />
-                  <IconButton icon="wifi" color="#03a9f4" size={20} />
-                  <IconButton icon="vpn-key" color="#03a9f4" size={20} />
-                  <IconButton icon="hot-tub" color="#03a9f4" size={20} />
-                <View style={styles.fiturKostContainer}>
-                </View>
-                <View style={styles.fiturKostContainer}>
-                </View>
-                <View style={styles.fiturKostContainer}>
-                </View>
-                <View style={styles.fiturKostContainer}>
-                </View>
+                <IconButton icon="hotel" color="#03a9f4" size={20} />
+                <IconButton icon="wifi" color="#03a9f4" size={20} />
+                <IconButton icon="vpn-key" color="#03a9f4" size={20} />
+                <IconButton icon="hot-tub" color="#03a9f4" size={20} />
               </ScrollView>
               <Text style={{fontWeight: "bold", marginTop: 20}}>Rp 1.750.000 / bulan</Text>
             </View>
