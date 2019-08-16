@@ -5,27 +5,29 @@ import Icon from "react-native-vector-icons";
 import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { withNavigation } from "react-navigation";
+import Modal from "react-native-modal";
 
 import ImageSlider from "../components/ImageSlider";
 import Maps from "../components/Maps";
+const { width } = Dimensions.get('window');
 
 class Detail extends Component {
   constructor() {
     super();
-    const width = Dimensions.get('window');
     this.state = {
       isShowImage: true,
       isShowMaps: false,
       showImageColor: "#03A9F4",
       showMapsColor: "white",
-      width: width.width,
+      width: width,
       isMapReady: false,
       region: {
         latitude: -6.301686,
         longitude: 106.734972,
         latitudeDelta: 0.01,
         longitudeDelta: 0.01
-      }
+      },
+      modalVisible: ""
     }
   }
 
@@ -180,37 +182,38 @@ class Detail extends Component {
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Kost Menarik Lainnya</Subheading>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer]}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, {marginHorizontal: -15}]}>
               <TouchableOpacity  onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
-                    <View style={{flex:2}}>
-                    <Image
-                        source={require('../../assets/kamarkos.jpg')}
-                        style={styles.kostImage}/>
-                    </View>
+                    <View style={styles.kostImageContainer}>
+                      <Image
+                          source={require('../../assets/kamarkos.jpg')}
+                          style={styles.kostImage}/>
+                      </View>
                     <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity  onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
-                    <View style={{flex:2}}>
-                    <Image
-                        source={require('../../assets/kamarkos.jpg')}
-                        style={styles.kostImage}/>
-                    </View>
+                    <View style={styles.kostImageContainer}>
+                      <Image
+                          source={require('../../assets/kamarkos.jpg')}
+                          style={styles.kostImage}/>
+                      </View>
                     <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
               </TouchableOpacity>
               <TouchableOpacity  onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
-                    <View style={{flex:2}}>
-                    <Image
-                        source={require('../../assets/kamarkos.jpg')}
-                        style={styles.kostImage}/>
-                    </View>
+                    <View style={styles.kostImageContainer}>
+                      <Image
+                          source={require('../../assets/kamarkos.jpg')}
+                          style={styles.kostImage}/>
+                      </View>
                     <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
               </TouchableOpacity>
+              <View style={{width: 15}}></View>
             </ScrollView>
           </View>
         </ScrollView>
@@ -219,12 +222,38 @@ class Detail extends Component {
             <Text style={styles.price}>Rp 1.750.000 / bulan</Text>
           </View>
           <View style={[styles.bookContainer, {flex: 1}]}>
-            <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]}>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]} onPress={() => this.setState({ modalVisible: "kostContact" })}>
               <Text style={{textAlign: "center", color: "#03a9f4"}}>Hubungi Kost</Text>
             </TouchableOpacity>
             <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]} onPress={() => navigate('Booking')}>
               <Text style={{textAlign: "center", color: "#fff"}}>Booking</Text>
             </TouchableOpacity>
+            <Modal isVisible={this.state.modalVisible === "kostContact"} style={styles.modalContainer} propagateSwipe={true}>
+              <View style={styles.modalContent}>
+                <Appbar.Header style={styles.modalHeader}>
+                  <Appbar.Content title="Pemilik Kost" />
+                  <Appbar.Action icon="close" onPress={() => this.setState({ modalVisible: "" })} />
+                </Appbar.Header>
+                <View>
+                  <View style={[styles.floatLeft]}>
+                    <View style={{ flex: 1 }}>
+                      <Text>Nama Pemilik: </Text>
+                    </View>
+                    <View style={{ flex: 1, alignItems: "flex-start"}}>
+                      <Text style={{fontWeight: "700"}}>Jhon Doe</Text>
+                    </View>
+                  </View>
+                  <View style={[styles.floatLeft]}>
+                    <View style={{ flex: 1 }}>
+                      <Text>Telp Pemilik: </Text>
+                    </View>
+                    <View style={{ flex: 1, alignItems: "flex-start"}}>
+                      <Text style={{fontWeight: "700"}}>081231209302</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
         </View>
       </View>
@@ -364,9 +393,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   anotherKostContainer: {
-    height:120, 
+    marginTop: 10,
+    paddingLeft: 15,
+    elevation: 1, 
+    position: 'relative'
+  },
+  kostImageContainer: {
     width:200, 
-    marginRight: 10, 
+    height:120, 
     borderWidth:0.5, 
     borderColor:"#dddddd", 
     borderColor:10,
@@ -375,8 +409,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 1, 
-    position: 'relative'
   },
   kostImage: {
     flex:1, 
@@ -391,7 +423,24 @@ const styles = StyleSheet.create({
     fontSize: 16, 
     fontWeight: "600",
     left:5,
-  }
+  },
+  modalContainer: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    width: width / 1.5,
+    borderRadius: 10
+  },
+  modalHeader: {
+    backgroundColor: "#fff",
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1,
+    paddingHorizontal: 0
+  },
 });
 
 export default withNavigation(Detail);

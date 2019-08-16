@@ -27,7 +27,11 @@
             "Kasur", "Kamar mandi dalam", "Wifi", "AC"
         ],
         "desc": "dekat ics, ada wifi",
-        "updated": "13 August 2019 13:13"
+        "updated": "13 August 2019 13:13",
+        "owner": {
+            "name": "Jhony Thompson",
+            "phone": "081231290209"
+        }
     },
     {
         "id": 2,
@@ -55,7 +59,11 @@
             "Kasur", "Kamar mandi dalam", "Akses kunci"
         ],
         "desc": "Dekat Masjid Al-riyadh, samping toko cinoha",
-        "updated": "27 March 2019 15:57"
+        "updated": "27 March 2019 15:57",
+        "owner": {
+            "name": "Pearl Harbour",
+            "phone": "08239023019"
+        }
     },
     {
         "id": 3,
@@ -83,7 +91,11 @@
             "Kasur", "Kamar mandi dalam", "AC", "TV"
         ],
         "desc": "Tersedia kamar kos khusus putri di jl. Achmad Jais no. 42, Surabaya. Ada 2 macam kamar, yaitu: - dengan kipas angin, harga mulai rp 550000/bln - dengan ac , harga mulai rp 1100000/bln Fasilitas lengkap, aman, nyaman, bersih, bebas banjir. Sudan termasuk pam, pln, gas dapur, air minum pureit. Lokasi tepat di tengah kota, sehingga tersedia berbagai angkutan umum segala jurusan. ",
-        "updated": "14 August 2019 11:34"
+        "updated": "14 August 2019 11:34",
+        "owner": {
+            "name": "Shikada Kenji",
+            "phone": "08892019020"
+        }
     },
     {
         "id": 4,
@@ -109,7 +121,11 @@
             "Kasur", "Kamar mandi dalam", "Akses Kunci", "Wifi"
         ],
         "desc": "5 menit dari simpang lima asia afrika, masuk bisa dari lengkong besar, lengkong kecil, karapitan, atau cikawao. Posisi tengah kota bandung, tetapi di lingkungan yang tenang. ",
-        "updated": "13 August 2019 10:15"
+        "updated": "13 August 2019 10:15",
+        "owner": {
+            "name": "Santa Kamila",
+            "phone": "084190941029"
+        }
     },
     {
         "id": 5,
@@ -137,6 +153,10 @@
             "Kasur", "Akses Kunci"
         ],
         "desc": "Dekat hotel nandya, sebrangnya ada tangga sekitar 1.2m yg ada lapang, turun ke bawah terus belokan kiri pertama belok, lewat satu rumah ada pager warna coklat",
-        "updated": "12 August 2019 22:24"
+        "updated": "12 August 2019 22:24",
+        "owner": {
+            "name": "Angleina Augustin",
+            "phone": "092380473990"
+        }
     }
 ]
