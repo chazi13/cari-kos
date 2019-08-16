@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, StatusBar, FlatList } from "react-native";
 import { Searchbar, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from "react-navigation";
@@ -27,6 +27,7 @@ class Explore extends React.Component {
     const cities = Cities;
     return (
       <View style={styles.containerHome}>
+        <StatusBar backgroundColor="rgba(3, 169, 244, .8)" barStyle="dark-content" />
         <View style={styles.HeaderExplore}>
           <View style={[styles.HeaderExplore, {paddingHorizontal: 10}]}>
             <Image
