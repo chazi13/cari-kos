@@ -117,6 +117,7 @@ class Explore extends React.Component {
                       </View>
                     </View>
                   </TouchableOpacity>
+                  <View style={{width: 10}}></View>
                 </ScrollView>
               </View>
 
@@ -146,6 +147,7 @@ class Explore extends React.Component {
                   style={styles.scrollHorizon}
                   keyExtractor={(item, index) => index.toString()}
                 />
+                <View style={{width: 10}}></View>
               </View>
             </View>
 
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   scrollHorizon: {
-    marginBottom: 10,
+    marginHorizontal: -10,
     paddingHorizontal: 0
   },
   containerHome: {
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
   promoContainer: {
     height: 120,
     width: 300,
-    marginRight: 10,
+    marginLeft: 10,
     borderWidth: 0.5,
     borderColor: "#dddddd",
     borderColor: 10,
@@ -279,7 +281,7 @@ const styles = StyleSheet.create({
   popularCityContainer: {
     height: 120,
     width: 80,
-    marginRight: 10,
+    marginLeft: 10,
     borderWidth: 0.5,
     borderColor: "#dddddd",
     borderColor: 10,

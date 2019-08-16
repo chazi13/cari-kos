@@ -91,7 +91,7 @@ class Filter extends Component {
                   <Appbar.Content title="Pilih tipe kost" />
                   <Appbar.Action icon="close" onPress={() => this.setState({ modalVisible: "" })} />
                 </Appbar.Header>
-                <View style={[styles.floatLeft, { alignItems: "space-between" }]}>
+                <View style={[styles.floatLeft]}>
                   <View style={{ flex: 1 }}>
                     <Text>Campur</Text>
                   </View>
@@ -103,7 +103,7 @@ class Filter extends Component {
                     />
                   </View>
                 </View>
-                <View style={[styles.floatLeft, { alignItems: "space-between" }]}>
+                <View style={[styles.floatLeft]}>
                   <View style={{ flex: 1 }}>
                     <Text>Putra</Text>
                   </View>
@@ -115,7 +115,7 @@ class Filter extends Component {
                     />
                   </View>
                 </View>
-                <View style={[styles.floatLeft, { alignItems: "space-between" }]}>
+                <View style={[styles.floatLeft]}>
                   <View style={{ flex: 1 }}>
                     <Text>Putri</Text>
                   </View>

@@ -10,7 +10,7 @@ class Booking extends Component {
     super();
     let dateNow = new Date(Date.now());
     this.state = {
-      date: dateNow,
+      date: Date.now(),
       show: false,
       duration: 1,
       dateDuration: dateNow.setMonth(dateNow.getMonth()+1) 
@@ -41,6 +41,7 @@ class Booking extends Component {
   
   changeDateDuration = () => {
     let datePicked = new Date(this.state.date);
+    alert(datePicked);
     let duration = this.state.duration;
     let dateDuration = datePicked.setMonth(datePicked.getMonth() + duration);
 
@@ -97,7 +98,7 @@ class Booking extends Component {
               </Picker>
             </View>
             <View style={{flex: 1, paddingVertical: 10}}>
-              <Text style={styles.headingGrey}>Tanggal Masuk</Text>
+              <Text style={styles.headingGrey}>Tanggal Keluar</Text>
               <Text style={styles.dateText}>{this.formatDate(dateDuration)}</Text>
             </View>
           </View>
