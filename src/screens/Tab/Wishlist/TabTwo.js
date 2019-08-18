@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "react-navigation";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import IklanKost from "../../components/IklanKost";
+import IklanKost from "../../../components/IklanKost";
 
 class TabTwo extends React.Component {
   renderItem = ({ item, index }) => (
@@ -17,7 +17,7 @@ class TabTwo extends React.Component {
 
 
   render() {
-    const kosts = require('../../../data/kosts.json');
+    const kosts = require('../../../../data/kosts.json');
 
     return (
       <View style={styles.containerHome}>

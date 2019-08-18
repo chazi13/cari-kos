@@ -1,34 +1,31 @@
 import React from "react";
-<<<<<<< HEAD
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, StatusBar, FlatList } from "react-native";
-=======
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from "react-native";
 import AsyncStorage from '@react-native-community/async-storage'
->>>>>>> update async, usable component
 import { Searchbar, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from "react-navigation";
-import Cities from '../../data/kota';
+import Cities from '../../../data/kota';
 
 class Explore extends React.Component {
 
 
 
-  componentDidMount(){
-    this._showAsynStorage
+  componentDidMount = () => {
+    this._showAsynStorage()
   }
 
   _showAsynStorage = async () => {
     try {
       let user = await AsyncStorage.getItem('user')
-        if (user != null) {
-          let data = JSON.parse(user)
-          alert(data.email + ' ' + data.password)
-        } else {
-          alert('asyncStorage sudah kosong')
-        };
+      let data = JSON.parse(user)
+      if (data.isLogin == 1) {
+          this.props.navigation.navigate('Auth')
+      } else {
+        alert('Harap Login Untuk Menikmati')
+        this.props.navigation.navigate('Guest')
+      }
     } catch (err) {
-      alert(err)
+      this.props.navigation.navigate('Guest')
     }
 
   }
@@ -53,12 +50,12 @@ class Explore extends React.Component {
     const cities = Cities;
     return (
       <View style={styles.containerHome}>
-        <StatusBar backgroundColor="rgba(3, 169, 244, .8)" barStyle="dark-content" />
+        <StatusBar backgroundColor="rgba(3, 169, 244, 0.8)" barStyle="light-content" />
         <View style={styles.HeaderExplore}>
           <View style={[styles.HeaderExplore, {paddingHorizontal: 10}]}>
             <Image
               style={styles.imageLogo}
-              source={require('../../assets/houses.png')}
+              source={require('../../../assets/houses.png')}
             />
             <Text style={styles.textLogo}>Carikos</Text>
           </View>
@@ -119,7 +116,7 @@ class Explore extends React.Component {
                     <View style={styles.promoContainer}>
                       <View style={{ flex: 2 }}>
                         <Image
-                          source={require('../../assets/traver1.jpg')}
+                          source={require('../../../assets/traver1.jpg')}
                           style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5 }} />
                       </View>
                     </View>
@@ -129,7 +126,7 @@ class Explore extends React.Component {
                     <View style={styles.promoContainer}>
                       <View style={{ flex: 2 }}>
                         <Image
-                          source={require('../../assets/traver2.jpg')}
+                          source={require('../../../assets/traver2.jpg')}
                           style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5 }} />
                       </View>
                     </View>
@@ -139,7 +136,7 @@ class Explore extends React.Component {
                     <View style={styles.promoContainer}>
                       <View style={{ flex: 2 }}>
                         <Image
-                          source={require('../../assets/traver3.jpg')}
+                          source={require('../../../assets/traver3.jpg')}
                           style={{ flex: 1, height: null, width: null, resizeMode: 'cover', borderRadius: 5 }} />
                       </View>
                     </View>

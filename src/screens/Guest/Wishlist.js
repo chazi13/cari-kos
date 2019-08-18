@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
 import { View, StyleSheet } from "react-native";
 import { TabNavigator } from "react-navigation";
-import LoginContainer from "./LoginContainer";
-import Tab1 from './Tab/TabOne';
-import Tab2 from './Tab/TabTwo';
+import LoginContainer from "./../../components/LoginContainer";
+import Tab1 from './../Tab/Wishlist/TabOne';
+import Tab2 from './../Tab/Wishlist/TabTwo';
 
 
 class Wishlist extends React.Component {

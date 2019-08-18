@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
 
-class listBook extends React.Component {
- 
+class listIklan extends React.Component {
+
   renderItem = ({ item, index }) => {
 
     return (
@@ -16,7 +16,7 @@ class listBook extends React.Component {
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('../../assets/kamarkos.jpg')}
+                  source={require('../../../assets/kamarkos.jpg')}
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 2, padding: 5 }}>
@@ -41,8 +41,8 @@ class listBook extends React.Component {
                 </View>
 
                 <View style={styles.cardStatus}>
-                    <Text style={{fontSize: 10, textAlign: 'center', color: '#03A9F4'}}>Tunggu Konfirmasi</Text>
-                </View>                
+                  <Text style={{ fontSize: 10, textAlign: 'center', color: '#03A9F4' }}>Tunggu Konfirmasi</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -57,7 +57,7 @@ class listBook extends React.Component {
       name: 'BMW',
       price: 3000,
       id: 1,
-    },{
+    }, {
       name: 'BMW',
       price: 3000,
       id: 2,
@@ -79,35 +79,43 @@ class listBook extends React.Component {
     {
       name: 'Jaguar',
       price: 300,
-      id: 5,
+      id: 6,
     }];
-    const { navigate } = this.props.navigation;
 
+    const { navigate } = this.props.navigation;
     return (
       <View style={styles.containerHome}>
         <View style={styles.searchBar}>
           <View style={{ flex: 1, position: 'relative' }}>
-            <Text style={{color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5}}>
-              Booking
+            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
+              Daftar Iklan
             </Text>
-            <TouchableOpacity style={styles.touchable} onPress={() => navigate('Login')}>
-              <Icon style={{ textAlign: 'center', paddingTop: 1,}} name='ios-arrow-back' color='#fff' size={30}></Icon>
+            <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
+              <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#fff' size={30}></Icon>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flex: 1, paddingLeft: 5, paddingTop:0, paddingRight: 5 }}>
+        <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 0, paddingTop: 0 }}>
           <FlatList
             data={cars}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
           />
         </View>
+
+        <View style={{width: '100%', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#bdbdbd', height: 50, borderTopLeftRadius: 2, borderTopRightRadius: 2}}>
+          <TouchableOpacity onPress={() => navigate('iklanPage')}>
+            <View style={{ backgroundColor: '#03A9F4', padding: 10, marginTop: 5, marginRight: 10, marginLeft: 10, marginBottom: 5, borderRadius: 5 }}>
+              <Text style={{ textAlign: 'center', color: '#fff' }}>Tambah Iklan</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
 }
 
-export default listBook;
+export default listIklan;
 
 const styles = StyleSheet.create({
   containerHome: {

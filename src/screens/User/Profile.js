@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, TextInput } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage'
 import { createBottomTabNavigator } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -29,17 +30,33 @@ class Profile extends React.Component {
           })
         } else {
           alert('Anda Belum Login')
-          this.props.navigation.navigate('LoginModal')
         };
     } catch (err) {
-      alert('Anda Belum Login')
-      this.props.navigation.navigate('LoginModal')
+      alert(err)
+      
     }
 
   }
 
   componentDidMount = () => {
    this._showAsynStorage()
+  }
+
+  _destroyAsynStorage = async () => {
+    try {
+      let dataUser = {
+        email: '',
+        password: '',
+        isLogin: 0
+      }
+
+      let destroy =  await AsyncStorage.setItem('user', JSON.stringify(dataUser));
+      this.props.navigation.navigate('Guest')
+    
+    } catch (err) {
+      console.log(err)
+      alert('asyncStorage sudah kosong')
+    }
   }
 
 
@@ -52,7 +69,7 @@ class Profile extends React.Component {
             <View style={styles.headerProfile}>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('../../assets/profildefaultuser.png')}
+                  source={require('../../../assets/profildefaultuser.png')}
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 3, paddingTop: 3 }}>
@@ -110,7 +127,7 @@ class Profile extends React.Component {
               </View>
             </TouchableOpacity>
 
-             <TouchableOpacity>
+             <TouchableOpacity >
               <View style={styles.cardProf}>
               <Icon name="user-circle" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
               <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Verifikasi Akun</Text>
@@ -120,7 +137,7 @@ class Profile extends React.Component {
 
 
             <View style={{marginTop: 10}}>
-            <TouchableOpacity>
+            <TouchableOpacity >
               <View style={styles.cardProfbot}>
               <Icon name="wrench" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
               <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Pengaturan</Text>
@@ -128,18 +145,18 @@ class Profile extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._showAsynStorage}>
               <View style={styles.cardProfbot}>
-              <Icon name="phone-volume" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Hubungi CS</Text>
+              <Icon name="info-circle" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
+              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Show AsyncStorage</Text>
                   
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._destroyAsynStorage}>
               <View style={styles.cardProfbot}>
-              <Icon name="scroll" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Syarat dan Ketentuan</Text>
+              <Icon name="power-off" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
+              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Log Out</Text>
                   
               </View>
             </TouchableOpacity>

@@ -35,13 +35,14 @@ class Login extends Component {
     if ( email == 'lucinta' && password == 'luna') {
       let dataUser = {
         email: email,
-        password: password
+        password: password,
+        isLogin: 1
       }
   
       await AsyncStorage.setItem('user', JSON.stringify(dataUser));
       Keyboard.dismiss();
       alert('Anda Berhasil Login')
-      this.props.navigation.navigate('Login')
+      this.props.navigation.navigate('Auth')
     } else {
       this.setState({
         email: '',
@@ -70,6 +71,7 @@ class Login extends Component {
   _destroyAsynStorage = async () => {
     try {
       let destroy = await AsyncStorage.removeItem('user')
+      this.props.navigate.navigation('Guest')
     } catch (err) {
       console.log(err)
       alert('asyncStorage sudah kosong')

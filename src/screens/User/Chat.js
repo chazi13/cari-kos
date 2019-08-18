@@ -14,7 +14,7 @@ class Chat extends React.Component {
         <View style={{alignItems: 'center'}}>
         <Image
                 style={{height:50, width:50}}
-                source={require('../../assets/chat.png')}
+                source={require('../../../assets/chat.png')}
                 />
         </View>
 

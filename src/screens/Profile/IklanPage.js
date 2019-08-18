@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Button, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Imageslider from './../components/ImageSlider';
+import Imageslider from './../../components/ImageSlider';
 import ImagePicker from 'react-native-image-crop-picker'
 
-import Maps from "../components/Maps";
+import Maps from "../../components/Maps";
 
 class IklanPage extends React.Component {
 
@@ -35,7 +35,7 @@ class IklanPage extends React.Component {
     return (
       <View style={styles.containerHome}>
         <View style={styles.HeaderExplore}>
-          <TouchableOpacity style={styles.touchable} onPress={() => navigate('Main')}>
+          <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
             <Icon name="arrow-left" style={{ marginTop: 10 }} size={18} color={'#fff'}></Icon>
           </TouchableOpacity>
           <Text style={styles.textLogo}>Tambah Data Iklan</Text>

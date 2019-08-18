@@ -3,37 +3,45 @@ import { View, Text, StyleSheet } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator, createAppContainer, HeaderStyleInterpolator, createStackNavigator, createSwitchNavigator } from "react-navigation";
 
-import Explore from './src/screens/Explore';
-import Wishlist from './src/screens/Wishlist';
-import Chat from './src/screens/Chat';
-import Login from './src/screens/Auth/Login';
-import ListItem from "./src/screens/ListItem";
-import IklanPage from "./src/screens/IklanPage";
-import SignupScreen from "./src/screens/Auth/SignupScreen";
-import Detail from "./src/screens/Detail";
-import Profil from "./src/screens/Profile";
-import ListBook from "./src/screens/listBook";
-import ListIklan from "./src/screens/listIklan";
+
+// Screen Guest 
+import ExploreGuest from './src/screens/Guest/Explore';
+import ChatGuest from './src/screens/Guest/Chat';
+import WishlistGuest from './src/screens/Guest/Wishlist';
+
+
+// Screen Auth
+import ExploreAuth from './src/screens/User/Explore';
+import WishlistAuth from './src/screens/User/Wishlist';
+import ChatAuth from './src/screens/User/Chat';
+import ProfilAuth from "./src/screens/User/Profile";
+
+// Profile
+import ListBookPage from "./src/screens/Profile/listBook";
+import IklanPage from "./src/screens/Profile/IklanPage";
+import ListIklan from "./src/screens/Profile/listIklan";
 import KontrakSaya from "./src/screens/kontrakSaya";
+// Auth
+import Login from './src/screens/Auth/Login';
+import SignupScreen from "./src/screens/Auth/SignupScreen";
+
+
+// Kost
+import ListItem from "./src/screens/ListItem";
+import Detail from "./src/screens/Detail";
 import Booking from "./src/screens/Booking";
 import Filter from "./src/screens/Filter";
 
-<<<<<<< HEAD
+
+
+
 console.disableYellowBox = true;
-const MainNavBottom = createBottomTabNavigator({
-=======
-
-
-
-
-
 
 
 
 const AuthNavBottom = createBottomTabNavigator({
->>>>>>> update async, usable component
   Explore: {
-    screen: Explore,
+    screen: ExploreAuth,
     navigationOptions: {
       tabBarLabel: 'Explore',
       tabBarIcon: ({ tintColor }) => (
@@ -42,7 +50,7 @@ const AuthNavBottom = createBottomTabNavigator({
     }
   },
   Wishlist: {
-    screen: Wishlist,
+    screen: WishlistAuth,
     navigationOptions: {
       tabBarLabel: 'Wishlist',
       tabBarIcon: ({ tintColor }) => (
@@ -51,7 +59,7 @@ const AuthNavBottom = createBottomTabNavigator({
     }
   },
   Chat: {
-    screen: Chat,
+    screen: ChatAuth,
     navigationOptions: {
       tabBarLabel: 'Chat',
       tabBarIcon: ({ tintColor }) => (
@@ -59,10 +67,10 @@ const AuthNavBottom = createBottomTabNavigator({
       )
     }
   },
-  Login: {
-    screen: Profil,
+  Profil: {
+    screen: ProfilAuth,
     navigationOptions: {
-      tabBarLabel: 'Login',
+      tabBarLabel: 'Profil',
       tabBarIcon: ({ tintColor }) => (
         <Icon name="ios-person" color={tintColor} size={24} />
       )
@@ -73,7 +81,7 @@ const AuthNavBottom = createBottomTabNavigator({
 
 const GuestNavBottom = createBottomTabNavigator({
   Explore: {
-    screen: Explore,
+    screen: ExploreGuest,
     navigationOptions: {
       tabBarLabel: 'Explore',
       tabBarIcon: ({ tintColor }) => (
@@ -82,7 +90,7 @@ const GuestNavBottom = createBottomTabNavigator({
     }
   },
   Wishlist: {
-    screen: Wishlist,
+    screen: WishlistGuest,
     navigationOptions: {
       tabBarLabel: 'Wishlist',
       tabBarIcon: ({ tintColor }) => (
@@ -91,7 +99,7 @@ const GuestNavBottom = createBottomTabNavigator({
     }
   },
   Chat: {
-    screen: Chat,
+    screen: ChatGuest,
     navigationOptions: {
       tabBarLabel: 'Chat',
       tabBarIcon: ({ tintColor }) => (
@@ -137,7 +145,7 @@ const guestNav = createStackNavigator(
       screen: ListIklan
     },
     ListBookPage: {
-      screen: ListBook
+      screen: ListBookPage
     },
     kontrakSaya: {
       screen: KontrakSaya
@@ -179,7 +187,7 @@ const authNav = createStackNavigator(
       screen: ListIklan
     },
     ListBookPage: {
-      screen: ListBook
+      screen: ListBookPage
     },
     kontrakSaya: {
       screen: KontrakSaya

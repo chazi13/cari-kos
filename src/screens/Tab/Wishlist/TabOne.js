@@ -9,7 +9,7 @@ class TabOne extends React.Component {
        <View style={{alignItems: 'center'}}>
         <Image
                 style={{height:50, width:50}}
-                source={require('../../../assets/houses.png')}
+                source={require('../../../../assets/houses.png')}
                 />
         </View>
 
