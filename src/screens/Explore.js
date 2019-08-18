@@ -1,11 +1,37 @@
 import React from "react";
+<<<<<<< HEAD
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, StatusBar, FlatList } from "react-native";
+=======
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, TextInput, FlatList } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage'
+>>>>>>> update async, usable component
 import { Searchbar, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { withNavigation } from "react-navigation";
 import Cities from '../../data/kota';
 
 class Explore extends React.Component {
+
+
+
+  componentDidMount(){
+    this._showAsynStorage
+  }
+
+  _showAsynStorage = async () => {
+    try {
+      let user = await AsyncStorage.getItem('user')
+        if (user != null) {
+          let data = JSON.parse(user)
+          alert(data.email + ' ' + data.password)
+        } else {
+          alert('asyncStorage sudah kosong')
+        };
+    } catch (err) {
+      alert(err)
+    }
+
+  }
 
   _renderPopCity = ({ item, index }) => {
     return (

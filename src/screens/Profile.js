@@ -10,6 +10,39 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 class Profile extends React.Component {
 
+
+  constructor(){
+    super() 
+    this.state = {
+      username: ''
+    }
+  }
+
+  _showAsynStorage = async () => {
+    try {
+      let user = await AsyncStorage.getItem('user')
+        if (user != null) {
+          let data = JSON.parse(user)
+          alert(data.email + ' ' + data.password)
+          this.setState({
+              username : data.email
+          })
+        } else {
+          alert('Anda Belum Login')
+          this.props.navigation.navigate('LoginModal')
+        };
+    } catch (err) {
+      alert('Anda Belum Login')
+      this.props.navigation.navigate('LoginModal')
+    }
+
+  }
+
+  componentDidMount = () => {
+   this._showAsynStorage()
+  }
+
+
   render() {
     const { navigate } = this.props.navigation;
     return (
@@ -23,7 +56,7 @@ class Profile extends React.Component {
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 3, paddingTop: 3 }}>
-                <Text style={styles.namaProfil}>Ricky Ariansyah</Text>
+                <Text style={styles.namaProfil}>{this.state.username}</Text>
                 <Text style={styles.notelepon}>082310569056</Text>
               </View>
               <View style={{ flex: 1 }}>
