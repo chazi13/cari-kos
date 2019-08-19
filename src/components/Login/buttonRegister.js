@@ -8,9 +8,9 @@ export default class buttonRegister extends Component {
     render() {
         return (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                <Text style={{ color: '#aaa' }}>Sudah punya akun? </Text>
+                <Text style={{ color: '#aaa' }}>Belum Punya akun? </Text>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUpModal')}>
-                    <Text style={{ color: "#03a9f4", marginLeft: 1 }}>Login disini</Text>
+                    <Text style={{ color: "#03a9f4", marginLeft: 1 }}>Daftar disini</Text>
                 </TouchableOpacity>
             </View>
         )

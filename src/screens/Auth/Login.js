@@ -110,16 +110,10 @@ class Login extends Component {
     return (
       <ScrollView style={styles.mainContainer}>
         <HeaderLogin navigation={this.props.navigation} />
-        <View>
-          <Text>{this.state.email}</Text>
-          <Text>{this.state.password}</Text>
-        </View>
         <FormLogin _handleInputEmail={this._handleInputEmail} _handleInputPassword={this._handleInputPassword} valueInput={{email : this.state.email, password: this.state.password}} />
         <ButtonLogin _submitHandle={this._submitHandle} />
         <ButtonRegister navigation={this.props.navigation} />
-        <ButtonLogin _submitHandle={this._simpanAsynStorage} />
-        <ButtonLogin _submitHandle={this._showAsynStorage} />
-        <ButtonLogin _submitHandle={this._destroyAsynStorage} />
+        
       </ScrollView>
     )
   }

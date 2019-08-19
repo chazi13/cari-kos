@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import { ScrollView, View, Image, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
 import { Title, Button, IconButton } from "react-native-paper";
-
+import axios from 'axios'
 
 
 // import component 
 import HeaderRegister from './../../components/Register/headerRegister'
 import FormGroup from './../../components/Register/formRegister'
 import ButtonRegister from "../../components/Register/buttonRegister";
-import LinkRedirect  from "../../components/Register/linkRedirectLogin"
+import LinkRedirect from "../../components/Register/linkRedirectLogin"
 
 class SignupScreen extends Component {
   constructor() {
     super();
     this.state = {
-      nama: '',
+      fullname: '',
       email: '',
       telepon: '',
       password: ''
@@ -23,7 +23,7 @@ class SignupScreen extends Component {
 
   _handlerChangeNama = (nama) => {
     this.setState({
-      nama: nama
+      fullname: nama
     })
   }
 
@@ -45,22 +45,39 @@ class SignupScreen extends Component {
     })
   }
 
-  _submitHandler= () => {
-    alert('data = ' + this.state.nama + this.state.email + this.state.password + this.state.telepon)
+  _submitHandler = async () => {
+    let dataUser = {
+      fullname: this.state.fullname,
+      email: this.state.email,
+      phone: this.state.telepon,
+      password: this.state.password
+    }
+     await axios.post('http://192.168.0.8:3000/api/v1/register', dataUser)
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        alert('Register Berhasil')
+        this.props.navigation.navigate('Login')
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+    // alert('data = ' + this.state.nama + this.state.email + this.state.password + this.state.telepon)
   }
 
-  
+
 
   render() {
 
     return (
 
-     
+
       <ScrollView style={styles.mainContainer}>
-        <HeaderRegister navigation={this.props.navigation}/>
-        <FormGroup handlerinput={{nama : this._handlerChangeNama, password : this._handlerChangePassword,email : this._handlerChangeEmail, telepon: this._handlerChangeTelepon} }/>
-        <ButtonRegister _submitHandler={this._submitHandler}/>
-        <LinkRedirect navigation={this.props.navigation}/>
+        <HeaderRegister navigation={this.props.navigation} />
+        <FormGroup handlerinput={{ nama: this._handlerChangeNama, password: this._handlerChangePassword, email: this._handlerChangeEmail, telepon: this._handlerChangeTelepon }} />
+        <ButtonRegister _submitHandler={this._submitHandler} />
+        <LinkRedirect navigation={this.props.navigation} />
       </ScrollView>
     )
   }
@@ -71,8 +88,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20
   },
- 
-  
+
+
   floatLeft: {
     flex: 1,
     alignItems: "stretch",
