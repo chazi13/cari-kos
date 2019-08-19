@@ -22,23 +22,33 @@ class IklanKost extends Component {
     const dimensions = Dimensions.get('window');
     const item = this.props.data;
     const index = this.props.index;
+    let margin = {
+      marginBottom: 10
+    }
+
+    if (index == 4) {
+      margin = {
+        marginBottom: 100
+      }
+    }
 
     return (
-      <View keys={index} style={[styles.cardContainer, { width: dimensions.width }]}>
+      <View keys={index} style={[styles.cardContainer, margin, { width: dimensions.width,  }]}>
         <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kost: item})}>
           <Image
-            source={{ uri: item.images[0] }}
+            // source={{ uri: item.images[0] }}
+            source={{ uri: `http://192.168.0.8/cari-kost-api/${item.images.split(',')[0]}` }}
             style={styles.imageCover} />
           <TouchableHighlight style={styles.starIconContainer} >
             <View>
               <Icon name="ios-star-outline" style={{ color: '#fff' }} size={24} />
             </View>
           </TouchableHighlight>
-          <View style={{ padding: 5 }}>
+          <View style={{ padding: 10 }}>
             <View style={{ flexDirection: 'row', marginTop: 5, marginBottom: 0 }}>
               <Text style={[styles.textDefault, { color: '#673AB7' }]}>{item.type}</Text>
               <Text style={[styles.textDefault, styles.textSeparator]}>-</Text>
-              <Text style={[styles.textDefault, { color: '#4CAF50' }]}>Ada {item.roomsAvaible} Kamar</Text>
+              <Text style={[styles.textDefault, { color: '#4CAF50' }]}>Ada {item.rooms_avaible} Kamar</Text>
               <Text style={[styles.textDefault, styles.textSeparator]}>-</Text>
               <Text style={[styles.textDefault]}>{item.address}</Text>
             </View>

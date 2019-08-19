@@ -9,12 +9,12 @@ export default class formLogin extends Component {
         return (
             <View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Email / No. Telp</Text>
-                    <TextInput value={this.props.valueInput.email}onFocus={this.onFocusChange} name="email" onChangeText={this.props._handleInputEmail} style={styles.inputStyle} placeholder='Masukkan Email / No. Telp Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+                    <Text style={styles.textLabel}>Email</Text>
+                    <TextInput value={this.props.valueInput.email}onFocus={this.onFocusChange} name="email" onChangeText={this.props._handleInputEmail} style={styles.inputStyle} placeholder='Masukkan Email / No. Telp Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" autoCapitalize="none" />
                 </View>
                 <View style={styles.formGroup}>
                     <Text style={styles.textLabel}>Password</Text>
-                    <TextInput value={this.props.valueInput.password}onFocus={this.onFocusChange} name="password" onChangeText={this.props._handleInputPassword} style={styles.inputStyle} secureTextEntry={true} placeholder='*************' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+                    <TextInput value={this.props.valueInput.password}onFocus={this.onFocusChange} name="password" onChangeText={this.props._handleInputPassword} style={styles.inputStyle} secureTextEntry={true} placeholder='*************' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" autoCapitalize="none" />
                 </View>
             </View>
         )

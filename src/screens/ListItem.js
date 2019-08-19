@@ -6,6 +6,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
 import { ActionSheetCustom as ActionSheet} from './../styles/style/index'
 import IklanKost from "../components/IklanKost";
+import axios from "axios";
 
 const dimensions = Dimensions.get('window');
 const options = [
@@ -79,7 +80,8 @@ class ListItem extends React.Component {
     const city = this.props.navigation.getParam('city', '');
     this.state = {
       search: city,
-      visible: false
+      visible: false,
+      dorms: []
     }
   }
 
@@ -96,8 +98,18 @@ class ListItem extends React.Component {
     });
   }
 
+  componentDidMount = async () => {
+    await axios.get('http://192.168.0.8:3000/api/v1/dorms')
+      .then(res => {
+        this.setState({
+          dorms: res.data.data
+        });
+      });
+  }
+
   render() {
-    const kosts = require('../../data/kosts.json');
+    // const kosts = require('../../data/kosts.json');
+    const kosts = this.state.dorms;
     const { navigate } = this.props.navigation;
     const { selected } = this.state
   
