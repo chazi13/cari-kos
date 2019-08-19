@@ -115,7 +115,7 @@ class Booking extends Component {
           <View style={[styles.detailKostContainer, styles.flexLeft]}>
             <View style={{flex: 4, alignContent: "stretch"}}>
               <Image
-                source={{uri: kost.images[0]}}
+                source={{uri: `http://192.168.0.8/cari-kost-api/${kost.images.split(',')[0]}`}}
                 style={{height: 100, width: 120}}
               />
             </View>

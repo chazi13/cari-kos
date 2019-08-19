@@ -10,7 +10,7 @@ export default class KostFeatures extends Component {
   }
 
   fetchKostFeatures = () => {
-    const items = this.props.items;
+    const items = this.props.items.split(',');
     let kostFeatures = [];
     for (const fitur of allFeatures) {
       items.map(fiturName => {

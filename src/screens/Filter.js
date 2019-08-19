@@ -73,6 +73,7 @@ class Filter extends Component {
   }
 
   render() {
+    let featI = 0;
     return (
       <View style={{ flex: 1 }}>
         <Appbar.Header style={styles.headerStyle}>
@@ -82,9 +83,9 @@ class Filter extends Component {
         <ScrollView style={[styles.mainContainer]}>
           <View>
             <Text style={styles.textLabel}>Tipe Kost (Gender)</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("gender")}>
+            <TouchableOpacity style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("gender")}>
               <Text style={{ color: "#03a9f4" }}>{this.state.types}</Text>
-            </Button>
+            </TouchableOpacity>
             <Modal isVisible={this.state.modalVisible === "gender"} style={styles.modalContainer}>
               <View style={styles.modalContent}>
                 <Appbar.Header style={styles.modalHeader}>
@@ -132,9 +133,9 @@ class Filter extends Component {
           </View>
           <View>
             <Text style={styles.textLabel}>Jangka Waktu</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("range")}>
-              <Text style={{ color: "#03a9f4" }}>{this.state.bilingType}</Text>
-            </Button>
+            <TouchableOpacity style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("range")}>
+              <Text style={{ color: "#03a9f4", width }}>{this.state.bilingType}</Text>
+            </TouchableOpacity>
             <Modal isVisible={this.state.modalVisible === "range"} style={styles.modalContainer}>
               <View style={styles.modalContent}>
                 <Appbar.Header style={styles.modalHeader}>
@@ -197,9 +198,9 @@ class Filter extends Component {
           </View>
           <View>
             <Text style={styles.textLabel}>Minimal Pembayaran</Text>
-            <Button style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("minBilling")}>
-              <Text style={{ color: "#03a9f4" }}>{this.state.minBilling !== 'Opsional' ? `Min. ${this.state.minBilling} bulan` : this.state.minBilling}</Text>
-            </Button>
+            <TouchableOpacity style={[styles.inputStyle, styles.buttonInput]} color="#03a9f4" uppercase={false} onPress={this.showModal("minBilling")}>
+              <Text style={{ color: "#03a9f4", width }}>{this.state.minBilling !== 'Opsional' ? `Min. ${this.state.minBilling} bulan` : this.state.minBilling}</Text>
+            </TouchableOpacity>
             <Modal isVisible={this.state.modalVisible === "minBilling"} style={styles.modalContainer} propagateSwipe={true}>
               <View style={styles.modalContent}>
                 <Appbar.Header style={styles.modalHeader}>
@@ -302,10 +303,10 @@ const styles = StyleSheet.create({
     borderBottomColor: '#03A9F4',
   },
   buttonInput: {
-    alignItems: "flex-start",
+    paddingTop: 10,
     paddingHorizontal: 0,
     color: "#333",
-    flex: 1
+    flex: 1,
   },
   textLabel: {
     fontSize: 12,

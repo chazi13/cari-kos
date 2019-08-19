@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Text, ScrollView, View, StyleSheet, TouchableOpacity, Dimensions, Share, Image } from "react-native";
+import axios from "axios";
 
 import Icon from "react-native-vector-icons";
 import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
@@ -21,7 +22,9 @@ class Detail extends Component {
       showImageColor: "#03A9F4",
       showMapsColor: "white",
       width: width,
-      modalVisible: ""
+      modalVisible: "",
+      loading: true,
+      kost: []
     }
   }
 
@@ -65,12 +68,12 @@ class Detail extends Component {
   }
 
   _renderShowImage = (images) => {
-
+    images = images.split(',');
     // const images = this.props.kost.images;
     let imagesArray = [];
     images.map(imgUri => {
       imagesArray.push({
-        src: {uri: imgUri}
+        src: {uri: `http://192.168.0.8/cari-kost-api/${imgUri}`}
       });
     })
     return (
@@ -103,10 +106,33 @@ class Detail extends Component {
     return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
   }
 
+  componentDidMount = () => {
+    const id = this.props.navigation.getParam('kostId');
+    axios.get(`http://192.168.0.8:3000/api/v1/dorms/${id}`)
+    .then(res => {
+      this.setState({
+        kost: res.data.data,
+        loading: false
+      })
+    });
+  }
+
 
   render() {
-    const kost = this.props.navigation.getParam('kost', 'Data kost tidak ditemukan');
     let {navigate, goBack} = this.props.navigation;
+    const kost = this.state.kost;
+    // const kost = getParam('kost');
+    // const kost = require('../../data/kosts.json')[0];
+    // const kost = this.getDataKost();
+    // alert(kost.name);
+    // alert(this.state.loading);
+    if (this.state.loading) {
+      return (
+        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+          <Text style={{color: '#03a9f4'}}>Harap Tunggu</Text>
+        </View>
+      )
+    }
 
     return (
       <View style={{flex: 1}}>
@@ -119,7 +145,7 @@ class Detail extends Component {
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.bannerSection}>
             <View style={{ flex: 4, width: this.state.width }}>
-              {this.state.isShowImage ? this._renderShowImage(kost.images) : this._renderShowMpas(kost.coordinate, kost.name)}
+              {this.state.isShowImage ? this._renderShowImage(kost.images) : this._renderShowMpas(kost, kost.name)}
             </View>
             <View style={[styles.bannerControlContainer]}>
               <TouchableOpacity style={[styles.buttonBannerController]} onPress={this._showImage}>
@@ -157,7 +183,7 @@ class Detail extends Component {
             <View style={[styles.floatLeft, styles.justifyCenter, {height: 50}]}>
               <IconButton icon="zoom-out-map" color="#03a9f4" size={30} style={{marginLeft: -0}} />
               <Paragraph style={{marginLeft: 10, marginTop: 12}}>
-                {kost.dimension.width} x {kost.dimension.length} m
+                {kost.width} x {kost.length} m
               </Paragraph>
             </View>
           </View>
@@ -235,7 +261,7 @@ class Detail extends Component {
                       <Text>Nama Pemilik: </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-start"}}>
-                      <Text style={{fontWeight: "700"}}>{kost.owner.name}</Text>
+                      {/* <Text style={{fontWeight: "700"}}>{kost.owner.name}</Text> */}
                     </View>
                   </View>
                   <View style={[styles.floatLeft]}>
@@ -243,7 +269,7 @@ class Detail extends Component {
                       <Text>Telp Pemilik: </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-start"}}>
-                      <Text style={{fontWeight: "700"}}>{kost.owner.phone}</Text>
+                      {/* <Text style={{fontWeight: "700"}}>{kost.owner.phone}</Text> */}
                     </View>
                   </View>
                 </View>

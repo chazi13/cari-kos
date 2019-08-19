@@ -8,6 +8,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import IklanKost from "../../../components/IklanKost";
 
 class TabTwo extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      dorms: []
+    }
+  }
+
   renderItem = ({ item, index }) => (
     <IklanKost
       data={item}
@@ -15,9 +22,17 @@ class TabTwo extends React.Component {
     />
   )
 
+  componentDidMount = async () => {
+    await axios.get('http://192.168.0.8:3000/api/v1/dorms')
+      .then(res => {
+        this.setState({
+          dorms: res.data.data
+        });
+      });
+  }
 
   render() {
-    const kosts = require('../../../../data/kosts.json');
+    const kosts = this.state.dorms;
 
     return (
       <View style={styles.containerHome}>

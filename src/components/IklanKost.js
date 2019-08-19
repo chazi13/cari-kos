@@ -34,7 +34,7 @@ class IklanKost extends Component {
 
     return (
       <View keys={index} style={[styles.cardContainer, margin, { width: dimensions.width,  }]}>
-        <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kost: item})}>
+        <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kostId: item.id})}>
           <Image
             // source={{ uri: item.images[0] }}
             source={{ uri: `http://192.168.0.8/cari-kost-api/${item.images.split(',')[0]}` }}
