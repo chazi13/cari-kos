@@ -24,7 +24,7 @@ class Profile extends React.Component {
       let user = await AsyncStorage.getItem('user')
         if (user != null) {
           let data = JSON.parse(user)
-          alert(data.email + ' ' + data.password)
+          // alert(data.email + ' ' + data.password)
           this.setState({
               username : data.email
           })
@@ -44,13 +44,13 @@ class Profile extends React.Component {
 
   _destroyAsynStorage = async () => {
     try {
-      let dataUser = {
-        email: '',
-        password: '',
-        isLogin: 0
-      }
-
-      let destroy =  await AsyncStorage.setItem('user', JSON.stringify(dataUser));
+      // let dataUser = {
+      //   email: '',
+      //   password: '',
+      //   isLogin: 0
+      // }
+      await AsyncStorage.setItem('token', '');
+      alert('Terima kasih');
       this.props.navigation.navigate('Guest')
     
     } catch (err) {

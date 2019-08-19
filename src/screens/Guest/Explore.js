@@ -16,12 +16,11 @@ class Explore extends React.Component {
 
   _showAsynStorage = async () => {
     try {
-      let user = await AsyncStorage.getItem('user')
-      let data = JSON.parse(user)
-      if (data.isLogin == 1) {
+      let token = await AsyncStorage.getItem('token');
+      if (token) {
           this.props.navigation.navigate('Auth')
       } else {
-        alert('Harap Login Untuk Menikmati')
+        // alert('Harap Login Untuk Menikmati')
         this.props.navigation.navigate('Guest')
       }
     } catch (err) {
@@ -57,7 +56,7 @@ class Explore extends React.Component {
               style={styles.imageLogo}
               source={require('../../../assets/houses.png')}
             />
-            <Text style={styles.textLogo}>Carikos</Text>
+            <Text style={styles.textLogo}>Kostkita.com</Text>
           </View>
           <View style={styles.rowLayout}>
             <TouchableOpacity style={styles.touchable}>
