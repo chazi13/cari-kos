@@ -83,6 +83,10 @@ class Detail extends Component {
     )
   }
 
+  changeRegion = () => {
+    console.log('asd');
+  }
+
   _renderShowMpas = (coordinate, placeName) => {
     const { latitude, longitude } = coordinate
     return (
@@ -95,6 +99,7 @@ class Detail extends Component {
         }}
         height={200}
         title={placeName}
+        changeRegion={this.changeRegion}
       />
     )
   }
@@ -145,7 +150,7 @@ class Detail extends Component {
         <ScrollView style={styles.scrollContainer}>
           <View style={styles.bannerSection}>
             <View style={{ flex: 4, width: this.state.width }}>
-              {this.state.isShowImage ? this._renderShowImage(kost.images) : this._renderShowMpas(kost, kost.name)}
+              {this.state.isShowImage ? this._renderShowImage(kost.images) : this._renderShowMpas(kost, kost.full_adress)}
             </View>
             <View style={[styles.bannerControlContainer]}>
               <TouchableOpacity style={[styles.buttonBannerController]} onPress={this._showImage}>

@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
           justifyContent: 'center',
       },
       HeaderExplore: {
-        padding: 5,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
         flexDirection: 'row',
         flex: 1,
         height: 50,

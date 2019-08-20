@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, FlatList } from "react-native";
 import { Appbar, Button, Checkbox, RadioButton } from "react-native-paper";
 import Modal from "react-native-modal";
 
@@ -13,10 +13,12 @@ for (let i = 2; i < 13; i++) {
 class Filter extends Component {
   constructor() {
     super();
-    featuresWithStatus = [];
+
+    let featuresWithStatus = [];
     features.map((fitur, index) => {
       featuresWithStatus.push({...fitur, status: false});
-    })
+    });
+
     this.state = {
       modalVisible: "",
       types: "Campur",
@@ -62,6 +64,21 @@ class Filter extends Component {
     });
   }
 
+  handleChangePriceRange = (value, name) => {
+    // alert(name);
+    this.setState({
+      [name]: value
+    });
+  }
+
+  toRupiah = (number) => {
+    number = number.toString().replace('.', '');
+    let rupiah = '';
+    let revNumber = number.split('').reverse().join('');
+    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
+    return rupiah.split('',rupiah.length-1).reverse().join('');
+  }
+ 
   fetchingGender = () => {
     let types = "";
     this.state.gender.map((item) => {
@@ -70,6 +87,32 @@ class Filter extends Component {
       }
     });
     this.setState({ types })
+  }
+
+  resetField = () => {
+    let featuresWithStatus = [];
+    features.map((fitur, index) => {
+      featuresWithStatus.push({...fitur, status: false});
+    });
+
+    this.setState({
+      modalVisible: "",
+      types: "Campur",
+      gender: [
+        { type: "Campur", status: true },
+        { type: "Putra", status: false },
+        { type: "Putri", status: false }
+      ],
+      bilingType: "Bulanan",
+      minPrice: 1000000,
+      maxPrice: 20000000,
+      features: featuresWithStatus,
+      minBilling: "Opsional"
+    });
+  }
+
+  find = () => {
+    this.props.navigation.navigate('ListItem', {filter: this.state});
   }
 
   render() {
@@ -186,13 +229,23 @@ class Filter extends Component {
             <Text style={styles.textLabel}>Harga</Text>
             <View style={styles.floatLeft}>
               <View style={{ flex: 8 }}>
-                <TextInput onFocus={this.onFocusChange} keyboardType="numeric" style={styles.inputStyle} value={this.state.minPrice.toString()} />
+                <TextInput 
+                  keyboardType="numeric" 
+                  style={styles.inputStyle} 
+                  value={this.toRupiah(this.state.minPrice)} 
+                  onChangeText={value => this.handleChangePriceRange(value, 'minPrice')}
+                />
               </View>
               <View style={{ flex: 1 }}>
                 <Text style={{ fontSize: 30, textAlign: "center", marginTop: 5 }}>-</Text>
               </View>
               <View style={{ flex: 8 }}>
-                <TextInput onFocus={this.onFocusChange} keyboardType="numeric" style={styles.inputStyle} value={this.state.maxPrice.toString()} />
+                <TextInput 
+                  keyboardType="numeric" 
+                  style={styles.inputStyle} 
+                  value={this.toRupiah(this.state.maxPrice)} 
+                  onChangeText={value => this.handleChangePriceRange(value, 'maxPrice')}
+                />
               </View>
             </View>
           </View>
@@ -229,6 +282,7 @@ class Filter extends Component {
           </View>
           <View style={{paddingBottom: 20}}>
             <Text style={styles.textLabel}>Fasilitas</Text>
+            {/* <FlatList></FlatList> */}
             {features.map((fitur, index) => (
               <View key={index} style={styles.floatLeft}>
                 <Checkbox
@@ -243,17 +297,12 @@ class Filter extends Component {
         </ScrollView>
         <View style={[styles.footerContainer, styles.floatLeft]}>
           <View style={{ flex: 1 }}>
-            <TouchableOpacity>
-              <Text style={styles.textUppercase}>Simpan</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.resetField}>
               <Text style={styles.textUppercase}>Reset</Text>
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1 }}>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.find}>
               <Text style={[styles.textUppercase, { color: "#03a9f4" }]}>Cari</Text>
             </TouchableOpacity>
           </View>

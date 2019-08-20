@@ -81,7 +81,8 @@ class ListItem extends React.Component {
     this.state = {
       search: city,
       visible: false,
-      dorms: []
+      dorms: [],
+      isAutoFocus: city == '' ? true : false,
     }
   }
 
@@ -102,7 +103,8 @@ class ListItem extends React.Component {
     await axios.get('http://192.168.0.8:3000/api/v1/dorms')
       .then(res => {
         this.setState({
-          dorms: res.data.data
+          dorms: res.data.data,
+          isLoading: false
         });
       });
   }
@@ -121,7 +123,7 @@ class ListItem extends React.Component {
               style={styles.seactInput}
               value={this.state.search}
               onChangeText={this.handleChangeText}
-              autoFocus={true}
+              autoFocus={this.state.isAutoFocus}
             />
             <TouchableOpacity style={styles.touchable} onPress={() => navigate('Main')}>
               <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#03A9F4' size={30}></Icon>

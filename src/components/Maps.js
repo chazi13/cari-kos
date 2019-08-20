@@ -28,11 +28,13 @@ export default class Maps extends Component {
           showsPointsOfInterest
           showsBuildings
           region={this.props.region}
+          onRegionChangeComplete={this.props.changeRegion}
           onLayout={this.onMapsShow}
 				>
 					{this.state.isMarkerShow && (
 						<MapView.Marker
-							title={this.props.title}
+              title={this.props.title}
+              
 							coordinate={{
 								latitude: this.props.region.latitude,
 								longitude: this.props.region.longitude
