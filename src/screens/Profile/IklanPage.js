@@ -4,13 +4,99 @@ import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Imageslider from './../../components/ImageSlider';
 import ImagePicker from 'react-native-image-crop-picker'
-
+import AsyncStorage from '@react-native-community/async-storage'
 import Maps from "../../components/Maps";
+import axios from 'axios'
 
+// import Component 
+import TextInputIklan from './../../components/TextInput/TextInputIklan'
+import LabelIklan from './../../components/Label/LabelFormIklan'
 class IklanPage extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      name: '',
+      type: '',
+      rooms_available: '',
+      address: '',
+      full_address: '',
+      latitude: '',
+      longitude: '',
+      price: '',
+      width: '',
+      length: '',
+      features: '',
+      city: '',
+      desc: '',
+      images: '',
+      owner: '',
+      ImageArrayFinal: null,
+      jwt: undefined,
+    }
+  }
 
-  state = {
-    ImageArrayFinal: null
+
+
+  componentDidMount() {
+    this._showAsynStorage()
+  }
+
+  //get JWT
+  _showAsynStorage = async () => {
+    try {
+      let user = await AsyncStorage.getItem('token')
+      if (user != null) {
+        this.setState({
+          jwt: user
+        })
+        alert('Bearer ' + JSON.parse(user))
+      } else {
+        alert('asyncStorage sudah kosong')
+      };
+    } catch (err) {
+      alert(err)
+    }
+
+  }
+
+
+
+  _handleSimpan = async () => {
+    
+
+    let jwt = JSON.parse(this.state.jwt)
+    let datakost = {
+      name: this.state.name,
+      // type: DataTypes.ENUM('Campur', 'Putra', 'Putri'),
+      rooms_avaible: this.state.rooms_available,
+      // address: DataTypes.STRING,
+      full_address: this.state.full_address,
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      price: this.state.price,
+      width: this.state.width,
+      lenght: this.state.length,
+      // features: DataTypes.STRING,
+      city: this.state.city,
+      desc: this.state.desc,
+      // images: DataTypes.STRING,
+    }
+
+    datakost = JSON.stringify(datakost)
+
+
+    await axios.post('http://192.168.0.8:3000/api/v1/dorms', datakost, { headers: { 'Authorization': 'Bearer ' + jwt,  "Content-Type": "application/json" } })
+      .then(function (response) {
+        // handle success
+        console.log(response);
+        alert('Input Data Kost Berhasil')
+        this.props.navigation.goBack()
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        alert(this.state.jwt)
+      })
   }
 
 
@@ -20,14 +106,25 @@ class IklanPage extends React.Component {
     console.log(images);
     let imgpatharray = []
     images.map((item, index) => {
-      imgpatharray.push({src: {uri: item.path} })
+      imgpatharray.push({ src: { uri: item.path } })
 
       this.setState({
         ImageArrayFinal: imgpatharray
-      }) 
+      })
     })
 
   });
+
+  _handleChange = (nama) => {
+    return (text) => {
+      this.setState({
+        [nama]: text
+      })
+    }
+  }
+
+
+
 
 
   render() {
@@ -43,24 +140,37 @@ class IklanPage extends React.Component {
 
         <View style={styles.formIklan}>
           <ScrollView>
-            <Text style={styles.textLabel}>Nama Kost</Text>
-            <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='Masukkan Nama Kost Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
+            <Text>{this.state.name}</Text>
+            <Text>{this.state.full_address}</Text>
 
-            <Text style={styles.textLabel}>Alamat Kost</Text>
-            <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} placeholder='masukkan nama jalan, kecamatan, kelurahan, dll' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3" />
+            {/* Nama Kost */}
+            <LabelIklan label="Nama Kost" />
+            <TextInputIklan namaValue="name" _handleChange={this._handleChange} placeholderEdit="Masukkan Nama Kost Disini" />
+
+            {/* Alamat Kost */}
+            <LabelIklan label="Alamat Kost" />
+            <TextInputIklan namaValue="full_address" _handleChange={this._handleChange} placeholderEdit="Masukkan Alamat Disini (contoh : nama jalan, kelurahan, kecamatan)" />
 
 
-
+            <TouchableOpacity onPress={this._showAsynStorage}>
+              <View style={{ backgroundColor: '#03A9F4', flex: 1, marginTop: 5, padding: 5, borderRadius: 5 }}>
+                <Text style={{ color: '#fff', textAlign: 'center' }}>
+                 show token
+                 </Text>
+              </View>
+            </TouchableOpacity>
             {
               this.state.ImageArrayFinal && (
-                <Imageslider photos={this.state.ImageArrayFinal}/>
+                <Imageslider photos={this.state.ImageArrayFinal} />
               )
             }
 
+
+
             <TouchableOpacity onPress={this.handlePicker}>
-              <View style={{backgroundColor: '#03A9F4', flex:1, marginTop: 5, padding: 5, borderRadius: 5}}>
-                 <Text style={{color: '#fff', textAlign: 'center'}}>
-                   Pilih Foto
+              <View style={{ backgroundColor: '#03A9F4', flex: 1, marginTop: 5, padding: 5, borderRadius: 5 }}>
+                <Text style={{ color: '#fff', textAlign: 'center' }}>
+                  Pilih Foto
                  </Text>
               </View>
             </TouchableOpacity>
@@ -91,49 +201,42 @@ class IklanPage extends React.Component {
 
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, }}>
-                <Text style={styles.textLabel}>Masukkan Latitude</Text>
-                <TextInput
-                  style={styles.inputStyle} placeholder='Latitude' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
-                />
+                <LabelIklan label="Masukkan Latitude" />
+                <TextInputIklan namaValue="latitude" _handleChange={this._handleChange} placeholderEdit="Latitude" />
               </View>
 
               <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, }}>
-                <Text style={styles.textLabel}>Masukkan Longitude</Text>
-                <TextInput
-                  style={styles.inputStyle} placeholder='Longitude' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
-                />
+                <LabelIklan label="Masukkan Longitude" />
+                <TextInputIklan namaValue="longitude" _handleChange={this._handleChange} placeholderEdit="Longitude" />
               </View>
             </View>
 
+            <View style={{ flexDirection: 'row' }}>
+              <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, }}>
+                <LabelIklan label="Lebar Ruangan" />
+                <TextInputIklan namaValue="width" _handleChange={this._handleChange} placeholderEdit="Lebar Ruangan" />
+              </View>
 
-            <Text style={styles.textLabel}>Pemilik Kost</Text>
-            <TextInput
+              <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, }}>
+                <LabelIklan label="Panjang Ruangan" />
+                <TextInputIklan namaValue="length" _handleChange={this._handleChange} placeholderEdit="Panjang Ruangan" />
+              </View>
+            </View>
 
-              style={styles.inputStyle} placeholder='Nama Pemilik Kost' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
+            <LabelIklan label="Jumlah Ruangan" />
+            <TextInputIklan namaValue="rooms_available" _handleChange={this._handleChange} placeholderEdit="Masukkan Alamat Disini (contoh : nama jalan, kelurahan, kecamatan)" />
 
-            />
+            <LabelIklan label="Harga" />
+            <TextInputIklan namaValue="price" _handleChange={this._handleChange} placeholderEdit="Masukkan Alamat Disini (contoh : nama jalan, kelurahan, kecamatan)" />
 
-            <Text style={styles.textLabel}>Nomor Handphone Pemilik Kost</Text>
-            <TextInput
-              onFocus={this.onFocusChange}
-              style={styles.inputStyle} placeholder='Nomor Handphone Pemilik Kost' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
+            <LabelIklan label="kota" />
+            <TextInputIklan namaValue="city" _handleChange={this._handleChange} placeholderEdit="Masukkan Alamat Disini (contoh : nama jalan, kelurahan, kecamatan)" />
 
-            />
+            <LabelIklan label="Deskripsi" />
+            <TextInputIklan namaValue="desc" _handleChange={this._handleChange} placeholderEdit="Masukkan Alamat Disini (contoh : nama jalan, kelurahan, kecamatan)" />
 
-            <Text style={styles.textLabel}>Pengelola Kost</Text>
-            <TextInput
 
-              style={styles.inputStyle} placeholder='Pemilik Kost' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
-
-            />
-
-            <Text style={styles.textLabel}>Nomor Handphone Pengelola Kost</Text>
-            <TextInput
-
-              style={styles.inputStyle} placeholder='Nomor Handphone pengelola kost' underlineColor="#03A9F4" underlineColorAndroid="#03A9F4" selectionColor="#03A9F4" placeholderTextColor="#D3D3D3"
-
-            />
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this._handleSimpan}>
               <View style={{ backgroundColor: '#03A9F4', padding: 10, margin: 10, borderRadius: 5 }}>
                 <Text style={{ textAlign: 'center', color: '#fff' }}>Submit</Text>
               </View>
