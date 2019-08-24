@@ -25,8 +25,8 @@ class IklanKost extends Component {
     let margin = {
       marginBottom: 10
     }
-
-    if (index == 4) {
+    alert(this.props.count);
+    if (index == (this.props.count-1)) {
       margin = {
         marginBottom: 100
       }

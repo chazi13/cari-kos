@@ -67,6 +67,7 @@ const title = <Text style={{padding: 5, color: '#03A9F4', fontSize: 14 }}>Urutka
 class ListItem extends React.Component {
   state = {
     selected: 1,
+    dormsCounter: 0
   }
 
   showActionSheet = () => this.actionSheet.show()
@@ -88,6 +89,7 @@ class ListItem extends React.Component {
 
   renderItem = ({ item, index }) => (
     <IklanKost
+      count={this.state.dorms.lenght}
       data={item}
       index={index}
     />
@@ -113,7 +115,8 @@ class ListItem extends React.Component {
     // const kosts = require('../../data/kosts.json');
     const kosts = this.state.dorms;
     const { navigate } = this.props.navigation;
-    const { selected } = this.state
+
+    alert(kosts.lenght);
   
     return (
       <View style={styles.containerHome}>
@@ -136,6 +139,7 @@ class ListItem extends React.Component {
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
+            ListFooterComponent={() => (<View style={{height: 50}}></View>)}
           />
         </View>
         <View style={styles.floatingContainer}>
