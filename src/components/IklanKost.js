@@ -25,7 +25,7 @@ class IklanKost extends Component {
     let margin = {
       marginBottom: 10
     }
-    alert(this.props.count);
+    // alert(this.props.count);
     if (index == (this.props.count-1)) {
       margin = {
         marginBottom: 100
@@ -37,7 +37,7 @@ class IklanKost extends Component {
         <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kostId: item.id})}>
           <Image
             // source={{ uri: item.images[0] }}
-            source={{ uri: `http://192.168.0.8/cari-kost-api/${item.images.split(',')[0]}` }}
+            source={{ uri: `http://192.168.1.31:3000/${item.images.split(',')[0]}` }}
             style={styles.imageCover} />
           <TouchableHighlight style={styles.starIconContainer} >
             <View>

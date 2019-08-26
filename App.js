@@ -2,6 +2,12 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator, createAppContainer, HeaderStyleInterpolator, createStackNavigator, createSwitchNavigator } from "react-navigation";
+import {Provider} from 'react-redux'
+import store from './src/_redux/store'
+
+
+
+
 
 
 // Screen Guest 
@@ -204,7 +210,7 @@ const authNav = createStackNavigator(
 
 
 
-const mainNav = createSwitchNavigator({
+const MainNav = createAppContainer(createSwitchNavigator({
   // Navigation Guest
   Guest: {
     screen: guestNav
@@ -214,6 +220,15 @@ const mainNav = createSwitchNavigator({
     screen: authNav
   }
 })
+)
 
 
-export default createAppContainer(mainNav);
+
+const App = () => {
+  return (
+    <Provider store={store}>
+       <MainNav/>
+    </Provider>
+  )
+}
+export default App

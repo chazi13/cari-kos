@@ -7,6 +7,9 @@ import { withNavigation } from "react-navigation";
 import { ActionSheetCustom as ActionSheet} from './../styles/style/index'
 import IklanKost from "../components/IklanKost";
 import axios from "axios";
+import { connect } from 'react-redux';
+import {getDorms} from './../_actions/dorms'
+
 
 const dimensions = Dimensions.get('window');
 const options = [
@@ -89,7 +92,7 @@ class ListItem extends React.Component {
 
   renderItem = ({ item, index }) => (
     <IklanKost
-      count={this.state.dorms.lenght}
+      // count={this.state.dorms.lenght}
       data={item}
       index={index}
     />
@@ -102,13 +105,14 @@ class ListItem extends React.Component {
   }
 
   componentDidMount = async () => {
-    await axios.get('http://192.168.0.8:3000/api/v1/dorms')
-      .then(res => {
-        this.setState({
-          dorms: res.data.data,
-          isLoading: false
-        });
-      });
+    // await axios.get('http://192.168.0.8:3000/api/v1/dorms')
+    //   .then(res => {
+    //     this.setState({
+    //       dorms: res.data.data,
+    //       isLoading: false
+    //     });
+    //   })
+    this.props.dispatch(getDorms())
   }
 
   render() {
@@ -116,7 +120,8 @@ class ListItem extends React.Component {
     const kosts = this.state.dorms;
     const { navigate } = this.props.navigation;
 
-    alert(kosts.lenght);
+    // alert(kosts.lenght);
+    console.log(this.props.dorms.isLoading)
   
     return (
       <View style={styles.containerHome}>
@@ -135,12 +140,16 @@ class ListItem extends React.Component {
         </View>
         <View style={{ flex: 1, alignItems: 'center', }}>
           <FlatList
-            data={kosts}
+            // data={kosts}
+            data={this.props.dorms.dataDorms}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
             ListFooterComponent={() => (<View style={{height: 50}}></View>)}
           />
+
+        <Text>{this.props.dorms.isLoading}</Text> 
+        {this.props.dorms.isLoading == true && <Text>Loading...</Text>}
         </View>
         <View style={styles.floatingContainer}>
           <View style={styles.floatingSection}>
@@ -174,7 +183,13 @@ class ListItem extends React.Component {
   }
 }
 
-export default withNavigation(ListItem);
+const mapStateToProps = (state) => {
+  return {
+    dorms: state.dorms
+  }
+}
+
+export default connect(mapStateToProps)(ListItem);
 
 const styles = StyleSheet.create({
   containerHome: {
