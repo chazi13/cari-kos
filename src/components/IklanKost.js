@@ -3,6 +3,7 @@ import { View, TouchableOpacity, TouchableHighlight, Dimensions, Image, Text, St
 import { Paragraph } from "react-native-paper";
 import Icon from "react-native-vector-icons/Ionicons";
 import { withNavigation } from "react-navigation";
+import { API_URL } from "react-native-dotenv";
 
 class IklanKost extends Component {
   constructor(props) {
@@ -37,7 +38,7 @@ class IklanKost extends Component {
         <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kostId: item.id})}>
           <Image
             // source={{ uri: item.images[0] }}
-            source={{ uri: `http://192.168.1.31:3000/${item.images.split(',')[0]}` }}
+            source={{ uri: `${API_URL.replace('api/v1/', '')}${item.images.split(',')[0]}` }}
             style={styles.imageCover} />
           <TouchableHighlight style={styles.starIconContainer} >
             <View>

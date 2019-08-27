@@ -13,7 +13,7 @@ const dorms = (state = initialState, action) => {
         case 'GET_DORMS_FULFILLED':
             return {
                 ...state,
-                dataDorms: action.payload.data.data,
+                dataDorms: action.payload.data,
                 isLoading: false,
             }
         case 'GET_DORMS_REJECTED':

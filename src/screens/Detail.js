@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Text, ScrollView, View, StyleSheet, TouchableOpacity, Dimensions, Share, Image } from "react-native";
 import axios from "axios";
+import { API_URL } from "react-native-dotenv";
 
 import Icon from "react-native-vector-icons";
 import { IconButton, Title, Subheading, Paragraph, Appbar } from "react-native-paper";
@@ -24,7 +25,8 @@ class Detail extends Component {
       width: width,
       modalVisible: "",
       loading: true,
-      kost: []
+      kost: [],
+      otherKost: {}
     }
   }
 
@@ -32,7 +34,7 @@ class Detail extends Component {
     try {
       const result = await Share.share({
         message:
-          'Sebarkan kamar kost',
+          `${API_URL}dorms/${this.props.navigation.getParam('kostId')}`,
       });
 
       if (result.action === Share.sharedAction) {
@@ -69,11 +71,10 @@ class Detail extends Component {
 
   _renderShowImage = (images) => {
     images = images.split(',');
-    // const images = this.props.kost.images;
     let imagesArray = [];
     images.map(imgUri => {
       imagesArray.push({
-        src: {uri: `http://192.168.0.8/cari-kost-api/${imgUri}`}
+        src: {uri: `${API_URL.replace('api/v1/', '')}${imgUri}`}
       });
     })
     return (
@@ -113,12 +114,15 @@ class Detail extends Component {
 
   componentDidMount = () => {
     const id = this.props.navigation.getParam('kostId');
-    axios.get(`http://192.168.0.8:3000/api/v1/dorms/${id}`)
+    axios.get(`${API_URL}dorms/${id}`)
     .then(res => {
       this.setState({
-        kost: res.data.data,
+        kost: res.data,
         loading: false
       })
+    })
+    .catch(err => {
+      alert(err.toString());
     });
   }
 
@@ -175,13 +179,13 @@ class Detail extends Component {
               <Title style={styles.titleNormalize}>{kost.name}</Title>
               <Text style={styles.updated}>Update {kost.updated}</Text>
             </View>
-            <View style={styles.premium}>
+            {/* <View style={styles.premium}>
               <IconButton icon="star-border" color="#03a9f4" size={30} />
-            </View>
+            </View> */}
           </View>
-          <View style={[styles.floatLeft, styles.contentSection, styles.bordered, {height: 50}]}>
-            <Text style={{alignItems: "center"}}>Tidak termasuk listrik</Text>
-            <Text style={{alignItems: "center"}}>Tidak ada min. bayar</Text>
+          <View style={[styles.floatLeft, styles.contentSection, styles.bordered]}>
+            {/* <Text style={{alignItems: "center"}}>Tidak termasuk listrik</Text>
+            <Text style={{alignItems: "center"}}>Tidak ada min. bayar</Text> */}
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Luas Kamar</Subheading>
