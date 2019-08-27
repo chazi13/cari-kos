@@ -4,74 +4,153 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { Paragraph, Button } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
-import { ActionSheetCustom as ActionSheet} from './../styles/style/index'
 import IklanKost from "../components/IklanKost";
-import axios from "axios";
 import { connect } from 'react-redux';
-import {getDorms} from './../_actions/dorms'
+import { getDorms } from './../_actions/dorms'
+
+import Modal from "react-native-modal";
+const { height, width } = Dimensions.get('window');
 
 
-const dimensions = Dimensions.get('window');
+
+
 const options = [
   {
-    component: <Text style={{ color: '#bdbdbd', 
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10, 
-    fontSize: 12, 
-    borderWidth: 0, 
-    textAlign: 'left'}}>Acak</Text>,
+    component: <Text style={{
+      color: '#bdbdbd',
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+      fontSize: 12,
+      borderWidth: 0,
+      textAlign: 'left'
+    }}>Acak</Text>,
   },
   {
-    component: <Text style={{ color: '#bdbdbd', 
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10, 
-    fontSize: 12, 
-    borderWidth: 0, 
-    textAlign: 'left'}}>Harga Termurah</Text>,
+    component: <Text style={{
+      color: '#bdbdbd',
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+      fontSize: 12,
+      borderWidth: 0,
+      textAlign: 'left'
+    }}>Harga Termurah</Text>,
   },
   {
-    component: <Text style={{ color: '#bdbdbd', 
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10, 
-    fontSize: 12, 
-    borderWidth: 0, 
-    textAlign: 'left'}}>Harga termahal</Text>,
+    component: <Text style={{
+      color: '#bdbdbd',
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+      fontSize: 12,
+      borderWidth: 0,
+      textAlign: 'left'
+    }}>Harga termahal</Text>,
   },
   {
-    component: <Text style={{ color: '#bdbdbd', 
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10, 
-    fontSize: 12, 
-    borderWidth: 0, 
-    textAlign: 'left'}}>kosong ke penuh</Text>,
+    component: <Text style={{
+      color: '#bdbdbd',
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+      fontSize: 12,
+      borderWidth: 0,
+      textAlign: 'left'
+    }}>kosong ke penuh</Text>,
   },
   {
-    component: <Text style={{ color: '#bdbdbd', 
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingLeft: 10,
-    paddingRight: 10, 
-    fontSize: 12, 
-    borderWidth: 0, 
-    textAlign: 'left'}}>update terbaru</Text>,
+    component: <Text style={{
+      color: '#bdbdbd',
+      paddingTop: 5,
+      paddingBottom: 5,
+      paddingLeft: 10,
+      paddingRight: 10,
+      fontSize: 12,
+      borderWidth: 0,
+      textAlign: 'left'
+    }}>update terbaru</Text>,
   },
 ]
 
-const title = <Text style={{padding: 5, color: '#03A9F4', fontSize: 14 }}>Urutkan Dari</Text>
+const title = <Text style={{ padding: 5, color: '#03A9F4', fontSize: 14 }}>Urutkan Dari</Text>
+
+const ModalComponent = props => (
+  <Modal
+    style={{
+      justifyContent: "flex-end",
+      margin: 0
+    }}
+    isVisible={props.modalVisible}
+    onBackdropPress={() => props.setModalVisible(false)}
+  >
+    <View
+      style={{
+        backgroundColor: "#fff",
+        justifyContent: "flex-end",
+        paddingVertical: 10,
+        paddingHorizontal: 20
+      }}
+    >
+      <View
+        style={{
+          borderBottomWidth: 1,
+          borderBottomColor: "#95a5a6",
+          flexDirection: "row",
+          paddingBottom: 10
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 17,
+            color: "#95a5a6",
+            flex: 1,
+            fontWeight: "500"
+          }}
+        >
+          Urutkan dari
+        </Text>
+        <Icon
+          name="close"
+          size={25}
+          onPress={() => props.setModalVisible(false)}
+        />
+      </View>
+      <View>
+        <TouchableOpacity>
+        <Text style={{ paddingVertical: 5, fontSize: 12 }}>Acak</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={{paddingVertical: 5, fontSize: 12,}}>
+          Harga termurah
+        </Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={{ paddingVertical: 5, fontSize: 12 }}>Harga termahal</Text>
+        </TouchableOpacity>
+        <TouchableOpacity>
+        <Text style={{ paddingVertical: 5, fontSize: 12 }}>
+          Kosong ke penuh
+        </Text>
+        </TouchableOpacity>
+        <Text style={{ paddingVertical: 5, fontSize: 12 }}>Update terbaru</Text>
+      </View>
+    </View>
+  </Modal>
+);
 
 class ListItem extends React.Component {
   state = {
     selected: 1,
-    dormsCounter: 0
+    dormsCounter: 0,
+
   }
+
+
 
   showActionSheet = () => this.actionSheet.show()
 
@@ -87,8 +166,14 @@ class ListItem extends React.Component {
       visible: false,
       dorms: [],
       isAutoFocus: city == '' ? true : false,
+      modalVisible: false
     }
   }
+
+
+  setModalVisible = visible => {
+    this.setState({ modalVisible: visible });
+  };
 
   renderItem = ({ item, index }) => (
     <IklanKost
@@ -115,14 +200,19 @@ class ListItem extends React.Component {
     this.props.dispatch(getDorms())
   }
 
+
+
   render() {
     // const kosts = require('../../data/kosts.json');
     const kosts = this.state.dorms;
     const { navigate } = this.props.navigation;
+    const deviceWidth = width
+    const deviceHeight = 2 / 3 * height
+
 
     // alert(kosts.lenght);
     console.log(this.props.dorms.isLoading)
-  
+
     return (
       <View style={styles.containerHome}>
         <View style={styles.searchBar}>
@@ -145,37 +235,42 @@ class ListItem extends React.Component {
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={() => (<View style={{height: 50}}></View>)}
+            ListFooterComponent={() => (<View style={{ height: 50 }}></View>)}
           />
 
-        <Text>{this.props.dorms.isLoading}</Text> 
-        {this.props.dorms.isLoading == true && <Text>Loading...</Text>}
-        </View>
-        <View style={styles.floatingContainer}>
-          <View style={styles.floatingSection}>
-            <View style={{ borderRightColor: "#ddd", borderRightWidth: 1 }}>
-              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" onPress={() => navigate('Filter')} icon={({ size, color }) => (
-                <Image
-                  source={require('../../assets/images/controls.png')}
-                  style={{ width: size, height: size, tintColor: color }} />
-              )}>
-                <Text style={{ fontSize: 10 }}>Filter</Text>
-              </Button>
-            </View>
-            <View>
-              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon="sort" onPress={this.showActionSheet}>
-                <Text style={{ fontSize: 10 }}>Urutkan</Text>
-              </Button>
-            </View>
-          </View>
+          <Text>{this.props.dorms.isLoading}</Text>
+          {this.props.dorms.isLoading == true && <Text>Loading...</Text>}
         </View>
 
-        <ActionSheet
-          ref={this.getActionSheetRef}
-          title={title}
-          options={options}
-          onPress={this.handlePress}
+
+       
+          <View style={styles.floatingContainer}>
+            <View style={styles.floatingSection}>
+              <View style={{ borderRightColor: "#ddd", borderRightWidth: 1 }}>
+                <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" onPress={() => navigate('Filter')} icon={({ size, color }) => (
+                  <Image
+                    source={require('../../assets/images/controls.png')}
+                    style={{ width: size, height: size, tintColor: color }} />
+                )}>
+                  <Text style={{ fontSize: 10 }}>Filter</Text>
+                </Button>
+              </View>
+              <View>
+                <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon="sort" onPress={() => this.setModalVisible(true)}>
+                  <Text style={{ fontSize: 10 }}>Urutkan</Text>
+                </Button>
+              </View>
+            </View>
+          </View>
+
+      
+
+        <ModalComponent
+          setModalVisible={this.setModalVisible}
+          modalVisible={this.state.modalVisible}
         />
+
+
 
 
       </View>
@@ -220,7 +315,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 3,
     left: 15,
-    marginBottom : -10,
+    marginBottom: -10,
   },
   floatingContainer: {
     justifyContent: "center",
@@ -230,7 +325,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 30,
     left: 50,
-    right: 50
+    right: 50,
+    zIndex: 1,
+  },
+  modalHeader: {
+    paddingHorizontal: 5,
+    backgroundColor: "#fff",
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1,
+    fontSize: 10
   },
   floatingSection: {
     backgroundColor: "white",
@@ -243,7 +346,7 @@ const styles = StyleSheet.create({
   buttonOptions: {
     padding: 0,
   },
-  styleText:{
-   
+  styleText: {
+
   }
 })
