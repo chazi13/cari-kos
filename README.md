@@ -59,7 +59,7 @@ react-native run-android #for android
 create .env file and set API_HOST as your expressUri
 
 ```env
-API_HOST=http://YOUR_DOMAIN:YOUR_PORT
+API_URL=http://YOUR_DOMAIN:YOUR_PORT
 ```
 
 ### Backend
@@ -77,8 +77,8 @@ npm start
 - Stars this repository
 - Hire Us
 
-  1. [Ricky Ariansyah](https://www.linkedin.com/in/rickyarians/)
-  2. [Muhamad Chairul Aziz](https://www.linkedin.com/in/muhamad-chairul-aziz/)
+  * [Ricky Ariansyah](https://www.linkedin.com/in/rickyarians/)
+  * [Muhamad Chairul Aziz](https://www.linkedin.com/in/muhamad-chairul-aziz/)
 
 ## Contact
 
