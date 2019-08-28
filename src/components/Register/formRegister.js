@@ -12,23 +12,23 @@ class formRegister extends Component {
             <View>
 
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Nama Lengkap {this.props.auth.fullname}</Text>
+                    <Text style={styles.textLabel}>Nama Lengkap</Text>
                     <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} onChangeText={(fullname) => this.props.dispatch(handlingFullname(fullname))} placeholder='Masukkan Nama Lengkap Disini' autoCapitalize="words" underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Email {this.props.auth.email}</Text>
+                    <Text style={styles.textLabel}>Email </Text>
                     <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} onChangeText={(email) => this.props.dispatch(handlingEmail(email))} placeholder='Masukkan Alamat Email Disini' autoCapitalize="none" underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>No. Telp  {this.props.auth.phone}</Text>
+                    <Text style={styles.textLabel}>No. Telp  </Text>
                     <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} onChangeText={(phone) => this.props.dispatch(handlingPhone(phone))} keyboardType={'numeric'} placeholder='Masukkan No. Telp Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Password {this.props.auth.password}</Text>
+                    <Text style={styles.textLabel}>Password </Text>
                     <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} onChangeText={(password) => this.props.dispatch(handlingPassword(password))} secureTextEntry={true} placeholder='*************' autoCapitalize="none" underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Confirmation Password {this.props.auth.passwordconf}</Text>
+                    <Text style={styles.textLabel}>Confirmation Password </Text>
                     <TextInput onFocus={this.onFocusChange} style={styles.inputStyle} onChangeText={(confpassword) => this.props.dispatch(handlingconfPassword(confpassword))} secureTextEntry={true} placeholder='*************' autoCapitalize="none" underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" />
                 </View>
             </View>

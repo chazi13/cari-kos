@@ -30,7 +30,63 @@ class Login extends Component {
   // }
 
 
+  _simpanAsynStorage = async () => {
+    const { email, password } = this.state;
+    const credential = {
+      username: email,
+      password
+    }
 
+    await axios.post('http://192.168.0.8:3000/api/v1/login', credential)
+      .then(async res => {
+        await AsyncStorage.setItem('token', JSON.stringify(res.data.data.token));
+        Keyboard.dismiss();
+        alert('Login berhasil');
+        this.props.navigation.navigate('Auth')
+      })
+      .catch(err => {
+        this.setState({
+          email: '',
+          password: ''
+        })
+        alert('Email atau password salah')
+      });
+    // const { email, password } = this.state
+
+    // if ( email == 'lucinta' && password == 'luna') {
+    //   let dataUser = {
+    //     email: email,
+    //     password: password,
+    //     isLogin: 1
+    //   }
+
+    //   await AsyncStorage.setItem('user', JSON.stringify(dataUser));
+    //   Keyboard.dismiss();
+    //   alert('Anda Berhasil Login')
+    //   this.props.navigation.navigate('Auth')
+    // } else {
+    //   this.setState({
+    //     email: '',
+    //     password: ''
+    //   })
+    //   alert('Username atau email salah')
+    // }
+  }
+
+  _showAsynStorage = async () => {
+    try {
+      let user = await AsyncStorage.getItem('user')
+      if (user != null) {
+        let data = JSON.parse(user)
+        alert(data.email + ' ' + data.password)
+      } else {
+        alert('asyncStorage sudah kosong')
+      };
+    } catch (err) {
+      alert(err)
+    }
+
+  }
 
   _destroyAsynStorage = async () => {
     try {
@@ -41,18 +97,31 @@ class Login extends Component {
       alert('asyncStorage sudah kosong')
     }
 
-
   }
 
- 
+  _handleInputEmail = (text) => {
+    this.setState({
+      email: text
+    })
+  }
 
+  _handleInputPassword = (text) => {
+    this.setState({
+      password: text
+    })
+  }
+
+  _submitHandle = () => {
+    //handle submit
+    alert('submit data = ' + 'Email = ' + this.state.email + 'Password = ' + this.state.password)
+  }
 
   componentDidUpdate() {
     if (this.props.auth.berhasil == true) {
-      alert('Berhasil Bosque')
+      alert('Berhasil Login')
       this.props.navigation.navigate('Auth')
     } else {
-
+      alert('Gagal Login')
     }
   }
 

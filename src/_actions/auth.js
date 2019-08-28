@@ -76,4 +76,12 @@ export const getDataUser = () => {
     }
 }
 
+export const functLogout = () => {
+    return {
+        type: 'DELETE_DATAUSER'
+    }
+}
+
+
+
 // http://192.168.1.31:3000/api/v1/

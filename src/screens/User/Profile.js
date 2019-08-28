@@ -5,32 +5,33 @@ import { createBottomTabNavigator } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { connect } from 'react-redux';
-import { getDataUser } from './../../_actions/auth'
+import { getDataUser, funcLogout, functLogout } from './../../_actions/auth'
 
 
 class Profile extends React.Component {
 
 
-  constructor(){
-    super() 
+  constructor() {
+    super()
     this.state = {
-      username: ''
+      username: '',
+      show: false
     }
   }
 
   _showAsynStorage = async () => {
     try {
       let user = await AsyncStorage.getItem('token')
-        if (user != null) {
-          let data = JSON.parse(user)
-          // alert(data.email + ' ' + data.password)
-          console.log(data)
-        } else {
-          alert('Anda Belum Login')
-        };
+      if (user != null) {
+        let data = JSON.parse(user)
+        // alert(data.email + ' ' + data.password)
+        alert(data)
+      } else {
+        alert('Anda Belum Login')
+      };
     } catch (err) {
       alert(err)
-      
+
     }
 
   }
@@ -38,25 +39,33 @@ class Profile extends React.Component {
   _showAsynStorageUser = async () => {
     try {
       let user = await AsyncStorage.getItem('dataUser')
-        if (user != null) {
-          let data = JSON.parse(user)
-          // alert(data.email + ' ' + data.password)
-         console.log(data)
-         console.log(this.props.auth.fullname)
-        } else {
-          alert('Anda Belum Login')
-        };
+      if (user != null) {
+        let data = JSON.parse(user)
+        // alert(data.email + ' ' + data.password)
+        console.log(data)
+        console.log(this.props.auth.fullname)
+      } else {
+        alert('Anda Belum Login')
+      };
     } catch (err) {
       alert(err)
-      
+
     }
 
   }
 
   componentDidMount = () => {
-   this.props.dispatch(getDataUser())
-   console.log(this.props.auth.email)
+    this.props.dispatch(getDataUser())
+    console.log(this.props.auth.email)
   }
+
+  componentDidUpdate = () => {
+    if(this.props.auth.logout == true) {
+      this.props.navigation.navigate('Guest')
+    }
+  }
+
+ 
 
   _destroyAsynStorage = async () => {
     try {
@@ -68,12 +77,22 @@ class Profile extends React.Component {
       await AsyncStorage.setItem('token', '');
       alert('Terima kasih');
       this.props.navigation.navigate('Guest')
-    
+
     } catch (err) {
       console.log(err)
       alert('asyncStorage sudah kosong')
     }
   }
+
+  handleOpen = () => {
+    this.setState({ show: true })
+  }
+
+  handleClose = () => {
+    this.setState({ show: false })
+  }
+
+
 
 
   render() {
@@ -129,53 +148,63 @@ class Profile extends React.Component {
 
             <TouchableOpacity onPress={() => navigate('ListBookPage')}>
               <View style={styles.cardProf}>
-              <Icon name="clock" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Daftar Booking</Text>
-                  
+                <Icon name="clock" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Daftar Booking</Text>
+
               </View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigate('ListIklanPage')}>
               <View style={styles.cardProf}>
-              <Icon name="ad" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Daftar Iklan</Text>
-                  
+                <Icon name="ad" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Daftar Iklan</Text>
+
               </View>
             </TouchableOpacity>
 
-             <TouchableOpacity >
+
+            <TouchableOpacity >
               <View style={styles.cardProf}>
-              <Icon name="user-circle" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Daftar Pesanan</Text>
-                  
+                <Icon name="user-circle" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Daftar Pesanan</Text>
+
               </View>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={this.handleOpen}>
+              <View style={styles.cardProf}>
+                <Icon name="user-circle" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Alert</Text>
 
-            <View style={{marginTop: 10}}>
-            <TouchableOpacity onPress={this._showAsynStorageUser} >
-              <View style={styles.cardProfbot}>
-              <Icon name="wrench" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Pengaturan</Text>
-                  
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this._showAsynStorage}>
-              <View style={styles.cardProfbot}>
-              <Icon name="info-circle" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Show AsyncStorage</Text>
-                  
-              </View>
-            </TouchableOpacity>
+          
 
-            <TouchableOpacity onPress={this._destroyAsynStorage}>
-              <View style={styles.cardProfbot}>
-              <Icon name="power-off" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Log Out</Text>
-                  
-              </View>
-            </TouchableOpacity>
+            <View style={{ marginTop: 10 }}>
+              <TouchableOpacity onPress={this._showAsynStorageUser} >
+                <View style={styles.cardProfbot}>
+                  <Icon name="wrench" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                  <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Pengaturan</Text>
+
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={this._showAsynStorage}>
+                <View style={styles.cardProfbot}>
+                  <Icon name="info-circle" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                  <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Show AsyncStorage</Text>
+
+                </View>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => this.props.dispatch(functLogout())}>
+                <View style={styles.cardProfbot}>
+                  <Icon name="power-off" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
+                  <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Log Out</Text>
+
+                </View>
+              </TouchableOpacity>
             </View>
 
 
@@ -188,7 +217,7 @@ class Profile extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-      auth: state.auth
+    auth: state.auth
   }
 }
 
@@ -213,7 +242,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 20,
     paddingLeft: 25,
-    paddingRight: 25,    
+    paddingRight: 25,
     flexDirection: 'row'
   },
   cardNav: {
@@ -231,7 +260,7 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 100,
   },
-  cardProf:{
+  cardProf: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 5,
@@ -239,7 +268,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginTop: 10,
   },
-  cardProfbot:{
+  cardProfbot: {
     flexDirection: 'row',
     backgroundColor: '#fff',
     borderRadius: 5,

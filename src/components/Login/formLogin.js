@@ -10,11 +10,11 @@ class formLogin extends Component {
         return (
             <View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Email {this.props.auth.email}</Text>
+                    <Text style={styles.textLabel}>Email </Text>
                     <TextInput value={this.props.auth.email} onFocus={this.onFocusChange} name="email" onChangeText={(email) => this.props.dispatch(handlingEmail(email))} style={styles.inputStyle} placeholder='Masukkan Email / No. Telp Disini' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" autoCapitalize="none" />
                 </View>
                 <View style={styles.formGroup}>
-                    <Text style={styles.textLabel}>Password {this.props.auth.password}</Text>
+                    <Text style={styles.textLabel}>Password </Text>
                     <TextInput value={this.props.auth.password} onFocus={this.onFocusChange} name="password" onChangeText={(password) => this.props.dispatch(handlingPassword(password))} style={styles.inputStyle} secureTextEntry={true} placeholder='*************' underlineColor="#03A9F4" underlineColorAndroid="#03a9f4" selectionColor="#03A9F4" autoCapitalize="none" />
                 </View>
             </View>

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight } from "react-native";
+import { ActivityIndicator, View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight } from "react-native";
 import { Paragraph } from "react-native-paper";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from "react-native-gesture-handler";
@@ -8,21 +8,22 @@ import { connect } from 'react-redux'
 // import {getOwnDorms} from './../../_actions/dorms'
 import AsyncStorage from '@react-native-community/async-storage'
 import axios from 'axios'
-import {API_URL} from 'react-native-dotenv'
+import { API_URL } from 'react-native-dotenv'
 
 class listIklan extends React.Component {
   constructor() {
     super()
     this.state = {
       datakost: null,
+      Loading: true
     }
   }
 
   toRupiah = (number) => {
-    let rupiah = '';		
+    let rupiah = '';
     let revNumber = number.toString().split('').reverse().join('');
-    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
-    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+    for (var i = 0; i < revNumber.length; i++) if (i % 3 == 0) rupiah += revNumber.substr(i, 3) + '.';
+    return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
   }
 
   renderItem = ({ item, index }) => {
@@ -37,23 +38,23 @@ class listIklan extends React.Component {
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 2, padding: 5 }}>
-                <Text style={{color: '#03A9F4', fontWeight: 'bold'}}>{item.name}</Text>
+                <Text style={{ color: '#03A9F4', fontWeight: 'bold' }}>{item.name}</Text>
                 <View style={{ flexDirection: 'row', marginTop: 5 }}>
                   <View style={styles.detailBook}>
                     <Text style={styles.textBook}>
                       Harga
                       </Text>
                     <Text style={styles.textBook}>
-                     {this.toRupiah(item.price)}
-                        </Text>
+                      {this.toRupiah(item.price)}
+                    </Text>
                   </View>
                   <View style={styles.detailBook}>
                     <Text style={styles.textBook}>
                       Ruangan : {item.rooms_avaible}
-                        </Text>
+                    </Text>
                     <Text style={styles.textBook}>
                       Kota : {item.city}
-                        </Text>
+                    </Text>
                   </View>
                 </View>
 
@@ -91,9 +92,9 @@ class listIklan extends React.Component {
       `${API_URL}dorms/own`,
       { headers: { 'Authorization': 'Bearer ' + user } }
     ).then(res => {
-      alert('Data kost berhasil ditambahkan');
       this.setState({
-        datakost: res.data
+        datakost: res.data,
+        Loading: false,
       })
     }).catch(err => {
       alert(err);
@@ -101,45 +102,53 @@ class listIklan extends React.Component {
   }
 
 
-componentDidMount() {
-  this.getData()
-}
+  componentDidMount() {
+    this.getData()
+  }
 
 
-render() {
+  render() {
 
-  const { navigate } = this.props.navigation;
-  return (
-    <View style={styles.containerHome}>
-      <View style={styles.searchBar}>
-        <View style={{ flex: 1, position: 'relative' }}>
-          <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
-            Daftar Iklan Kost
+    const { navigate } = this.props.navigation;
+    return (
+      <View style={styles.containerHome}>
+        <View style={styles.searchBar}>
+          <View style={{ flex: 1, position: 'relative' }}>
+            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
+              Daftar Iklan Kost
             </Text>
-          <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
-            <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#fff' size={30}></Icon>
+            <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
+              <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#fff' size={30}></Icon>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {this.state.Loading == true &&
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color="#03a9f4" />
+            <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Harap Tunggu..</Text>
+          </View>
+        }
+        {this.state.Loading == false &&
+          <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 0, paddingTop: 0 }}>
+            <FlatList
+              data={this.state.datakost}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => item.id}
+            />
+          </View>
+        }
+
+        <View style={{ width: '100%', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#bdbdbd', height: 50, borderTopLeftRadius: 2, borderTopRightRadius: 2 }}>
+          <TouchableOpacity onPress={() => navigate('iklanPage')}>
+            <View style={{ backgroundColor: '#03A9F4', padding: 10, marginTop: 5, marginRight: 10, marginLeft: 10, marginBottom: 5, borderRadius: 5 }}>
+              <Text style={{ textAlign: 'center', color: '#fff' }}>Tambah Iklan</Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 0, paddingTop: 0 }}>
-        <FlatList
-          data={this.state.datakost}
-          showsVerticalScrollIndicator={false}
-          renderItem={this.renderItem}
-          keyExtractor={(item, index) => item.id}
-        />
-      </View>
-
-      <View style={{ width: '100%', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#bdbdbd', height: 50, borderTopLeftRadius: 2, borderTopRightRadius: 2 }}>
-        <TouchableOpacity onPress={() => navigate('iklanPage')}>
-          <View style={{ backgroundColor: '#03A9F4', padding: 10, marginTop: 5, marginRight: 10, marginLeft: 10, marginBottom: 5, borderRadius: 5 }}>
-            <Text style={{ textAlign: 'center', color: '#fff' }}>Tambah Iklan</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
-    </View>
-  )
-}
+    )
+  }
 }
 
 const mapStateToProps = (state) => {

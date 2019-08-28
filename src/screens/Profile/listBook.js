@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
+import { ActivityIndicator, View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import axios from "axios";
 import { API_URL } from "react-native-dotenv";
@@ -19,17 +19,17 @@ class listBook extends React.Component {
     const jwt = await AsyncStorage.getItem('token');
     await axios.get(
       `${API_URL}booking`,
-      {headers: {'Authorization': 'Bearer ' + JSON.parse(jwt)}}
+      { headers: { 'Authorization': 'Bearer ' + JSON.parse(jwt) } }
     )
-    .then(res => {
-      this.setState({
-        booking: res.data,
-        is_loading: false
+      .then(res => {
+        this.setState({
+          booking: res.data,
+          is_loading: false
+        })
       })
-    })
-    .catch(err => {
-      alert(err);
-    });
+      .catch(err => {
+        alert(err);
+      });
   }
 
   formatDate = (date) => {
@@ -46,7 +46,7 @@ class listBook extends React.Component {
 
     return day + ' ' + monthName[month] + ' ' + years;
   }
- 
+
   renderItem = ({ item, index }) => {
 
     return (
@@ -73,8 +73,8 @@ class listBook extends React.Component {
                 </View>
 
                 <View style={styles.cardStatus}>
-                    <Text style={{fontSize: 10, textAlign: 'center', color: '#03A9F4'}}>Tunggu Konfirmasi</Text>
-                </View>                
+                  <Text style={{ fontSize: 10, textAlign: 'center', color: '#03A9F4' }}>Tunggu Konfirmasi</Text>
+                </View>
               </View>
             </View>
           </View>
@@ -85,35 +85,35 @@ class listBook extends React.Component {
 
 
   render() {
-    const {booking, is_loading} = this.state;
-
-    if (is_loading) {
-      return (
-        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
-          <Text style={{color: '#03a9f4'}}>Loading</Text>
-        </View>
-      )
-    }
+    const { booking, is_loading } = this.state;
 
     return (
       <View style={styles.containerHome}>
         <View style={styles.searchBar}>
           <View style={{ flex: 1, position: 'relative' }}>
-            <Text style={{color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5}}>
+            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
               Booking
             </Text>
-            <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
-              <Icon style={{ textAlign: 'center', paddingTop: 1,}} name='ios-arrow-back' color='#fff' size={30}></Icon>
+            <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.navigate('Profil')}>
+              <Icon style={{ textAlign: 'center', paddingTop: 1, }} name='ios-arrow-back' color='#fff' size={30}></Icon>
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flex: 1, paddingLeft: 5, paddingTop:0, paddingRight: 5 }}>
-          <FlatList
-            data={booking}
-            showsVerticalScrollIndicator={false}
-            renderItem={this.renderItem}
-          />
-        </View>
+         {this.state.is_loading == true &&
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color="#03a9f4" />
+            <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Harap Tunggu..</Text>
+          </View>
+        }
+        { this.state.is_loading == false && 
+          <View style={{ flex: 1, paddingLeft: 5, paddingTop: 0, paddingRight: 5 }}>
+            <FlatList
+              data={booking}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+            />
+          </View>
+        }
       </View>
     )
   }

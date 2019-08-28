@@ -8,7 +8,8 @@ const initialState = {
     isLoading: false,
     berhasil: null,
     message: null,
-    berhasildaftar: null
+    berhasildaftar: null,
+    logout: false,
 }
 
 const auth = (state = initialState, action) => {
@@ -98,6 +99,13 @@ const auth = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 berhasil: false,
+                message: action.payload
+            }
+        case 'DELETE_DATAUSER':
+            AsyncStorage.setItem('token', '');
+            AsyncStorage.setItem('dataUser', '');
+            return {
+                logout: true,
                 message: action.payload
             }
 
