@@ -7,6 +7,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import Maps from "../../components/Maps";
 import axios from "axios";
+import {API_URL} from 'react-native-dotenv'
 
 // import Component 
 import TextInputIklan from './../../components/TextInput/TextInputIklan'
@@ -109,7 +110,7 @@ class IklanPage extends React.Component {
     });
 
     await axios.post(
-      'http://192.168.0.8:3000/api/v1/dorms',
+      `${API_URL}dorms`,
       dataKost,
       {headers: {'Authorization': 'Bearer ' + JSON.parse(jwt), 'Content-Type': 'multipart/form-data'}}
     ).then(res => {

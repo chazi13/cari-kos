@@ -4,44 +4,61 @@ import { Paragraph } from "react-native-paper";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { TextInput } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
+import { connect } from 'react-redux'
+// import {getOwnDorms} from './../../_actions/dorms'
+import AsyncStorage from '@react-native-community/async-storage'
+import axios from 'axios'
+import {API_URL} from 'react-native-dotenv'
 
 class listIklan extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      datakost: null,
+    }
+  }
+
+  toRupiah = (number) => {
+    let rupiah = '';		
+    let revNumber = number.toString().split('').reverse().join('');
+    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
+    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+  }
 
   renderItem = ({ item, index }) => {
-
     return (
-      <View key={index} style={styles.cardContainer}>
+      <View key={item.id} style={styles.cardContainer}>
         <TouchableOpacity>
           <View style={styles.cardListBooking}>
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('../../../assets/kamarkos.jpg')}
+                  source={{ uri: `${API_URL.replace('api/v1/', '')}${item.images.split(',')[0]}` }}
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 2, padding: 5 }}>
-                <Text>Kost Mamirooms Isma Tegalrejo...</Text>
-                <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                <Text style={{color: '#03A9F4', fontWeight: 'bold'}}>{item.name}</Text>
+                <View style={{ flexDirection: 'row', marginTop: 5 }}>
                   <View style={styles.detailBook}>
                     <Text style={styles.textBook}>
-                      Booking
-                        </Text>
+                      Harga
+                      </Text>
                     <Text style={styles.textBook}>
-                      12 Agu 2019
+                     {this.toRupiah(item.price)}
                         </Text>
                   </View>
                   <View style={styles.detailBook}>
                     <Text style={styles.textBook}>
-                      Durasi Sewa
+                      Ruangan : {item.rooms_avaible}
                         </Text>
                     <Text style={styles.textBook}>
-                      1 Bulan
+                      Kota : {item.city}
                         </Text>
                   </View>
                 </View>
 
                 <View style={styles.cardStatus}>
-                  <Text style={{ fontSize: 10, textAlign: 'center', color: '#03A9F4' }}>Tunggu Konfirmasi</Text>
+                  <Text style={{ fontSize: 10, textAlign: 'center', color: '#03A9F4' }}>Ditampilkan</Text>
                 </View>
               </View>
             </View>
@@ -51,71 +68,87 @@ class listIklan extends React.Component {
     )
   }
 
+  _showAsynStorage = async () => {
+    try {
+      let user = await AsyncStorage.getItem('token')
+      if (user != null) {
+        this.setState({
+          jwt: user
+        })
+      } else {
+        alert('asyncStorage sudah kosong')
+      };
+    } catch (err) {
+      alert(err)
+    }
 
-  render() {
-    const cars = [{
-      name: 'BMW',
-      price: 3000,
-      id: 1,
-    }, {
-      name: 'BMW',
-      price: 3000,
-      id: 2,
-    },
-    {
-      name: 'Porsche',
-      price: 1500,
-      id: 3,
-    }, {
-      name: 'Jaguar',
-      price: 300,
-      id: 4,
-    },
-    {
-      name: 'Jaguar',
-      price: 300,
-      id: 5,
-    },
-    {
-      name: 'Jaguar',
-      price: 300,
-      id: 6,
-    }];
+  }
 
-    const { navigate } = this.props.navigation;
-    return (
-      <View style={styles.containerHome}>
-        <View style={styles.searchBar}>
-          <View style={{ flex: 1, position: 'relative' }}>
-            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
-              Daftar Iklan
+  getData = async () => {
+    let user = await AsyncStorage.getItem('token')
+    user = JSON.parse(user)
+    await axios.get(
+      `${API_URL}dorms/own`,
+      { headers: { 'Authorization': 'Bearer ' + user } }
+    ).then(res => {
+      alert('Data kost berhasil ditambahkan');
+      this.setState({
+        datakost: res.data
+      })
+    }).catch(err => {
+      alert(err);
+    });
+  }
+
+
+componentDidMount() {
+  this.getData()
+}
+
+
+render() {
+
+  const { navigate } = this.props.navigation;
+  return (
+    <View style={styles.containerHome}>
+      <View style={styles.searchBar}>
+        <View style={{ flex: 1, position: 'relative' }}>
+          <Text style={{ color: '#fff', textAlign: 'center', fontSize: 18, fontWeight: 'bold', marginTop: 5 }}>
+            Daftar Iklan Kost
             </Text>
-            <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
-              <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#fff' size={30}></Icon>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 0, paddingTop: 0 }}>
-          <FlatList
-            data={cars}
-            showsVerticalScrollIndicator={false}
-            renderItem={this.renderItem}
-          />
-        </View>
-
-        <View style={{width: '100%', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#bdbdbd', height: 50, borderTopLeftRadius: 2, borderTopRightRadius: 2}}>
-          <TouchableOpacity onPress={() => navigate('iklanPage')}>
-            <View style={{ backgroundColor: '#03A9F4', padding: 10, marginTop: 5, marginRight: 10, marginLeft: 10, marginBottom: 5, borderRadius: 5 }}>
-              <Text style={{ textAlign: 'center', color: '#fff' }}>Tambah Iklan</Text>
-            </View>
+          <TouchableOpacity style={styles.touchable} onPress={() => this.props.navigation.goBack()}>
+            <Icon style={{ textAlign: 'center', paddingTop: 1 }} name='ios-arrow-back' color='#fff' size={30}></Icon>
           </TouchableOpacity>
         </View>
       </View>
-    )
+      <View style={{ flex: 1, paddingLeft: 5, paddingRight: 5, paddingBottom: 0, paddingTop: 0 }}>
+        <FlatList
+          data={this.state.datakost}
+          showsVerticalScrollIndicator={false}
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => item.id}
+        />
+      </View>
+
+      <View style={{ width: '100%', backgroundColor: '#fff', borderTopWidth: 0.5, borderColor: '#bdbdbd', height: 50, borderTopLeftRadius: 2, borderTopRightRadius: 2 }}>
+        <TouchableOpacity onPress={() => navigate('iklanPage')}>
+          <View style={{ backgroundColor: '#03A9F4', padding: 10, marginTop: 5, marginRight: 10, marginLeft: 10, marginBottom: 5, borderRadius: 5 }}>
+            <Text style={{ textAlign: 'center', color: '#fff' }}>Tambah Iklan</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  )
+}
+}
+
+const mapStateToProps = (state) => {
+  return {
+    dorms: state.dorms
   }
 }
 
-export default listIklan;
+export default connect(mapStateToProps)(listIklan);
 
 const styles = StyleSheet.create({
   containerHome: {
@@ -126,7 +159,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     borderWidth: 1,
     borderColor: '#03A9F4',
-    width: '50%',
+    width: '100%',
     padding: 2,
     borderRadius: 5,
   },
@@ -135,6 +168,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#eeeeee',
     height: 100,
+    elevation: 1
   },
   textBook: {
     fontSize: 12,

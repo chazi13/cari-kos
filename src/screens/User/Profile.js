@@ -146,7 +146,7 @@ class Profile extends React.Component {
              <TouchableOpacity >
               <View style={styles.cardProf}>
               <Icon name="user-circle" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
-              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Verifikasi Akun</Text>
+              <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Daftar Pesanan</Text>
                   
               </View>
             </TouchableOpacity>

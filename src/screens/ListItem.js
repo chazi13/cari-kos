@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight, Dimensions } from "react-native";
+import { ActivityIndicator, View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight, Dimensions } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Paragraph, Button } from "react-native-paper";
 import { TextInput } from "react-native-gesture-handler";
@@ -122,19 +122,19 @@ const ModalComponent = props => (
       </View>
       <View>
         <TouchableOpacity>
-        <Text style={{ paddingVertical: 5, fontSize: 12 }}>Acak</Text>
+          <Text style={{ paddingVertical: 5, fontSize: 12 }}>Acak</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-        <Text style={{paddingVertical: 5, fontSize: 12,}}>
-          Harga termurah
+          <Text style={{ paddingVertical: 5, fontSize: 12, }}>
+            Harga termurah
         </Text>
         </TouchableOpacity>
         <TouchableOpacity>
-        <Text style={{ paddingVertical: 5, fontSize: 12 }}>Harga termahal</Text>
+          <Text style={{ paddingVertical: 5, fontSize: 12 }}>Harga termahal</Text>
         </TouchableOpacity>
         <TouchableOpacity>
-        <Text style={{ paddingVertical: 5, fontSize: 12 }}>
-          Kosong ke penuh
+          <Text style={{ paddingVertical: 5, fontSize: 12 }}>
+            Kosong ke penuh
         </Text>
         </TouchableOpacity>
         <Text style={{ paddingVertical: 5, fontSize: 12 }}>Update terbaru</Text>
@@ -228,42 +228,48 @@ class ListItem extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flex: 1, alignItems: 'center', }}>
-          <FlatList
-            // data={kosts}
-            data={this.props.dorms.dataDorms}
-            showsVerticalScrollIndicator={false}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            ListFooterComponent={() => (<View style={{ height: 50 }}></View>)}
-          />
+        {
+          this.props.dorms.isLoading == true && 
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <ActivityIndicator size="large" color="#03a9f4" />
+            <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Tunggu ya datanya sedang diantar ke handphonemu..</Text>
+          </View>
+        }
+        {this.props.dorms.isLoading == false &&
+          <View style={{ flex: 1, alignItems: 'center', }}>
+            <FlatList
+              // data={kosts}
+              data={this.props.dorms.dataDorms}
+              showsVerticalScrollIndicator={false}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+              ListFooterComponent={() => (<View style={{ height: 50 }}></View>)}
+            />
+          </View>
+        }
 
-          <Text>{this.props.dorms.isLoading}</Text>
-          {this.props.dorms.isLoading == true && <Text>Loading...</Text>}
+
+
+        <View style={styles.floatingContainer}>
+          <View style={styles.floatingSection}>
+            <View style={{ borderRightColor: "#ddd", borderRightWidth: 1 }}>
+              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" onPress={() => navigate('Filter')} icon={({ size, color }) => (
+                <Image
+                  source={require('../../assets/images/controls.png')}
+                  style={{ width: size, height: size, tintColor: color }} />
+              )}>
+                <Text style={{ fontSize: 10 }}>Filter</Text>
+              </Button>
+            </View>
+            <View>
+              <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon="sort" onPress={() => this.setModalVisible(true)}>
+                <Text style={{ fontSize: 10 }}>Urutkan</Text>
+              </Button>
+            </View>
+          </View>
         </View>
 
 
-       
-          <View style={styles.floatingContainer}>
-            <View style={styles.floatingSection}>
-              <View style={{ borderRightColor: "#ddd", borderRightWidth: 1 }}>
-                <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" onPress={() => navigate('Filter')} icon={({ size, color }) => (
-                  <Image
-                    source={require('../../assets/images/controls.png')}
-                    style={{ width: size, height: size, tintColor: color }} />
-                )}>
-                  <Text style={{ fontSize: 10 }}>Filter</Text>
-                </Button>
-              </View>
-              <View>
-                <Button mode="text" style={styles.buttonOptions} uppercase={false} color="#03a9f4" icon="sort" onPress={() => this.setModalVisible(true)}>
-                  <Text style={{ fontSize: 10 }}>Urutkan</Text>
-                </Button>
-              </View>
-            </View>
-          </View>
-
-      
 
         <ModalComponent
           setModalVisible={this.setModalVisible}

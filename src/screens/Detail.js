@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, ScrollView, View, StyleSheet, TouchableOpacity, Dimensions, Share, Image } from "react-native";
+import { ActivityIndicator, Text, ScrollView, View, StyleSheet, TouchableOpacity, Dimensions, Share, Image } from "react-native";
 import axios from "axios";
 import { API_URL } from "react-native-dotenv";
 
@@ -74,7 +74,7 @@ class Detail extends Component {
     let imagesArray = [];
     images.map(imgUri => {
       imagesArray.push({
-        src: {uri: `${API_URL.replace('api/v1/', '')}${imgUri}`}
+        src: { uri: `${API_URL.replace('api/v1/', '')}${imgUri}` }
       });
     })
     return (
@@ -91,7 +91,7 @@ class Detail extends Component {
   _renderShowMpas = (coordinate, placeName) => {
     const { latitude, longitude } = coordinate
     return (
-      <Maps 
+      <Maps
         region={{
           latitude: latitude,
           longitude: longitude,
@@ -106,29 +106,29 @@ class Detail extends Component {
   }
 
   toRupiah = (number) => {
-    let rupiah = '';		
+    let rupiah = '';
     let revNumber = number.toString().split('').reverse().join('');
-    for(var i = 0; i < revNumber.length; i++) if(i%3 == 0) rupiah += revNumber.substr(i,3)+'.';
-    return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
+    for (var i = 0; i < revNumber.length; i++) if (i % 3 == 0) rupiah += revNumber.substr(i, 3) + '.';
+    return 'Rp. ' + rupiah.split('', rupiah.length - 1).reverse().join('');
   }
 
   componentDidMount = () => {
     const id = this.props.navigation.getParam('kostId');
     axios.get(API_URL + 'dorms/' + id)
-    .then(res => {
-      this.setState({
-        kost: res.data,
-        loading: false
+      .then(res => {
+        this.setState({
+          kost: res.data,
+          loading: false
+        })
       })
-    })
-    .catch(err => {
-      alert(err.toString());
-    });
+      .catch(err => {
+        alert(err.toString());
+      });
   }
 
 
   render() {
-    let {navigate, goBack} = this.props.navigation;
+    let { navigate, goBack } = this.props.navigation;
     const kost = this.state.kost;
     // const kost = getParam('kost');
     // const kost = require('../../data/kosts.json')[0];
@@ -137,15 +137,16 @@ class Detail extends Component {
     // alert(this.state.loading);
     if (this.state.loading) {
       return (
-        <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
-          <Text style={{color: '#03a9f4'}}>Harap Tunggu</Text>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <ActivityIndicator size="large" color="#03a9f4" />
+          <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Mengambil Data Kost</Text>
         </View>
       )
     }
 
     return (
-      <View style={{flex: 1}}>
-        <Appbar.Header style={{backgroundColor: "#03a9f4"}}>
+      <View style={{ flex: 1 }}>
+        <Appbar.Header style={{ backgroundColor: "#03a9f4" }}>
           <Appbar.BackAction onPress={() => goBack()} />
           <Appbar.Content title="Detail Kost" />
           <Appbar.Action icon="favorite-border" />
@@ -158,23 +159,23 @@ class Detail extends Component {
             </View>
             <View style={[styles.bannerControlContainer]}>
               <TouchableOpacity style={[styles.buttonBannerController]} onPress={this._showImage}>
-                <View style={{flexDirection: "row", flex: 1}}>
+                <View style={{ flexDirection: "row", flex: 1 }}>
                   <IconButton icon="image" color={this.state.showImageColor} />
-                  <Text style={[styles.buttonBannerControllerText, {color: `${this.state.showImageColor}`}]}>Gambar</Text>
+                  <Text style={[styles.buttonBannerControllerText, { color: `${this.state.showImageColor}` }]}>Gambar</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonBannerController, {alignItems: "flex-start", marginLeft: 50}]} onPress={this._showMaps}>
-                <View style={{flexDirection: "row", flex: 1}}>
+              <TouchableOpacity style={[styles.buttonBannerController, { alignItems: "flex-start", marginLeft: 50 }]} onPress={this._showMaps}>
+                <View style={{ flexDirection: "row", flex: 1 }}>
                   <IconButton icon="place" color={this.state.showMapsColor} />
-                  <Text style={[styles.buttonBannerControllerText, {color: `${this.state.showMapsColor}`}]}>Peta</Text>
+                  <Text style={[styles.buttonBannerControllerText, { color: `${this.state.showMapsColor}` }]}>Peta</Text>
                 </View>
               </TouchableOpacity>
             </View>
           </View>
-          <View style={[styles.InfoContainer, {marginBottom: 10}]}>
+          <View style={[styles.InfoContainer, { marginBottom: 10 }]}>
             <View style={styles.primaryInfo}>
               <View style={styles.floatLeft}>
-             <Text style={styles.category}>{kost.type} </Text><Text> - </Text><Text style={styles.roomAvaible}>Ada {kost.rooms_avaible} Kamar - </Text><Text>{kost.city}</Text>
+                <Text style={styles.category}>{kost.type} </Text><Text> - </Text><Text style={styles.roomAvaible}>Ada {kost.rooms_avaible} Kamar - </Text><Text>{kost.city}</Text>
               </View>
               <Title style={styles.titleNormalize}>{kost.name}</Title>
               <Text style={styles.updated}>Update {kost.updated}</Text>
@@ -189,19 +190,19 @@ class Detail extends Component {
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Luas Kamar</Subheading>
-            <View style={[styles.floatLeft, styles.justifyCenter, {height: 50}]}>
-              <IconButton icon="zoom-out-map" color="#03a9f4" size={30} style={{marginLeft: -0}} />
-              <Paragraph style={{marginLeft: 10, marginTop: 12}}>
+            <View style={[styles.floatLeft, styles.justifyCenter, { height: 50 }]}>
+              <IconButton icon="zoom-out-map" color="#03a9f4" size={30} style={{ marginLeft: -0 }} />
+              <Paragraph style={{ marginLeft: 10, marginTop: 12 }}>
                 {kost.width} x {kost.lenght} m
               </Paragraph>
             </View>
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Fasilitas Kamar</Subheading>
-            <KostFeatures 
+            <KostFeatures
               items={kost.features}
               size={24}
-              style={[styles.InfoContainer, {height: 75, marginLeft: -15}]}
+              style={[styles.InfoContainer, { height: 75, marginLeft: -15 }]}
               itemStyle={styles.fiturKostContainer}
               text={true}
             />
@@ -212,51 +213,51 @@ class Detail extends Component {
           </View>
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Kost Menarik Lainnya</Subheading>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, {marginHorizontal: -15}]}>
-              <TouchableOpacity  onPress={() => navigate('ListItem')}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, { marginHorizontal: -15 }]}>
+              <TouchableOpacity onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
-                    <View style={styles.kostImageContainer}>
-                      <Image
-                          source={require('../../assets/kamarkos.jpg')}
-                          style={styles.kostImage}/>
-                      </View>
-                    <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
+                  <View style={styles.kostImageContainer}>
+                    <Image
+                      source={require('../../assets/kamarkos.jpg')}
+                      style={styles.kostImage} />
+                  </View>
+                  <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity  onPress={() => navigate('ListItem')}>
+              <TouchableOpacity onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
-                    <View style={styles.kostImageContainer}>
-                      <Image
-                          source={require('../../assets/kamarkos.jpg')}
-                          style={styles.kostImage}/>
-                      </View>
-                    <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
+                  <View style={styles.kostImageContainer}>
+                    <Image
+                      source={require('../../assets/kamarkos.jpg')}
+                      style={styles.kostImage} />
+                  </View>
+                  <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
               </TouchableOpacity>
-              <TouchableOpacity  onPress={() => navigate('ListItem')}>
+              <TouchableOpacity onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
-                    <View style={styles.kostImageContainer}>
-                      <Image
-                          source={require('../../assets/kamarkos.jpg')}
-                          style={styles.kostImage}/>
-                      </View>
-                    <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
+                  <View style={styles.kostImageContainer}>
+                    <Image
+                      source={require('../../assets/kamarkos.jpg')}
+                      style={styles.kostImage} />
+                  </View>
+                  <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
               </TouchableOpacity>
-              <View style={{width: 15}}></View>
+              <View style={{ width: 15 }}></View>
             </ScrollView>
           </View>
         </ScrollView>
         <View style={styles.footerContainer}>
-          <View style={{flex: 1, justifyContent: "center"}}>
+          <View style={{ flex: 1, justifyContent: "center" }}>
             <Text style={styles.price}>{this.toRupiah(kost.price)} / bulan</Text>
           </View>
-          <View style={[styles.bookContainer, {flex: 1}]}>
-            <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, {flex: 1, textAlign: "center"}]} onPress={() => this.setState({ modalVisible: "kostContact" })}>
-              <Text style={{textAlign: "center", color: "#03a9f4"}}>Hubungi Kost</Text>
+          <View style={[styles.bookContainer, { flex: 1 }]}>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonOUtline, { flex: 1, textAlign: "center" }]} onPress={() => this.setState({ modalVisible: "kostContact" })}>
+              <Text style={{ textAlign: "center", color: "#03a9f4" }}>Hubungi Kost</Text>
             </TouchableOpacity>
-            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, {flex: 1, textAlign: "center"}]} onPress={() => navigate('Booking', {kost: kost})}>
-              <Text style={{textAlign: "center", color: "#fff"}}>Booking</Text>
+            <TouchableOpacity color="#03a9f4" style={[styles.buttonContained, { flex: 1, textAlign: "center" }]} onPress={() => navigate('Booking', { kost: kost })}>
+              <Text style={{ textAlign: "center", color: "#fff" }}>Booking</Text>
             </TouchableOpacity>
             <Modal isVisible={this.state.modalVisible === "kostContact"} style={styles.modalContainer} propagateSwipe={true}>
               <View style={styles.modalContent}>
@@ -269,7 +270,7 @@ class Detail extends Component {
                     <View style={{ flex: 1 }}>
                       <Text>Nama Pemilik: {kost.dormOwner.fullname} </Text>
                     </View>
-                    <View style={{ flex: 1, alignItems: "flex-start"}}>
+                    <View style={{ flex: 1, alignItems: "flex-start" }}>
                       {/* <Text style={{fontWeight: "700"}}>{kost.owner.name}</Text> */}
                     </View>
                   </View>
@@ -277,7 +278,7 @@ class Detail extends Component {
                     <View style={{ flex: 1 }}>
                       <Text>Telp Pemilik: {kost.dormOwner.phone}  </Text>
                     </View>
-                    <View style={{ flex: 1, alignItems: "flex-start"}}>
+                    <View style={{ flex: 1, alignItems: "flex-start" }}>
                       {/* <Text style={{fontWeight: "700"}}>{kost.owner.phone}</Text> */}
                     </View>
                   </View>
@@ -303,23 +304,23 @@ const styles = StyleSheet.create({
     position: "relative"
   },
   header: {
-    backgroundColor: "transparent", 
+    backgroundColor: "transparent",
     flex: 1,
   },
   bannerControlContainer: {
-    flexDirection: "row", 
+    flexDirection: "row",
     paddingHorizontal: 15,
-    flex: 1, 
+    flex: 1,
     backgroundColor: Colors.dark
   },
   buttonBannerController: {
-    justifyContent: "center", 
-    alignItems: "center", 
+    justifyContent: "center",
+    alignItems: "center",
     flex: 1,
   },
   buttonBannerControllerText: {
-    justifyContent: "center", 
-    marginTop: 15, 
+    justifyContent: "center",
+    marginTop: 15,
   },
   InfoContainer: {
     flexDirection: "row",
@@ -328,7 +329,7 @@ const styles = StyleSheet.create({
     padding: 15,
     alignItems: "flex-start",
     justifyContent: "space-around",
-  }, 
+  },
   primaryInfo: {
     flex: 4,
     padding: 15,
@@ -425,32 +426,32 @@ const styles = StyleSheet.create({
   anotherKostContainer: {
     marginTop: 10,
     paddingLeft: 15,
-    elevation: 1, 
+    elevation: 1,
     position: 'relative'
   },
   kostImageContainer: {
-    width:200, 
-    height:120, 
-    borderWidth:0.5, 
-    borderColor:"#dddddd", 
-    borderColor:10,
-    borderRadius:5, 
-    shadowColor: '#000', 
+    width: 200,
+    height: 120,
+    borderWidth: 0.5,
+    borderColor: "#dddddd",
+    borderColor: 10,
+    borderRadius: 5,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
   },
   kostImage: {
-    flex:1, 
-    height:null, 
-    width:null, 
-    borderRadius:5
+    flex: 1,
+    height: null,
+    width: null,
+    borderRadius: 5
   },
   anotherKostName: {
     color: '#fff',
     position: 'absolute',
     bottom: 3,
-    fontSize: 16, 
+    fontSize: 16,
     fontWeight: "600",
     left: 15,
   },

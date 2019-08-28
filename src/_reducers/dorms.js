@@ -1,7 +1,7 @@
 const initialState = {
     dataDorms: [],
     isLoading: true,
-
+    dataOwnDorms: []
 }
 
 const dorms = (state = initialState, action) => {
