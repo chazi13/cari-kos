@@ -1,6 +1,7 @@
 const initialState = {
     dataDorms: [],
-    isLoading: false
+    isLoading: true,
+
 }
 
 const dorms = (state = initialState, action) => {
@@ -20,6 +21,24 @@ const dorms = (state = initialState, action) => {
             return {
                 ...state,
                 dataDorms: action.payload.message,
+                isLoading: false
+            }
+        case 'GET_DORMDETAIL':
+            return {
+                ...state,
+                dataDetail: action.payload.daat,
+                isLoading: false
+            }
+        case 'GET_DORMDETAIL_FULFILLED':
+            return {
+                ...state,
+                dataDetail: action.payload.data,
+                isLoading: false
+            }
+        case 'GET_DORMDETAIL_REJECTED':
+            return {
+                ...state,
+                dataDetail: action.payload.message,
                 isLoading: false
             }
         default:

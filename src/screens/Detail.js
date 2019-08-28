@@ -114,7 +114,7 @@ class Detail extends Component {
 
   componentDidMount = () => {
     const id = this.props.navigation.getParam('kostId');
-    axios.get(`${API_URL}dorms/${id}`)
+    axios.get(API_URL + 'dorms/' + id)
     .then(res => {
       this.setState({
         kost: res.data,
@@ -174,7 +174,7 @@ class Detail extends Component {
           <View style={[styles.InfoContainer, {marginBottom: 10}]}>
             <View style={styles.primaryInfo}>
               <View style={styles.floatLeft}>
-                <Text style={styles.category}>{kost.type} </Text><Text> - </Text><Text style={styles.roomAvaible}>Ada {kost.roomsAvaible} Kamar</Text>
+             <Text style={styles.category}>{kost.type} </Text><Text> - </Text><Text style={styles.roomAvaible}>Ada {kost.rooms_avaible} Kamar - </Text><Text>{kost.city}</Text>
               </View>
               <Title style={styles.titleNormalize}>{kost.name}</Title>
               <Text style={styles.updated}>Update {kost.updated}</Text>
@@ -192,7 +192,7 @@ class Detail extends Component {
             <View style={[styles.floatLeft, styles.justifyCenter, {height: 50}]}>
               <IconButton icon="zoom-out-map" color="#03a9f4" size={30} style={{marginLeft: -0}} />
               <Paragraph style={{marginLeft: 10, marginTop: 12}}>
-                {kost.width} x {kost.length} m
+                {kost.width} x {kost.lenght} m
               </Paragraph>
             </View>
           </View>
@@ -267,7 +267,7 @@ class Detail extends Component {
                 <View>
                   <View style={[styles.floatLeft]}>
                     <View style={{ flex: 1 }}>
-                      <Text>Nama Pemilik: </Text>
+                      <Text>Nama Pemilik: {kost.dormOwner.fullname} </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-start"}}>
                       {/* <Text style={{fontWeight: "700"}}>{kost.owner.name}</Text> */}
@@ -275,7 +275,7 @@ class Detail extends Component {
                   </View>
                   <View style={[styles.floatLeft]}>
                     <View style={{ flex: 1 }}>
-                      <Text>Telp Pemilik: </Text>
+                      <Text>Telp Pemilik: {kost.dormOwner.phone}  </Text>
                     </View>
                     <View style={{ flex: 1, alignItems: "flex-start"}}>
                       {/* <Text style={{fontWeight: "700"}}>{kost.owner.phone}</Text> */}

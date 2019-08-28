@@ -32,7 +32,7 @@ class IklanKost extends Component {
         marginBottom: 100
       }
     }
-
+    
     return (
       <View keys={index} style={[styles.cardContainer, margin, { width: dimensions.width,  }]}>
         <TouchableOpacity style={{ position: 'relative', borderColor: "#aaa", borderWidth: .5, borderRadius: 5 }} onPress={() => navigate('Detail', {kostId: item.id})}>

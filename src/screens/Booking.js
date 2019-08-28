@@ -4,9 +4,10 @@ import { Appbar, IconButton } from "react-native-paper";
 import { Picker, Button } from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import { API_URL } from "react-native-dotenv";
 import KostFeatures from "../components/KostFeatures";
-
+import { connect } from 'react-redux';
+import { getDataUser } from './../_actions/auth'
 class Booking extends Component {
   constructor() {
     super();
@@ -38,13 +39,15 @@ class Booking extends Component {
     this.setState({
       duration: value
     });
-    this.changeDateDuration();
+    // this.changeDateDuration();
+    alert(this.state.duration)
   }
   
   changeDateDuration = () => {
     let datePicked = new Date(this.state.date);
-    alert(datePicked);
+    // alert(datePicked);
     let duration = this.state.duration;
+    alert(duration)
     let dateDuration = datePicked.setMonth(datePicked.getMonth() + duration);
 
     this.setState({
@@ -74,7 +77,13 @@ class Booking extends Component {
     return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
   }
 
+  componentDidMount(){
+    this.props.dispatch(getDataUser())
+    console.log(this.props.auth)
+  }
+
   render() {
+    console.log(this.props.auth)
     const { show, date, dateDuration } = this.state;
     const kost = this.props.navigation.getParam('kost', 'Tidak ada data kost');
 
@@ -98,7 +107,7 @@ class Booking extends Component {
                 note
                 mode="dropdown"
                 selectedValue={this.state.duration}
-                onValueChange={this.changeDuration.bind(this)}
+                onValueChange={this.changeDuration}
               >
                 <Picker.Item label="1 bulan" value="1" />
                 <Picker.Item label="6 bulan" value="6" />
@@ -107,15 +116,11 @@ class Booking extends Component {
                 <Picker.Item label="3 tahun" value="36" />
               </Picker>
             </View>
-            <View style={{flex: 1, paddingVertical: 10}}>
-              <Text style={styles.headingGrey}>Tanggal Keluar</Text>
-              <Text style={styles.dateText}>{this.formatDate(dateDuration)}</Text>
-            </View>
           </View>
           <View style={[styles.detailKostContainer, styles.flexLeft]}>
             <View style={{flex: 4, alignContent: "stretch"}}>
               <Image
-                source={{uri: `http://192.168.0.8/cari-kost-api/${kost.images.split(',')[0]}`}}
+                source={{uri: `${API_URL.replace('api/v1/', '')}${kost.images.split(',')[0]}`}}
                 style={{height: 100, width: 120}}
               />
             </View>
@@ -147,15 +152,15 @@ class Booking extends Component {
                 <Text>Nama</Text>
               </View>
               <View style={{flex: 1}}>
-                <Text style={[styles.textBold, styles.textRight]}>Fajar Muttaqin</Text>
+                <Text style={[styles.textBold, styles.textRight]}>{this.props.auth.fullname}</Text>
               </View>
             </View>
             <View style={[styles.flexLeft, {marginVertical: 5}]}>
               <View style={{flex: 1}}>
-                <Text>Jenis Kelamin</Text>
+                <Text>Email</Text>
               </View>
               <View style={{flex: 1}}>
-                <Text style={[styles.textBold, styles.textRight]}>Laki-laki</Text>
+                <Text style={[styles.textBold, styles.textRight]}>{this.props.auth.email}</Text>
               </View>
             </View>
             <View style={[styles.flexLeft, {marginVertical: 5}]}>
@@ -163,17 +168,10 @@ class Booking extends Component {
                 <Text>No. Telp</Text>
               </View>
               <View style={{flex: 1}}>
-                <Text style={[styles.textBold, styles.textRight]}>082130128030</Text>
+                <Text style={[styles.textBold, styles.textRight]}>{this.props.auth.phone}</Text>
               </View>
             </View>
-            <View style={[styles.flexLeft, {marginVertical: 5}]}>
-              <View style={{flex: 1}}>
-                <Text>Pekerjaan</Text>
-              </View>
-              <View style={{flex: 1}}>
-                <Text style={[styles.textBold, styles.textRight]}>Pelajar</Text>
-              </View>
-            </View>
+           
           </View>
           { show && (
             <DateTimePicker value={date}
@@ -191,6 +189,15 @@ class Booking extends Component {
     );
   }
 }
+
+
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Booking);
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -236,4 +243,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Booking
+

@@ -4,9 +4,8 @@ import AsyncStorage from '@react-native-community/async-storage'
 import { createBottomTabNavigator } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
-
-
+import { connect } from 'react-redux';
+import { getDataUser } from './../../_actions/auth'
 
 
 class Profile extends React.Component {
@@ -21,13 +20,29 @@ class Profile extends React.Component {
 
   _showAsynStorage = async () => {
     try {
-      let user = await AsyncStorage.getItem('user')
+      let user = await AsyncStorage.getItem('token')
         if (user != null) {
           let data = JSON.parse(user)
           // alert(data.email + ' ' + data.password)
-          this.setState({
-              username : data.email
-          })
+          console.log(data)
+        } else {
+          alert('Anda Belum Login')
+        };
+    } catch (err) {
+      alert(err)
+      
+    }
+
+  }
+
+  _showAsynStorageUser = async () => {
+    try {
+      let user = await AsyncStorage.getItem('dataUser')
+        if (user != null) {
+          let data = JSON.parse(user)
+          // alert(data.email + ' ' + data.password)
+         console.log(data)
+         console.log(this.props.auth.fullname)
         } else {
           alert('Anda Belum Login')
         };
@@ -39,7 +54,8 @@ class Profile extends React.Component {
   }
 
   componentDidMount = () => {
-   this._showAsynStorage()
+   this.props.dispatch(getDataUser())
+   console.log(this.props.auth.email)
   }
 
   _destroyAsynStorage = async () => {
@@ -73,8 +89,8 @@ class Profile extends React.Component {
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 3, paddingTop: 3 }}>
-                <Text style={styles.namaProfil}>{this.state.username}</Text>
-                <Text style={styles.notelepon}>082310569056</Text>
+                <Text style={styles.namaProfil}>{this.props.auth.fullname}</Text>
+                <Text style={styles.notelepon}>{this.props.auth.phone}</Text>
               </View>
               <View style={{ flex: 1 }}>
                 <TouchableOpacity>
@@ -137,7 +153,7 @@ class Profile extends React.Component {
 
 
             <View style={{marginTop: 10}}>
-            <TouchableOpacity >
+            <TouchableOpacity onPress={this._showAsynStorageUser} >
               <View style={styles.cardProfbot}>
               <Icon name="wrench" style={{ textAlign: 'center',  }} size={20} color={'#03A9F4'}></Icon>
               <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10,  color: '#03A9F4' }}>Pengaturan</Text>
@@ -170,7 +186,13 @@ class Profile extends React.Component {
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+      auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Profile);
 
 
 const styles = StyleSheet.create({
