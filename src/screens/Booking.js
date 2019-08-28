@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Appbar, IconButton } from "react-native-paper";
+import { ScrollView, View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Appbar } from "react-native-paper";
 import { Picker, Button } from "native-base";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { ScrollView } from 'react-native-gesture-handler';
+import axios from "axios";
 import { API_URL } from "react-native-dotenv";
+import AsyncStorage from "@react-native-community/async-storage";
+
 import KostFeatures from "../components/KostFeatures";
 import { connect } from 'react-redux';
 import { getDataUser } from './../_actions/auth'
+
 class Booking extends Component {
-  constructor() {
-    super();
-    let dateNow = new Date(Date.now());
+  constructor(props) {
+    super(props);
     this.state = {
       date: Date.now(),
       show: false,
       duration: 1,
-      dateDuration: dateNow.setMonth(dateNow.getMonth()+1) 
+      kost: {},
+      loading: true
+    }
+  }
+
+  componentDidMount = () => {
+    this.props.dispatch(getDataUser());
+    
+    this._checkAuth();
+    this.setState({
+      loading: false,
+      kost: this.props.navigation.getParam('kost', 'Tidak ada data kost')
+    });
+  }
+
+  _checkAuth = () => {
+    if (!this.props.auth.fullname) {
+      alert('Harap login untuk melanjutkan!');
+      this.props.navigation.navigate('Login');
     }
   }
 
@@ -32,26 +52,11 @@ class Booking extends Component {
     this.setState({
       show: true
     });
-    this.changeDateDuration();
   }
 
   changeDuration = (value) =>  {
     this.setState({
       duration: value
-    });
-    // this.changeDateDuration();
-    alert(this.state.duration)
-  }
-  
-  changeDateDuration = () => {
-    let datePicked = new Date(this.state.date);
-    // alert(datePicked);
-    let duration = this.state.duration;
-    alert(duration)
-    let dateDuration = datePicked.setMonth(datePicked.getMonth() + duration);
-
-    this.setState({
-      dateDuration: dateDuration
     });
   }
 
@@ -77,15 +82,38 @@ class Booking extends Component {
     return 'Rp. '+rupiah.split('',rupiah.length-1).reverse().join('');
   }
 
-  componentDidMount(){
-    this.props.dispatch(getDataUser())
-    console.log(this.props.auth)
+  _handleBooking = async () => {
+    const {kost, date, duration} = this.state;
+    const jwt = await AsyncStorage.getItem('token');
+    const dataPost = {
+      dorm_id: kost.id,
+      price: kost.price,
+      date_entries: new Date(date),
+      duration
+    }
+    
+    axios.post(
+      API_URL + 'booking',
+      dataPost,
+      {headers: {'Authorization': 'Bearer ' + JSON.parse(jwt)}}
+    ).then(res => {
+      alert('Kost telah dimasukan ke daftar booking');
+      this.props.navigation.navigate('ListBookPage');
+    }).catch(err => {
+      alert(err);
+    });
   }
 
   render() {
-    console.log(this.props.auth)
-    const { show, date, dateDuration } = this.state;
-    const kost = this.props.navigation.getParam('kost', 'Tidak ada data kost');
+    const { show, date, kost, loading } = this.state;
+
+    if (loading == true) {
+      return (
+        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+          <Text>Harap Tunggu</Text>
+        </View>
+      );
+    }
 
     return (
       <View style={{flex: 1}}>
@@ -132,12 +160,6 @@ class Booking extends Component {
                 style={[styles.flexLeft, {height: 30}]}
                 text={false}
               />
-              {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.flexLeft, {height: 30}]}>
-                <IconButton icon="hotel" color="#03a9f4" size={20} />
-                <IconButton icon="wifi" color="#03a9f4" size={20} />
-                <IconButton icon="vpn-key" color="#03a9f4" size={20} />
-                <IconButton icon="hot-tub" color="#03a9f4" size={20} />
-              </ScrollView> */}
               <Text style={{fontWeight: "bold", marginTop: 20}}>{this.toRupiah(kost.price)} / bulan</Text>
             </View>
           </View>
@@ -181,7 +203,7 @@ class Booking extends Component {
           )}
         </ScrollView>
         <View style={styles.footerContainer}>
-          <Button full info block style={{borderRadius: 5}}>
+          <Button full info block style={{borderRadius: 5}} onPress={this._handleBooking}>
             <Text style={styles.buttonText}>Book</Text>
           </Button>
         </View>

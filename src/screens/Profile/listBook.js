@@ -1,11 +1,51 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image, TouchableHighlight } from "react-native";
-import { Paragraph } from "react-native-paper";
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
-import { TextInput } from "react-native-gesture-handler";
-import { withNavigation } from "react-navigation";
+import axios from "axios";
+import { API_URL } from "react-native-dotenv";
+import AsyncStorage from "@react-native-community/async-storage";
 
 class listBook extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      is_loading: true,
+      booking: []
+    }
+  }
+
+  componentDidMount = async () => {
+    const jwt = await AsyncStorage.getItem('token');
+    await axios.get(
+      `${API_URL}booking`,
+      {headers: {'Authorization': 'Bearer ' + JSON.parse(jwt)}}
+    )
+    .then(res => {
+      this.setState({
+        booking: res.data,
+        is_loading: false
+      })
+    })
+    .catch(err => {
+      alert(err);
+    });
+  }
+
+  formatDate = (date) => {
+    const monthName = [
+      "Jan", "Feb", "Mar",
+      "Apr", "May", "Jun", "Jul",
+      "Agu", "Sep", "Okt",
+      "Nov", "Des"
+    ];
+    date = new Date(date);
+    let day = date.getDate();
+    let month = date.getMonth();
+    let years = date.getFullYear();
+
+    return day + ' ' + monthName[month] + ' ' + years;
+  }
  
   renderItem = ({ item, index }) => {
 
@@ -16,27 +56,19 @@ class listBook extends React.Component {
             <View style={{ flexDirection: 'row' }}>
               <View style={{ flex: 1 }}>
                 <Image
-                  source={require('../../../assets/kamarkos.jpg')}
+                  source={{ uri: `${API_URL.replace('api/v1/', '')}${item.bookingDorm.images.split(',')[0]}` }}
                   style={styles.imageIcon} />
               </View>
               <View style={{ flex: 2, padding: 5 }}>
-                <Text>Kost Mamirooms Isma Tegalrejo...</Text>
+                <Text>{item.bookingDorm.name}</Text>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                   <View style={styles.detailBook}>
-                    <Text style={styles.textBook}>
-                      Booking
-                        </Text>
-                    <Text style={styles.textBook}>
-                      12 Agu 2019
-                        </Text>
+                    <Text style={styles.textBook}>Tgl Masuk</Text>
+                    <Text style={styles.textBook}>{this.formatDate(item.date_entries)}</Text>
                   </View>
                   <View style={styles.detailBook}>
-                    <Text style={styles.textBook}>
-                      Durasi Sewa
-                        </Text>
-                    <Text style={styles.textBook}>
-                      1 Bulan
-                        </Text>
+                    <Text style={styles.textBook}>Durasi Sewa</Text>
+                    <Text style={styles.textBook}>{item.duration} Bulan</Text>
                   </View>
                 </View>
 
@@ -53,35 +85,15 @@ class listBook extends React.Component {
 
 
   render() {
-    const cars = [{
-      name: 'BMW',
-      price: 3000,
-      id: 1,
-    },{
-      name: 'BMW',
-      price: 3000,
-      id: 2,
-    },
-    {
-      name: 'Porsche',
-      price: 1500,
-      id: 3,
-    }, {
-      name: 'Jaguar',
-      price: 300,
-      id: 4,
-    },
-    {
-      name: 'Jaguar',
-      price: 300,
-      id: 5,
-    },
-    {
-      name: 'Jaguar',
-      price: 300,
-      id: 5,
-    }];
-    const { navigate } = this.props.navigation;
+    const {booking, is_loading} = this.state;
+
+    if (is_loading) {
+      return (
+        <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
+          <Text style={{color: '#03a9f4'}}>Loading</Text>
+        </View>
+      )
+    }
 
     return (
       <View style={styles.containerHome}>
@@ -97,7 +109,7 @@ class listBook extends React.Component {
         </View>
         <View style={{ flex: 1, paddingLeft: 5, paddingTop:0, paddingRight: 5 }}>
           <FlatList
-            data={cars}
+            data={booking}
             showsVerticalScrollIndicator={false}
             renderItem={this.renderItem}
           />
