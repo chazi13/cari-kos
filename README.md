@@ -11,14 +11,15 @@ kitakost is an application that is useful for finding good and affordable boardi
 ## Screenshots
 
 <p float="left">
- <img src="https://drive.google.com/open?id=1xeB-xdFC8ehGJM_SY-eJJbS8-jSZQaaE" width="200" height="350" alt="KostKita Home"/>
- <img src="https://drive.google.com/open?id=16WbCMjK_rIUt3ciqfoeLughwQ5yj3tc7" width="200" height="350" alt="KostKita Daftar Akun"/>
- <img src="https://drive.google.com/open?id=1Dbo-cM05CYts3G3aw0AMDIAsinPiPF6o" width="200" height="350" alt="KostKita Login Akun"/>
- <img src="https://drive.google.com/open?id=1LUy4LFBNHWF08BEhEh8q41b5F2_xOiSE" width="200" height="350" alt="KostKita Add Kost"/>
- <img src="https://drive.google.com/open?id=1slVdZ7yLjtlrZXtioi-QdFeWu7YsM3pP" width="200" height="350" alt="KostKita List Kost"/>
- <img src="https://drive.google.com/open?id=1Oj5EKhWQI5EW1blB6KJYHffHHxhSYP1e" width="200" height="350" alt="KostKita Detail Kost"/>
- <img src="https://drive.google.com/open?id=1iAYVGkBba8UGE7E_GgFwOuRJC5hXGOrW" width="200" height="350" alt="KostKita Booking Kost"/>
+ ![Home Page](https://user-images.githubusercontent.com/48378351/63936916-56f9ff00-ca8b-11e9-911b-e1ae506da524.png)
+ ![Register](https://user-images.githubusercontent.com/48378351/63936967-827ce980-ca8b-11e9-8b57-1e0aab2426fc.png)
+ ![Login](https://user-images.githubusercontent.com/48378351/63936984-90326f00-ca8b-11e9-83ff-f69c78eb8f3c.png)
+ ![Add Ads](https://user-images.githubusercontent.com/48378351/63937008-9e808b00-ca8b-11e9-9b90-7e8716fb99e9.png)
+ ![List](https://user-images.githubusercontent.com/48378351/63937019-a6d8c600-ca8b-11e9-8ee3-bece0ec1f6ea.png)
+ ![Detail](https://user-images.githubusercontent.com/48378351/63937028-ab9d7a00-ca8b-11e9-8f1a-b7af08d723c2.png)
+ ![Booking](https://user-images.githubusercontent.com/48378351/63937033-ae986a80-ca8b-11e9-98c9-5b8cb466e1f9.png)
 </p>
+
 
 ## Features
 
@@ -89,10 +90,15 @@ npm start
 
 ## Contact
 
-- WA/TELEGRAM: +62 823 10569056 (Ricky Ariansyah)
-- WA/TELEGRAM: +62 857 74237634 (Muhamad Chairul Aziz)
-- Email: ri@gmail.com
+- Ricky Ariansyah
+  Wa/Telegram:  +62 823 10569056
+  E-Mail: rickyarians@outlook.com
+
+- Muhamad Chairul Aziz
+  WA/Telegram: +62 857 74237634
+  E-Mail: m.chairul669@gmail.com
+  
 
 ## Download App (Demo usage only)
-[![download](https://camo.githubusercontent.com/a9c59dcbf62ec123e8bb099fb473ad30554d70e6/68747470733a2f2f69312e77702e636f6d2f61706b6d6f6473696f732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031382f31322f446f776e6c6f61642d496e66696e6974652d44657369676e2d332e342e31302d41706b2e706e67 "Download")](https://drive.google.com/file/d/1KEYEvZTC4jApH9BBbM8WdEOPgvmJRQJq/view?usp=sharing)
+[![download](https://camo.githubusercontent.com/a9c59dcbf62ec123e8bb099fb473ad30554d70e6/68747470733a2f2f69312e77702e636f6d2f61706b6d6f6473696f732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031382f31322f446f776e6c6f61642d496e66696e6974652d44657369676e2d332e342e31302d41706b2e706e67 "Download")](https://drive.google.com/open?id=1OOXC_AM8I8XvsabpSW9W6IbjiYSPPk_9)
 
