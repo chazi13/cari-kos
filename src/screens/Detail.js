@@ -129,7 +129,7 @@ class Detail extends Component {
 
 
   render() {
-    let { navigate, goBack } = this.props.navigation;
+    let { navigate, goBack, push } = this.props.navigation;
     const kost = this.state.kost;
     // const kost = getParam('kost');
     // const kost = require('../../data/kosts.json')[0];
@@ -215,7 +215,21 @@ class Detail extends Component {
           <View style={styles.contentSection}>
             <Subheading style={styles.titleNormalize}>Kost Menarik Lainnya</Subheading>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={[styles.InfoContainer, { marginHorizontal: -15 }]}>
-              <TouchableOpacity onPress={() => navigate('ListItem')}>
+              {this.state.otherKost && this.state.otherKost.map(item => (
+                <TouchableOpacity onPress={() => push('Detail', {kostId: item.id})}>
+                  <View style={styles.anotherKostContainer}>
+                    <View style={styles.kostImageContainer}>
+                      <Image
+                        source={{ uri: `${API_URL.replace('api/v1/', '')}${item.images.split(',')[0]}` }}
+                        style={styles.kostImage} />
+                    </View>
+                    <View style={styles.otherKostDesc}>
+                      <Text style={styles.anotherKostName}>{item.name}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              ))}
+              {/* <TouchableOpacity onPress={() => navigate('ListItem')}>
                 <View style={styles.anotherKostContainer}>
                   <View style={styles.kostImageContainer}>
                     <Image
@@ -244,7 +258,7 @@ class Detail extends Component {
                   </View>
                   <Text style={styles.anotherKostName}>Kost Murah di Jakarta</Text>
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <View style={{ width: 15 }}></View>
             </ScrollView>
           </View>
@@ -447,6 +461,9 @@ const styles = StyleSheet.create({
     height: null,
     width: null,
     borderRadius: 5
+  },
+  otherKostDesc: {
+    backgroundColor: '#909090'
   },
   anotherKostName: {
     color: '#fff',

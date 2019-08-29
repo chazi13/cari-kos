@@ -2,10 +2,15 @@ import axios from 'axios'
 import { API_URL } from 'react-native-dotenv'
 
 
-export const getDorms = () => {
+export const getDorms = (param = '') => {
+    let query = '';
+    if (param !== '') {
+        query = '?city=' + param;
+    }
+
     return {
         type: 'GET_DORMS',
-        payload: axios.get(API_URL + 'dorms')
+        payload: axios.get(API_URL + 'dorms' + query)
     }
 }
 

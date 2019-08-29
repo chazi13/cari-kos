@@ -197,7 +197,7 @@ class ListItem extends React.Component {
     //       isLoading: false
     //     });
     //   })
-    this.props.dispatch(getDorms())
+    this.props.dispatch(getDorms(this.state.search));
   }
 
 
@@ -232,10 +232,10 @@ class ListItem extends React.Component {
           this.props.dorms.isLoading == true && 
           <View style={{ flex: 1, justifyContent: 'center' }}>
             <ActivityIndicator size="large" color="#03a9f4" />
-            <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Tunggu ya datanya sedang diantar ke handphonemu..</Text>
+            <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Tunggu ya datanya sedang diantar ke handphonemu...</Text>
           </View>
         }
-        {this.props.dorms.isLoading == false &&
+        {(!this.props.dorms.isLoading && this.props.dorms.dataDorms) &&
           <View style={{ flex: 1, alignItems: 'center', }}>
             <FlatList
               // data={kosts}
@@ -247,7 +247,11 @@ class ListItem extends React.Component {
             />
           </View>
         }
-
+        {(!this.props.dorms.isLoading && this.props.dorms.dataDorms == '') && 
+          <View style={{ flex: 1 }}>
+            <Text style={{ textAlign: 'center', fontSize: 12, color: '#03a9f4' }}>Maaf, tidak ditemukan kost di daerah yang kamu cari</Text>
+          </View>
+        }
 
 
         <View style={styles.floatingContainer}>
