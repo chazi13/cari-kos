@@ -86,7 +86,8 @@ const auth = (state = initialState, action) => {
             return {
                 ...state,
                 isLoading: false,
-                berhasildaftar: true
+                berhasildaftar: true,
+                logout: false
             }
         case 'POST_USER_REJECTED':
             return {
@@ -108,7 +109,12 @@ const auth = (state = initialState, action) => {
                 logout: true,
                 message: action.payload
             }
-
+        case 'CHANGE_STATUS':
+            return {
+                ...state,
+                logout: false,
+                message: action.payload
+            }
         default:
             return state;
     }

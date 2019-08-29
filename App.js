@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator, createAppContainer, HeaderStyleInterpolator, createStackNavigator, createSwitchNavigator } from "react-navigation";
-import {Provider} from 'react-redux'
+import { Provider } from 'react-redux'
 import store from './src/_redux/store'
 
 
@@ -27,6 +27,7 @@ import ListBookPage from "./src/screens/Profile/listBook";
 import IklanPage from "./src/screens/Profile/IklanPage";
 import ListIklan from "./src/screens/Profile/listIklan";
 import KontrakSaya from "./src/screens/kontrakSaya";
+import ListPemesanan from './src/screens/Profile/listPemesanan'
 // Auth
 import Login from './src/screens/Auth/Login';
 import SignupScreen from "./src/screens/Auth/SignupScreen";
@@ -37,7 +38,7 @@ import ListItem from "./src/screens/ListItem";
 import Detail from "./src/screens/Detail";
 import Booking from "./src/screens/Booking";
 import Filter from "./src/screens/Filter";
-
+import Splashscreen from './src/screens/SplashScreen'
 
 
 
@@ -200,6 +201,9 @@ const authNav = createStackNavigator(
     },
     Booking: {
       screen: Booking
+    },
+    ListPemesanan: {
+      screen: ListPemesanan
     }
   },
   {
@@ -212,6 +216,9 @@ const authNav = createStackNavigator(
 
 const MainNav = createAppContainer(createSwitchNavigator({
   // Navigation Guest
+  Main : {
+    screen : Splashscreen
+  },
   Guest: {
     screen: guestNav
   },
@@ -227,7 +234,7 @@ const MainNav = createAppContainer(createSwitchNavigator({
 const App = () => {
   return (
     <Provider store={store}>
-       <MainNav/>
+      <MainNav />
     </Provider>
   )
 }

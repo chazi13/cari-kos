@@ -25,8 +25,8 @@ class Detail extends Component {
       width: width,
       modalVisible: "",
       loading: true,
-      kost: [],
-      otherKost: {}
+      kost: {},
+      otherKost: []
     }
   }
 
@@ -117,7 +117,8 @@ class Detail extends Component {
     axios.get(API_URL + 'dorms/' + id)
       .then(res => {
         this.setState({
-          kost: res.data,
+          kost: res.data.detailDorm,
+          otherKost: res.data.otherDorms,
           loading: false
         })
       })

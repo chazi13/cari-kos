@@ -82,6 +82,12 @@ export const functLogout = () => {
     }
 }
 
+export const changeStatus = () => {
+    return {
+        type: 'CHANGE_STATUS'
+    }
+}
+
 
 
 // http://192.168.1.31:3000/api/v1/

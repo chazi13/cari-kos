@@ -57,6 +57,7 @@ class Profile extends React.Component {
   componentDidMount = () => {
     this.props.dispatch(getDataUser())
     console.log(this.props.auth.email)
+    console.log(this.props.auth.logout)
   }
 
   componentDidUpdate = () => {
@@ -163,7 +164,7 @@ class Profile extends React.Component {
             </TouchableOpacity>
 
 
-            <TouchableOpacity >
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ListPemesanan')}>
               <View style={styles.cardProf}>
                 <Icon name="user-circle" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
                 <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Daftar Pesanan</Text>
@@ -171,13 +172,6 @@ class Profile extends React.Component {
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={this.handleOpen}>
-              <View style={styles.cardProf}>
-                <Icon name="user-circle" style={{ textAlign: 'center', }} size={20} color={'#03A9F4'}></Icon>
-                <Text style={{ textAlign: 'left', marginTop: 3, marginLeft: 5, fontSize: 10, color: '#03A9F4' }}>Alert</Text>
-
-              </View>
-            </TouchableOpacity>
 
           
 

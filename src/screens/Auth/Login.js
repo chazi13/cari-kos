@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { Title, Button, IconButton } from "react-native-paper";
 import axios from "axios";
 import { connect } from 'react-redux';
-import { functLogin, handlingEmail, handlingPassword } from './../../_actions/auth'
+import { functLogin, changeStatus } from './../../_actions/auth'
 // import component 
 import HeaderLogin from './../../components/Login/headerLogin'
 import FormLogin from './../../components/Login/formLogin'
@@ -119,9 +119,10 @@ class Login extends Component {
   componentDidUpdate() {
     if (this.props.auth.berhasil == true) {
       alert('Berhasil Login')
+      this.props.dispatch(changeStatus())
       this.props.navigation.navigate('Auth')
     } else {
-      alert('Gagal Login')
+    
     }
   }
 
