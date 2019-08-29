@@ -91,12 +91,12 @@ npm start
 ## Contact
 
 - Ricky Ariansyah
-  Wa/Telegram:  +62 823 10569056
-  E-Mail: rickyarians@outlook.com
+  * Wa/Telegram:  +62 823 10569056
+  * E-Mail: rickyarians@outlook.com
 
 - Muhamad Chairul Aziz
-  WA/Telegram: +62 857 74237634
-  E-Mail: m.chairul669@gmail.com
+  * WA/Telegram: +62 857 74237634
+  * E-Mail: m.chairul669@gmail.com
   
 
 ## Download App (Demo usage only)
