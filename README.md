@@ -11,13 +11,13 @@ kitakost is an application that is useful for finding good and affordable boardi
 ## Screenshots
 
 <p float="left">
- ![Home Page](https://user-images.githubusercontent.com/48378351/63936916-56f9ff00-ca8b-11e9-911b-e1ae506da524.png)
- ![Register](https://user-images.githubusercontent.com/48378351/63936967-827ce980-ca8b-11e9-8b57-1e0aab2426fc.png)
- ![Login](https://user-images.githubusercontent.com/48378351/63936984-90326f00-ca8b-11e9-83ff-f69c78eb8f3c.png)
- ![Add Ads](https://user-images.githubusercontent.com/48378351/63937008-9e808b00-ca8b-11e9-9b90-7e8716fb99e9.png)
- ![List](https://user-images.githubusercontent.com/48378351/63937019-a6d8c600-ca8b-11e9-8ee3-bece0ec1f6ea.png)
- ![Detail](https://user-images.githubusercontent.com/48378351/63937028-ab9d7a00-ca8b-11e9-8f1a-b7af08d723c2.png)
- ![Booking](https://user-images.githubusercontent.com/48378351/63937033-ae986a80-ca8b-11e9-98c9-5b8cb466e1f9.png)
+ <img src="https://user-images.githubusercontent.com/48378351/63936916-56f9ff00-ca8b-11e9-911b-e1ae506da524.png" width="200" height="350" alt="Home"/>
+ <img src="https://user-images.githubusercontent.com/48378351/63936967-827ce980-ca8b-11e9-8b57-1e0aab2426fc.png" width="200" height="350" alt="Register"/>
+ <img src="https://user-images.githubusercontent.com/48378351/63936984-90326f00-ca8b-11e9-83ff-f69c78eb8f3c.png" width="200" height="350" alt="Login"/>
+ <img src="https://user-images.githubusercontent.com/48378351/63937008-9e808b00-ca8b-11e9-9b90-7e8716fb99e9.png" width="200" height="350" alt="Add Ads"/>
+ <img src="https://user-images.githubusercontent.com/48378351/63937019-a6d8c600-ca8b-11e9-8ee3-bece0ec1f6ea.png" width="200" height="350" alt="List"/>
+ <img src="https://user-images.githubusercontent.com/48378351/63937028-ab9d7a00-ca8b-11e9-8f1a-b7af08d723c2.png" width="200" height="350" alt="Detail"/>
+ <img src="https://user-images.githubusercontent.com/48378351/63937033-ae986a80-ca8b-11e9-98c9-5b8cb466e1f9.png" width="200" height="350" alt="Booking"/>
 </p>
 
 
