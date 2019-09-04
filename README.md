@@ -1,12 +1,12 @@
-# KitaKost - Kost untuk Kita-kita
+# KostKita - Kost untuk Kita-kita
 
 ## Important
 
 This project is still on very early development stage. If you want to use for production, use it with your own risk. More feature coming soon.
 
-## KitaKost
+## KostKita
 
-kitakost is an application that is useful for finding good and affordable boarding house
+KostKita is an application that is useful for finding good and affordable boarding house
 
 ## Screenshots
 
@@ -31,7 +31,7 @@ kitakost is an application that is useful for finding good and affordable boardi
 - Register
 - Add ads
 
-## Why KitaKost?
+## Why KostKita?
 
 - a simple application with powerful features
 - It's React Native, so it support android & iOS by default
